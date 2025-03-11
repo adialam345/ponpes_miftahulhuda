@@ -1,5 +1,5 @@
 -- Pastikan database sudah dibuat
-CREATE DATABASE IF NOT EXISTS ponpes_miftalhuda;
+CREATE DATABASE IF NOT EXISTS ponpes_miftahulhuda;
 USE ponpes_miftalhuda;
 
 -- Buat tabel users jika belum ada
@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS users (
 );
 
 -- Masukkan data admin
--- Password: admin (sudah di-hash dengan bcrypt)
+-- Password: admin123 (sudah di-hash dengan bcrypt)
 INSERT INTO users (name, username, password, created_at, updated_at)
 VALUES (
     'Administrator',
