@@ -7,6 +7,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/', function () {
+    return view('home');
+});
+
 // Login route alias for Laravel's default auth system
 Route::get('/login', function () {
     return redirect()->route('admin.login');
@@ -25,7 +29,7 @@ Route::prefix('admin')->group(function () {
         Route::get('dashboard', function () {
             return view('admin.dashboard');
         })->name('admin.dashboard');
-        
+
         Route::post('logout', [AuthController::class, 'logout'])->name('admin.logout');
         Route::post('password/update', [AuthController::class, 'updatePassword'])->name('admin.password.update');
     });
