@@ -25,13 +25,37 @@
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="{{ url('/') }}">Beranda</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ url('/profil') }}">Profil</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ url('/pendidikan') }}">Pendidikan</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ url('/pendaftaran') }}">Pendaftaran</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ url('/pembayaran') }}">Pembayaran</a></li>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="profilDropdown" role="button" data-bs-toggle="dropdown">Profil</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{{ url('/profil/pimpinan') }}">Pimpinan</a></li>
+                            <li><a class="dropdown-item" href="{{ url('/profil/pesantren') }}">Pesantren</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="pendidikanDropdown" role="button" data-bs-toggle="dropdown">Pendidikan</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{{ url('/pendidikan/kegiatan') }}">Kegiatan</a></li>
+                            <li><a class="dropdown-item" href="{{ url('/pendidikan/madin') }}">Madin</a></li>
+                            <li><a class="dropdown-item" href="{{ url('/pendidikan/smp') }}">SMP</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="pendaftaranDropdown" role="button" data-bs-toggle="dropdown">Pendaftaran</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{{ url('/pendaftaran/pondok') }}">Pondok</a></li>
+                            <li><a class="dropdown-item" href="{{ url('/pendaftaran/smp') }}">SMP</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="pembayaranDropdown" role="button" data-bs-toggle="dropdown">Pembayaran</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{{ url('/pembayaran/syariah-pondok') }}">Syariah Pondok</a></li>
+                            <li><a class="dropdown-item" href="{{ url('/pembayaran/syariah-smp') }}">Syariah SMP</a></li>
+                        </ul>
+                    </li>
                     <li class="nav-item"><a class="nav-link" href="{{ url('/kontak') }}">Kontak</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ url('/alamat') }}">Alamat</a></li>
                 </ul>
@@ -42,10 +66,6 @@
     <div class="container mt-4">
         @yield('content')
     </div>
-
-    <footer class="text-center py-3 mt-4 bg-green-700 text-white">
-        &copy; {{ date('Y') }} Pondok Pesantren Miftahul Huda
-    </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
