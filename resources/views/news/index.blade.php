@@ -3,8 +3,8 @@
 @section('title', 'Berita & Pengumuman - Pondok Pesantren Miftahul Huda')
 
 @section('content')
-<div class="container py-5" style="margin-top: 80px;">
-    <div class="text-center mb-5">
+<div class="container pt-2 pb-4" style="margin-top: 0px;">
+    <div class="text-center mb-3">
         <h1 class="text-green-700 fw-bold display-5">Berita & Pengumuman</h1>
         <p class="text-gray-600">Informasi terbaru dari Pondok Pesantren Miftahul Huda</p>
     </div>
@@ -31,14 +31,14 @@
             </div>
         </div>
         @empty
-        <div class="col-12 text-center py-5">
+        <div class="col-12 text-center py-4">
             <i class="fas fa-newspaper fa-3x text-gray-400 mb-3"></i>
             <p class="text-muted">Belum ada berita atau pengumuman terbaru.</p>
         </div>
         @endforelse
     </div>
 
-    <div class="d-flex justify-content-center mt-4">
+    <div class="d-flex justify-content-center mt-3">
         {{ $news->links() }}
     </div>
 </div>
