@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 @extends('layouts.app')
 
 @section('title', 'Pesantren - Pondok Pesantren Miftahul Huda')
@@ -26,3 +27,17 @@
     </div>
 </div>
 @endsection 
+=======
+<!-- resources/views/pimpinan/index.blade.php -->
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Halaman Pimpinan</title>
+</head>
+<body>
+    <h1>Halaman Pimpinan</h1>
+</body>
+</html>
+>>>>>>> 59626b2efba55b26845c4b099836ba1a564d0046

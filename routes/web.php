@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\RegistrationController;
+use App\Http\Controllers\NavbarController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -12,6 +13,9 @@ Route::get('/', function () {
 Route::get('/', function () {
     return view('home');
 });
+
+Route::get('/pimpinan', [NavbarController::class, 'pimpinan']);
+Route::get('/pesantren', [NavbarController::class, 'pesantren']);
 
 // News Routes
 Route::get('/news', [NewsController::class, 'index'])->name('news.index');
