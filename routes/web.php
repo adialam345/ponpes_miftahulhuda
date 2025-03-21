@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\NavbarController;
+use App\Http\Controllers\PendidikanController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -41,6 +42,8 @@ Route::get('/madin', function () {
 Route::get('/smp', function () {
     return view('smp');
 });
+
+Route::get('/pendidikan', [PendidikanController::class, 'index']);
 
 Route::get('/syariah-pondok', function () {
     return view('syariah-pondok');

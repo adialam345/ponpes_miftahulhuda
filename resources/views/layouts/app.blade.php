@@ -350,6 +350,8 @@
                 align-items: flex-start;
                 padding: 1rem;
                 box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+                max-height: 80vh;
+                overflow-y: auto;
             }
             
             .navbar-custom .menu.active {
@@ -400,32 +402,48 @@
                 transform: rotate(180deg);
             }
             
+            .navbar-custom .dropdown:hover .dropdown-content {
+                opacity: 0;
+                visibility: hidden;
+                transform: translateY(10px);
+            }
+            
             .navbar-custom .dropdown-content {
                 position: static;
                 width: 100%;
                 opacity: 1;
                 visibility: visible;
                 transform: none;
+                display: block;
                 max-height: 0;
                 transition: max-height 0.3s ease;
                 box-shadow: none;
-                background-color: rgba(255, 255, 255, 0.05);
+                background-color: rgba(0, 0, 0, 0.15);
                 border-radius: 0;
                 overflow: hidden;
+                padding: 0;
             }
             
             .navbar-custom .dropdown.active .dropdown-content {
                 max-height: 300px;
+                padding: 0.25rem 0;
+                opacity: 1;
+                visibility: visible;
             }
             
             .navbar-custom .dropdown-content a {
-                color: white !important;
-                padding: 0.8rem 1.5rem;
+                color: rgba(255, 255, 255, 0.9) !important;
+                padding: 0.6rem 1.5rem 0.6rem 2rem;
+                font-size: 0.95rem;
+                border-left: 2px solid rgba(255, 255, 255, 0.2);
+                margin-left: 1rem;
             }
             
             .navbar-custom .dropdown-content a:hover {
                 background-color: rgba(255, 255, 255, 0.1);
                 color: white !important;
+                border-left: 2px solid var(--accent-color);
+                padding-left: 2rem;
             }
         }
         
@@ -465,7 +483,7 @@
                     </div>
                 </div>
                 <div class="dropdown">
-                    <a href="javascript:void(0);" class="nav-link">Pendidikan <i class="fas fa-chevron-down ms-1 fa-xs"></i></a>
+                    <a href="{{ url('/pendidikan') }}" class="nav-link">Pendidikan <i class="fas fa-chevron-down ms-1 fa-xs"></i></a>
                     <div class="dropdown-content">
                         <a href="{{ url('/kegiatan') }}">Kegiatan</a>
                         <a href="{{ url('/madin') }}">Madin</a>
@@ -520,21 +538,74 @@
 
             mobileMenuToggle.addEventListener('click', function() {
                 mobileMenu.classList.toggle('active');
+                this.innerHTML = mobileMenu.classList.contains('active') ? 
+                    '<i class="fas fa-times"></i>' : 
+                    '<i class="fas fa-bars"></i>';
             });
 
             // Mobile dropdown toggles
             const dropdowns = document.querySelectorAll('.dropdown');
+            const isMobile = () => window.innerWidth <= 991;
 
             dropdowns.forEach(dropdown => {
                 const dropdownLink = dropdown.querySelector('a');
 
-                if (window.innerWidth <= 991) {
-                    dropdownLink.addEventListener('click', function(e) {
-                        if (this.getAttribute('href') === 'javascript:void(0);' || window.innerWidth <= 991) {
-                            e.preventDefault();
+                // Handle click on dropdown links
+                dropdownLink.addEventListener('click', function(e) {
+                    if (this.getAttribute('href') === 'javascript:void(0);') {
+                        e.preventDefault();
+                        
+                        // Only toggle on mobile
+                        if (isMobile()) {
+                            // Close other dropdowns
+                            dropdowns.forEach(otherDropdown => {
+                                if (otherDropdown !== dropdown && otherDropdown.classList.contains('active')) {
+                                    otherDropdown.classList.remove('active');
+                                }
+                            });
+                            
+                            // Toggle this dropdown
                             dropdown.classList.toggle('active');
                         }
+                    }
+                });
+            });
+            
+            // Setup resize handler
+            function handleResize() {
+                if (isMobile()) {
+                    // Add mobile-specific behaviors
+                    dropdowns.forEach(dropdown => {
+                        dropdown.classList.remove('hover-triggered');
                     });
+                } else {
+                    // Reset mobile menu when in desktop mode
+                    if (mobileMenu.classList.contains('active')) {
+                        mobileMenu.classList.remove('active');
+                        mobileMenuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+                    }
+                    
+                    // Reset all dropdowns in desktop mode
+                    dropdowns.forEach(dropdown => {
+                        dropdown.classList.remove('active');
+                    });
+                }
+            }
+            
+            // Initial setup
+            handleResize();
+            
+            // Handle resize events
+            window.addEventListener('resize', handleResize);
+            
+            // Close mobile menu when clicking outside
+            document.addEventListener('click', function(e) {
+                if (isMobile()) {
+                    // Close menu when clicking outside
+                    if (!mobileMenu.contains(e.target) && !mobileMenuToggle.contains(e.target) && mobileMenu.classList.contains('active')) {
+                        mobileMenu.classList.remove('active');
+                        mobileMenuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+                    }
                 }
             });
             

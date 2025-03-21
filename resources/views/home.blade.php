@@ -15,7 +15,6 @@
                     </h1>
                     <p class="text-gray-600 mb-4 fs-5">Menjadi lembaga pendidikan Islam yang mencetak generasi berakhlak mulia, berilmu, dan siap menghadapi tantangan masa depan.</p>
                     <div class="d-flex flex-wrap gap-3">
-                        <a href="{{ url('/pendaftaran') }}" class="btn btn-custom">Daftar Sekarang</a>
                         <a href="{{ url('/pesantren') }}" class="btn btn-outline-custom">Tentang Kami</a>
             </div>
         </div>
@@ -178,7 +177,7 @@
                         <i class="fas fa-users fa-2x text-primary-custom"></i>
                     </div>
                     <h3 class="counter fw-bold fs-2">500</h3>
-                    <p class="stat-title text-muted">Santri Aktif</p>
+                    <p class="stat-title text-muted">Jumlah Pengunjung</p>
                 </div>
             </div>
             <div class="col-6 col-md-3 mb-4 mb-md-0">
