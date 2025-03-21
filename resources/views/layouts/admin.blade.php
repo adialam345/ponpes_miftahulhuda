@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Admin - Ponpes Miftahul Huda</title>
+    <title>@yield('title', 'Admin Dashboard - Ponpes Miftahul Huda')</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -26,8 +26,11 @@
 
                     <!-- Menu Desktop -->
                     <div class="hidden md:flex items-center space-x-4">
-                        <a href="#" class="text-gray-600 hover:text-gray-900 flex items-center px-3 py-2 rounded-md text-sm font-medium">
+                        <a href="{{ route('admin.dashboard') }}" class="text-gray-600 hover:text-gray-900 flex items-center px-3 py-2 rounded-md text-sm font-medium">
                             <i class="fas fa-home mr-1"></i> Dashboard
+                        </a>
+                        <a href="{{ route('admin.news.index') }}" class="text-gray-600 hover:text-gray-900 flex items-center px-3 py-2 rounded-md text-sm font-medium">
+                            <i class="fas fa-newspaper mr-1"></i> Berita
                         </a>
                         <a href="#" class="text-gray-600 hover:text-gray-900 flex items-center px-3 py-2 rounded-md text-sm font-medium">
                             <i class="fas fa-users mr-1"></i> Santri
@@ -72,8 +75,11 @@
                 x-transition:leave-start="opacity-100 transform scale-100"
                 x-transition:leave-end="opacity-0 transform scale-95">
                 <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                    <a href="#" class="text-gray-600 hover:text-gray-900 hover:bg-gray-100 block px-3 py-2 rounded-md text-base font-medium">
+                    <a href="{{ route('admin.dashboard') }}" class="text-gray-600 hover:text-gray-900 hover:bg-gray-100 block px-3 py-2 rounded-md text-base font-medium">
                         <i class="fas fa-home mr-2"></i> Dashboard
+                    </a>
+                    <a href="{{ route('admin.news.index') }}" class="text-gray-600 hover:text-gray-900 hover:bg-gray-100 block px-3 py-2 rounded-md text-base font-medium">
+                        <i class="fas fa-newspaper mr-2"></i> Berita
                     </a>
                     <a href="#" class="text-gray-600 hover:text-gray-900 hover:bg-gray-100 block px-3 py-2 rounded-md text-base font-medium">
                         <i class="fas fa-users mr-2"></i> Santri
@@ -99,82 +105,7 @@
 
         <!-- Main Content -->
         <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-            <!-- Konten Dashboard -->
-            <div class="bg-white shadow rounded-lg p-6">
-                <h2 class="text-lg font-medium mb-6">Selamat Datang di Dashboard Admin</h2>
-                <p>Silahkan gunakan menu di atas untuk mengelola sistem.</p>
-                
-                @if(session('success'))
-                    <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mt-4">
-                        {{ session('success') }}
-                    </div>
-                @endif
-            </div>
-
-            <!-- Dashboard Cards -->
-            <div class="mt-6 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-                <!-- News Management Card -->
-                <div class="bg-white overflow-hidden shadow rounded-lg">
-                    <div class="p-5">
-                        <div class="flex items-center">
-                            <div class="flex-shrink-0 bg-green-500 rounded-md p-3">
-                                <i class="fas fa-newspaper text-white text-xl"></i>
-                            </div>
-                            <div class="ml-5 w-0 flex-1">
-                                <dl>
-                                    <dt class="text-sm font-medium text-gray-500 truncate">
-                                        Kelola Berita
-                                    </dt>
-                                    <dd>
-                                        <div class="text-lg font-medium text-gray-900">
-                                            Berita & Pengumuman
-                                        </div>
-                                    </dd>
-                                </dl>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bg-gray-50 px-5 py-3">
-                        <div class="text-sm">
-                            <a href="{{ route('admin.news.index') }}" class="font-medium text-green-700 hover:text-green-900">
-                                Kelola Berita <i class="fas fa-arrow-right ml-1"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Registration Management Card -->
-                <div class="bg-white overflow-hidden shadow rounded-lg">
-                    <div class="p-5">
-                        <div class="flex items-center">
-                            <div class="flex-shrink-0 bg-blue-500 rounded-md p-3">
-                                <i class="fas fa-user-plus text-white text-xl"></i>
-                            </div>
-                            <div class="ml-5 w-0 flex-1">
-                                <dl>
-                                    <dt class="text-sm font-medium text-gray-500 truncate">
-                                        Kelola Pendaftaran
-                                    </dt>
-                                    <dd>
-                                        <div class="text-lg font-medium text-gray-900">
-                                            Halaman Pendaftaran
-                                        </div>
-                                    </dd>
-                                </dl>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bg-gray-50 px-5 py-3">
-                        <div class="text-sm">
-                            <a href="{{ route('admin.registration.index') }}" class="font-medium text-blue-700 hover:text-blue-900">
-                                Kelola Pendaftaran <i class="fas fa-arrow-right ml-1"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Additional cards can be added here -->
-            </div>
+            @yield('content')
         </div>
     </div>
 
