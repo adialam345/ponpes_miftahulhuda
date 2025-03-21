@@ -17,6 +17,39 @@ Route::get('/', function () {
 Route::get('/news', [NewsController::class, 'index'])->name('news.index');
 Route::get('/news/{id}', [NewsController::class, 'show'])->name('news.show');
 
+// Static Page Routes
+Route::get('/pimpinan', function () {
+    return view('pimpinan');
+});
+
+Route::get('/pesantren', function () {
+    return view('pesantren');
+});
+
+Route::get('/kegiatan', function () {
+    return view('kegiatan');
+});
+
+Route::get('/madin', function () {
+    return view('madin');
+});
+
+Route::get('/smp', function () {
+    return view('smp');
+});
+
+Route::get('/syariah-pondok', function () {
+    return view('syariah-pondok');
+});
+
+Route::get('/syariah-smp', function () {
+    return view('syariah-smp');
+});
+
+Route::get('/kontak', function () {
+    return view('kontak');
+});
+
 // Registration Routes
 Route::get('/pendaftaran', [RegistrationController::class, 'index'])->name('registration.index');
 Route::get('/pendaftaran/{type}', [RegistrationController::class, 'show'])->name('registration.show');

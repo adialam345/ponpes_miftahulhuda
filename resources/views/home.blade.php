@@ -13,12 +13,12 @@
     <div class="mt-3">
         <h2 class="text-green-700 text-center fw-bold mb-2 mb-md-3 fs-3">Berita & Pengumuman Terbaru</h2>
         
-        @php
-            $news = \App\Models\News::where('status', 'published')
-                ->orderBy('published_at', 'desc')
+            @php
+                $news = \App\Models\News::where('status', 'published')
+                    ->orderBy('published_at', 'desc')
                 ->take(5)
-                ->get();
-        @endphp
+                    ->get();
+            @endphp
 
         @if($news->count() > 0)
         <!-- News Slider -->
@@ -35,18 +35,18 @@
                     <div class="carousel-item {{ $index == 0 ? 'active' : '' }}" data-bs-interval="6000">
                         <a href="{{ route('news.show', $item->id) }}" class="text-decoration-none">
                             <div class="position-relative">
-                                @if($item->image)
+                    @if($item->image)
                                 <img src="{{ asset('storage/' . $item->image) }}" class="d-block w-100" alt="{{ $item->title }}" style="height: 600px; object-fit: cover;">
-                                @else
+                    @else
                                 <div class="bg-light d-flex justify-content-center align-items-center" style="height: 600px;">
                                     <i class="fas fa-newspaper fa-4x text-secondary"></i>
-                                </div>
-                                @endif
+                    </div>
+                    @endif
                                 <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-75 rounded-3 p-3">
                                     <h3 class="fs-4 text-white">{{ $item->title }}</h3>
                                     <p class="small mb-2 text-white">
-                                        <i class="fas fa-calendar-alt me-1"></i> {{ $item->published_at->format('d M Y') }}
-                                    </p>
+                            <i class="fas fa-calendar-alt me-1"></i> {{ $item->published_at->format('d M Y') }}
+                        </p>
                                     <p class="text-white">{{ \Illuminate\Support\Str::limit(strip_tags($item->content), 150) }}</p>
                                 </div>
                                 <!-- Mobile Caption (visible on small screens) -->
