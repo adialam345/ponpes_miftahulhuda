@@ -106,7 +106,7 @@
                 padding-bottom: 50px;
             }
         }
-        
+
         /* Mobile menu styles */
         .mobile-menu-button {
             display: none;
@@ -116,7 +116,7 @@
             font-size: 1.5rem;
             cursor: pointer;
         }
-        
+
         @media (max-width: 991px) {
             .mobile-menu-button {
                 display: block;
@@ -166,7 +166,7 @@
                 display: block;
             }
         }
-        
+
         /* Responsive card layout */
         @media (max-width: 767px) {
             .card {
@@ -179,7 +179,7 @@
 <body class="bg-green-50">
     <nav class="navbar-custom">
         <div class="logo">
-            <img src="/images/logo.png" alt="Logo">
+            <img src="{{ asset("/images/logopondok.png") }}" alt="Logo">
             <span>Pondok Pesantren Miftahul Huda</span>
         </div>
         <button class="mobile-menu-button" id="mobileMenuToggle">
@@ -234,17 +234,17 @@
             // Mobile menu toggle
             const mobileMenuToggle = document.getElementById('mobileMenuToggle');
             const mobileMenu = document.getElementById('mobileMenu');
-            
+
             mobileMenuToggle.addEventListener('click', function() {
                 mobileMenu.classList.toggle('active');
             });
-            
+
             // Mobile dropdown toggles
             const dropdowns = document.querySelectorAll('.dropdown');
-            
+
             dropdowns.forEach(dropdown => {
                 const dropdownLink = dropdown.querySelector('a');
-                
+
                 if (window.innerWidth <= 991) {
                     dropdownLink.addEventListener('click', function(e) {
                         if (this.getAttribute('href') === 'javascript:void(0);' || window.innerWidth <= 991) {
