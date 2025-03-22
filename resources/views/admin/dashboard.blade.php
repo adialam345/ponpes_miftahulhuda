@@ -29,12 +29,6 @@
                         <a href="#" class="text-gray-600 hover:text-gray-900 flex items-center px-3 py-2 rounded-md text-sm font-medium">
                             <i class="fas fa-home mr-1"></i> Dashboard
                         </a>
-                        <a href="#" class="text-gray-600 hover:text-gray-900 flex items-center px-3 py-2 rounded-md text-sm font-medium">
-                            <i class="fas fa-users mr-1"></i> Santri
-                        </a>
-                        <a href="#" class="text-gray-600 hover:text-gray-900 flex items-center px-3 py-2 rounded-md text-sm font-medium">
-                            <i class="fas fa-book mr-1"></i> Akademik
-                        </a>
                         <button 
                             @click="openPasswordModal = true" 
                             class="text-gray-600 hover:text-gray-900 flex items-center px-3 py-2 rounded-md text-sm font-medium"
@@ -74,12 +68,6 @@
                 <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
                     <a href="#" class="text-gray-600 hover:text-gray-900 hover:bg-gray-100 block px-3 py-2 rounded-md text-base font-medium">
                         <i class="fas fa-home mr-2"></i> Dashboard
-                    </a>
-                    <a href="#" class="text-gray-600 hover:text-gray-900 hover:bg-gray-100 block px-3 py-2 rounded-md text-base font-medium">
-                        <i class="fas fa-users mr-2"></i> Santri
-                    </a>
-                    <a href="#" class="text-gray-600 hover:text-gray-900 hover:bg-gray-100 block px-3 py-2 rounded-md text-base font-medium">
-                        <i class="fas fa-book mr-2"></i> Akademik
                     </a>
                     <button 
                         @click="openPasswordModal = true; mobileMenu = false" 
@@ -168,6 +156,66 @@
                         <div class="text-sm">
                             <a href="{{ route('admin.registration.index') }}" class="font-medium text-blue-700 hover:text-blue-900">
                                 Kelola Pendaftaran <i class="fas fa-arrow-right ml-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Kartu Kelola Kegiatan -->
+                <div class="bg-white overflow-hidden shadow rounded-lg">
+                    <div class="p-5">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0 bg-yellow-500 rounded-md p-3">
+                                <i class="fas fa-calendar-alt text-white text-xl"></i>
+                            </div>
+                            <div class="ml-5 w-0 flex-1">
+                                <dl>
+                                    <dt class="text-sm font-medium text-gray-500 truncate">
+                                        Kelola Kegiatan
+                                    </dt>
+                                    <dd>
+                                        <div class="text-lg font-medium text-gray-900">
+                                            Galeri Kegiatan
+                                        </div>
+                                    </dd>
+                                </dl>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-gray-50 px-5 py-3">
+                        <div class="text-sm">
+                            <a href="{{ route('admin.activities.index') }}" class="font-medium text-yellow-700 hover:text-yellow-900">
+                                Kelola Kegiatan <i class="fas fa-arrow-right ml-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Kartu Kelola Galeri -->
+                <div class="bg-white overflow-hidden shadow rounded-lg divide-y divide-gray-200">
+                    <div class="px-4 py-5 sm:px-6">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0 bg-purple-500 rounded-md p-3">
+                                <i class="fas fa-images text-white text-xl"></i>
+                            </div>
+                            <div class="ml-5 w-0 flex-1">
+                                <dl>
+                                    <dt class="text-sm font-medium text-gray-500 truncate">
+                                        Kelola Galeri
+                                    </dt>
+                                    <dd>
+                                        <div class="text-lg font-medium text-gray-900">
+                                            Galeri Foto
+                                        </div>
+                                    </dd>
+                                </dl>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-gray-50 px-5 py-3">
+                        <div class="text-sm">
+                            <a href="{{ route('admin.gallery.index') }}" class="font-medium text-purple-700 hover:text-purple-900">
+                                Kelola Galeri <i class="fas fa-arrow-right ml-1"></i>
                             </a>
                         </div>
                     </div>

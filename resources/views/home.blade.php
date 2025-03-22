@@ -113,8 +113,8 @@
 <section class="features-section py-5 bg-light-custom">
     <div class="container">
         <div class="section-header text-center mb-5">
-            <h6 class="text-uppercase fw-bold text-primary-custom"><i class="fas fa-star me-2"></i>Keunggulan</h6>
-            <h2 class="fw-bold mb-2">Program Unggulan Kami</h2>
+            <h6 class="text-uppercase fw-bold text-primary-custom"><i class="fa fa-info-circle me-2"></i>Informasi</h6>
+            <h2 class="fw-bold mb-2">Informasi Umum</h2>
             <div class="title-underline mx-auto"></div>
         </div>
         
@@ -207,6 +207,240 @@
                     <p class="stat-title text-muted">Tahun Berdiri</p>
         </div>
             </div>
+        </div>
+    </div>
+</section>
+
+<!-- Program Schedule Section -->
+<section class="schedule-section py-5 bg-light-custom">
+    <div class="container">
+        <div class="section-header text-center mb-5">
+            <h6 class="text-uppercase fw-bold text-primary-custom"><i class="fas fa-calendar me-2"></i>Jadwal</h6>
+            <h2 class="fw-bold mb-2">Program Kegiatan Unggulan</h2>
+            <div class="title-underline mx-auto"></div>
+            <p class="text-muted mt-3 col-md-8 mx-auto">Berikut adalah jadwal kegiatan dan program unggulan di Pondok Pesantren Miftahul Huda yang membantu mengembangkan potensi para santri.</p>
+        </div>
+        
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="schedule-card card h-100 border-0 shadow-sm hover-card">
+                    <div class="card-header bg-primary-custom text-white d-flex align-items-center py-3">
+                        <i class="fas fa-quran me-3 fa-2x"></i>
+                        <h5 class="m-0 fw-bold">Tahfidz Al-Qur'an</h5>
+                    </div>
+                    <div class="card-body">
+                        <ul class="schedule-list">
+                            <li class="d-flex mb-3">
+                                <div class="schedule-time bg-light px-3 py-2 rounded me-3 text-center">
+                                    <span class="d-block fw-bold">04:30</span>
+                                    <small class="text-muted">Pagi</small>
+                                </div>
+                                <div>
+                                    <h6 class="mb-1 fw-semibold">Setoran Hafalan</h6>
+                                    <p class="text-muted small mb-0">Setelah Sholat Subuh</p>
+                                </div>
+                            </li>
+                            <li class="d-flex mb-3">
+                                <div class="schedule-time bg-light px-3 py-2 rounded me-3 text-center">
+                                    <span class="d-block fw-bold">15:30</span>
+                                    <small class="text-muted">Sore</small>
+                                </div>
+                                <div>
+                                    <h6 class="mb-1 fw-semibold">Muroja'ah</h6>
+                                    <p class="text-muted small mb-0">Setelah Sholat Ashar</p>
+                                </div>
+                            </li>
+                            <li class="d-flex">
+                                <div class="schedule-time bg-light px-3 py-2 rounded me-3 text-center">
+                                    <span class="d-block fw-bold">20:00</span>
+                                    <small class="text-muted">Malam</small>
+                                </div>
+                                <div>
+                                    <h6 class="mb-1 fw-semibold">Tahsin</h6>
+                                    <p class="text-muted small mb-0">Setelah Sholat Isya</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="schedule-card card h-100 border-0 shadow-sm hover-card">
+                    <div class="card-header bg-success text-white d-flex align-items-center py-3">
+                        <i class="fas fa-book me-3 fa-2x"></i>
+                        <h5 class="m-0 fw-bold">Kajian Kitab</h5>
+                    </div>
+                    <div class="card-body">
+                        <ul class="schedule-list">
+                            <li class="d-flex mb-3">
+                                <div class="schedule-time bg-light px-3 py-2 rounded me-3 text-center">
+                                    <span class="d-block fw-bold">08:00</span>
+                                    <small class="text-muted">Pagi</small>
+                                </div>
+                                <div>
+                                    <h6 class="mb-1 fw-semibold">Fiqih</h6>
+                                    <p class="text-muted small mb-0">Kitab Fathul Qarib</p>
+                                </div>
+                            </li>
+                            <li class="d-flex mb-3">
+                                <div class="schedule-time bg-light px-3 py-2 rounded me-3 text-center">
+                                    <span class="d-block fw-bold">13:30</span>
+                                    <small class="text-muted">Siang</small>
+                                </div>
+                                <div>
+                                    <h6 class="mb-1 fw-semibold">Hadits</h6>
+                                    <p class="text-muted small mb-0">Kitab Bulughul Maram</p>
+                                </div>
+                            </li>
+                            <li class="d-flex">
+                                <div class="schedule-time bg-light px-3 py-2 rounded me-3 text-center">
+                                    <span class="d-block fw-bold">19:30</span>
+                                    <small class="text-muted">Malam</small>
+                                </div>
+                                <div>
+                                    <h6 class="mb-1 fw-semibold">Akhlak</h6>
+                                    <p class="text-muted small mb-0">Kitab Ta'limul Muta'alim</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="schedule-card card h-100 border-0 shadow-sm hover-card">
+                    <div class="card-header bg-warning text-dark d-flex align-items-center py-3">
+                        <i class="fas fa-lightbulb me-3 fa-2x"></i>
+                        <h5 class="m-0 fw-bold">Ekstrakurikuler</h5>
+                    </div>
+                    <div class="card-body">
+                        <ul class="schedule-list">
+                            <li class="d-flex mb-3">
+                                <div class="schedule-time bg-light px-3 py-2 rounded me-3 text-center">
+                                    <span class="d-block fw-bold">Selasa</span>
+                                    <small class="text-muted">15:30</small>
+                                </div>
+                                <div>
+                                    <h6 class="mb-1 fw-semibold">Kaligrafi</h6>
+                                    <p class="text-muted small mb-0">Ruang Seni</p>
+                                </div>
+                            </li>
+                            <li class="d-flex mb-3">
+                                <div class="schedule-time bg-light px-3 py-2 rounded me-3 text-center">
+                                    <span class="d-block fw-bold">Kamis</span>
+                                    <small class="text-muted">15:30</small>
+                                </div>
+                                <div>
+                                    <h6 class="mb-1 fw-semibold">Hadroh</h6>
+                                    <p class="text-muted small mb-0">Aula Utama</p>
+                                </div>
+                            </li>
+                            <li class="d-flex">
+                                <div class="schedule-time bg-light px-3 py-2 rounded me-3 text-center">
+                                    <span class="d-block fw-bold">Sabtu</span>
+                                    <small class="text-muted">08:00</small>
+                                </div>
+                                <div>
+                                    <h6 class="mb-1 fw-semibold">Olahraga</h6>
+                                    <p class="text-muted small mb-0">Lapangan</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="text-center mt-4">
+            <a href="{{ url('/kegiatan') }}" class="btn btn-outline-custom">
+                Lihat Semua Kegiatan <i class="fas fa-arrow-right ms-2"></i>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Gallery Section -->
+<section class="gallery-section py-5">
+    <div class="container">
+        <div class="section-header text-center mb-5">
+            <h6 class="text-uppercase fw-bold text-primary-custom"><i class="fas fa-images me-2"></i>Galeri</h6>
+            <h2 class="fw-bold mb-2">Aktivitas Santri</h2>
+            <div class="title-underline mx-auto"></div>
+            <p class="text-muted mt-3 col-md-8 mx-auto">Melihat lebih dekat kehidupan dan aktivitas santri di Pondok Pesantren Miftahul Huda.</p>
+        </div>
+        
+        <div class="row g-3">
+            @php
+                // Dapatkan aktivitas yang aktif dan memiliki galeri
+                $activities = \App\Models\Activity::active()
+                    ->ordered()
+                    ->whereHas('galleries', function($query) {
+                        $query->active();
+                    })
+                    ->with(['galleries' => function($query) {
+                        $query->active()->ordered()->limit(1);
+                    }])
+                    ->withCount(['galleries' => function($query) {
+                        $query->active();
+                    }])
+                    ->take(8)
+                    ->get();
+            @endphp
+            
+            @forelse($activities as $activity)
+                @if($activity->galleries->isNotEmpty())
+                <div class="col-6 col-md-4 col-lg-3 gallery-item">
+                    <div class="gallery-card">
+                        <img src="{{ asset('storage/' . $activity->galleries->first()->image) }}" alt="{{ $activity->title }}" class="img-fluid rounded">
+                        <div class="gallery-overlay">
+                            <a href="{{ asset('storage/' . $activity->galleries->first()->image) }}" class="gallery-icon" 
+                               data-fancybox="gallery-{{ $activity->id }}" 
+                               data-caption="{{ $activity->title }} - {{ $activity->galleries->first()->title ?? 'Foto 1' }}">
+                                <i class="fas fa-search-plus"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="text-center mt-2">
+                        <h6 class="small fw-bold mb-0">{{ $activity->title }}</h6>
+                        <small class="text-muted">{{ $activity->galleries_count }} foto</small>
+                    </div>
+                </div>
+                
+                @php
+                // Tambahkan kode ini untuk menyiapkan link lainnya untuk fancybox tapi tersembunyi
+                $otherImages = \App\Models\Gallery::where('activity_id', $activity->id)
+                                ->where('id', '!=', $activity->galleries->first()->id)
+                                ->where('is_active', true)
+                                ->get();
+                @endphp
+                
+                <!-- Hidden links for additional gallery images -->
+                <div class="d-none" id="gallery-links-{{ $activity->id }}">
+                @foreach($otherImages as $index => $otherImage)
+                <a href="{{ asset('storage/' . $otherImage->image) }}" 
+                   data-fancybox="gallery-{{ $activity->id }}" 
+                   data-type="image"
+                   data-caption="{{ $activity->title }} - {{ $otherImage->title ?? 'Foto ' . ($index + 2) }}">
+                   <img src="{{ asset('storage/' . $otherImage->image) }}" alt="{{ $otherImage->title ?? 'Foto ' . ($index + 2) }}" style="display:none">
+                </a>
+                @endforeach
+                </div>
+                @endif
+            @empty
+                <div class="col-12 text-center">
+                    <div class="p-4 bg-light rounded">
+                        <i class="fas fa-images fa-3x text-muted mb-3"></i>
+                        <p class="text-muted">Belum ada foto dalam galeri.</p>
+                    </div>
+                </div>
+            @endforelse
+        </div>
+        
+        <div class="text-center mt-4">
+            <a href="{{ route('gallery.index') }}" class="btn btn-outline-custom">
+                Lihat Semua Galeri <i class="fas fa-arrow-right ms-2"></i>
+            </a>
         </div>
     </div>
 </section>
@@ -415,6 +649,213 @@
             margin-bottom: 1.5rem;
         }
     }
+
+    /* Schedule Section Styles */
+    .schedule-section {
+        position: relative;
+    }
+    
+    .schedule-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    
+    .schedule-card {
+        transition: all 0.3s ease;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+    
+    .hover-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1) !important;
+    }
+    
+    .schedule-time {
+        min-width: 70px;
+        font-size: 0.9rem;
+    }
+    
+    .card-header {
+        border-bottom: 0;
+    }
+    
+    /* Hero Parallax Effect */
+    .hero-section {
+        overflow: hidden;
+        padding: 4rem 0 3rem;
+        position: relative;
+        background-attachment: fixed;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+    
+    .hero-bg {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background-color: var(--light-color);
+        clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+        z-index: -1;
+        background-image: url('https://source.unsplash.com/random/1600x900/?pattern,islamic');
+        background-blend-mode: overlay;
+        opacity: 0.1;
+    }
+    
+    /* Animation for schedule cards */
+    @keyframes slideInRight {
+        from {
+            transform: translateX(50px);
+            opacity: 0;
+        }
+        to {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+    
+    .animate-slide-in {
+        animation: slideInRight 0.5s ease forwards;
+    }
+
+    /* Gallery Section Styles */
+    .gallery-section {
+        background-color: #fff;
+    }
+    
+    .gallery-card {
+        position: relative;
+        margin-bottom: 15px;
+        overflow: hidden;
+        border-radius: 8px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+    }
+    
+    .gallery-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+    
+    .gallery-card img {
+        transition: all 0.5s ease;
+        width: 100%;
+        aspect-ratio: 1 / 1;
+        object-fit: cover;
+    }
+    
+    .gallery-card:hover img {
+        transform: scale(1.05);
+    }
+    
+    .gallery-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(10, 93, 54, 0.7);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: all 0.3s ease;
+    }
+    
+    .gallery-card:hover .gallery-overlay {
+        opacity: 1;
+    }
+    
+    .gallery-icon {
+        width: 50px;
+        height: 50px;
+        background: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--primary-color);
+        font-size: 18px;
+        transform: scale(0);
+        transition: all 0.3s ease;
+        text-decoration: none;
+    }
+    
+    .gallery-card:hover .gallery-icon {
+        transform: scale(1);
+    }
+    
+    /* Fancybox Custom Styles */
+    .fancybox__container {
+        --fancybox-bg: rgba(0, 0, 0, 0.9);
+    }
+    
+    .fancybox__nav {
+        --carousel-button-bg: rgba(0, 0, 0, 0.5);
+        --carousel-button-svg-width: 24px;
+        --carousel-button-svg-height: 24px;
+        --carousel-button-svg-stroke-width: 2.5;
+    }
+    
+    .fancybox__nav .carousel__button {
+        visibility: visible;
+        opacity: 0.7;
+        background-color: rgba(0, 0, 0, 0.6);
+        border-radius: 50%;
+        width: 48px;
+        height: 48px;
+    }
+    
+    .fancybox__nav .carousel__button:hover {
+        opacity: 1;
+        background-color: rgba(0, 0, 0, 0.8);
+    }
+    
+    .fancybox__thumbs {
+        background-color: rgba(0, 0, 0, 0.3);
+    }
+    
+    /* Ensure images are properly loaded in fancybox */
+    .fancybox__content img {
+        display: block;
+        max-width: 100%;
+        max-height: 100%;
+    }
+    
+    .fancybox__slide {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    /* Loading indicator for images */
+    .fancybox-loading {
+        border: 6px solid rgba(100, 100, 100, 0.4);
+        border-top: 6px solid var(--primary-color);
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        animation: fancybox-rotate 1s linear infinite;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-top: -25px;
+        margin-left: -25px;
+        z-index: 99999;
+    }
+    
+    @keyframes fancybox-rotate {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+    }
 </style>
 
 <script>
@@ -474,6 +915,139 @@
         animatedElements.forEach(element => {
             animateOnScroll.observe(element);
         });
+
+        // Animate schedule cards on scroll
+        const scheduleCards = document.querySelectorAll('.schedule-card');
+        let delay = 0;
+        
+        const animateSchedules = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.classList.add('animate-slide-in');
+                    }, index * 150); // Staggered animation
+                    animateSchedules.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        scheduleCards.forEach(card => {
+            animateSchedules.observe(card);
+        });
+        
+        // Animate gallery items on scroll
+        const galleryItems = document.querySelectorAll('.gallery-item');
+        
+        const animateGallery = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.classList.add('animate__animated', 'animate__fadeIn');
+                    }, index * 100); // Staggered animation
+                    animateGallery.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        galleryItems.forEach(item => {
+            animateGallery.observe(item);
+        });
     });
+</script>
+
+<!-- Include Fancybox for Gallery -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css"/>
+<script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
+<script src="{{ asset('js/custom-gallery.js') }}"></script>
+
+<script>
+// Debugging helper untuk FancyBox
+document.addEventListener('DOMContentLoaded', function() {
+    // Log ketika FancyBox tersedia
+    if (typeof Fancybox !== 'undefined') {
+        console.log("FancyBox tersedia di halaman");
+        
+        // Tambahkan class untuk memastikan link terdeteksi dengan benar
+        document.querySelectorAll('[data-fancybox]').forEach(function(el) {
+            el.classList.add('fancybox-enabled');
+        });
+        
+        // Event listener untuk debugging
+        document.querySelectorAll('.gallery-card .gallery-icon').forEach(link => {
+            link.addEventListener('click', function(e) {
+                const galleryId = this.getAttribute('data-fancybox');
+                console.log("Mengklik galeri:", galleryId);
+                
+                // Hitung jumlah gambar dalam galeri ini
+                const totalImages = document.querySelectorAll(`[data-fancybox="${galleryId}"]`).length;
+                console.log(`Galeri ${galleryId} berisi ${totalImages} gambar`);
+                
+                // Log semua URL gambar untuk debugging
+                const imageUrls = [];
+                document.querySelectorAll(`[data-fancybox="${galleryId}"]`).forEach(item => {
+                    imageUrls.push(item.getAttribute('href'));
+                });
+                console.log("URLs gambar dalam galeri:", imageUrls);
+                
+                // Coba untuk me-reset FancyBox jika ada masalah
+                if (totalImages > 0 && typeof Fancybox.show === 'function') {
+                    console.log("FancyBox.show tersedia");
+                } else {
+                    console.error("FancyBox.show tidak tersedia atau tidak ada gambar");
+                }
+            });
+        });
+        
+        // Inisialisasi alternatif jika script utama gagal
+        setTimeout(function() {
+            // Cek apakah FancyBox sudah berjalan dengan benar
+            if (typeof window.initFancyBox === 'function') {
+                console.log("Mencoba inisialisasi FancyBox alternatif");
+                window.initFancyBox();
+            } else {
+                console.log("FancyBox helper tidak tersedia");
+                
+                // Jika helper tidak tersedia, gunakan metode langsung sederhana
+                document.querySelectorAll('.gallery-card .gallery-icon').forEach(function(el) {
+                    el.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        const galleryId = this.getAttribute('data-fancybox');
+                        
+                        // Kumpulkan semua gambar dengan galleryId yang sama
+                        const images = [];
+                        document.querySelectorAll(`[data-fancybox="${galleryId}"]`).forEach(item => {
+                            images.push({
+                                src: item.getAttribute('href'),
+                                caption: item.getAttribute('data-caption') || ''
+                            });
+                        });
+                        
+                        // Cari indeks gambar yang diklik
+                        const currentSrc = this.getAttribute('href');
+                        let startIndex = 0;
+                        for (let i = 0; i < images.length; i++) {
+                            if (images[i].src === currentSrc) {
+                                startIndex = i;
+                                break;
+                            }
+                        }
+                        
+                        // Buka galeri dengan Fancybox API
+                        try {
+                            Fancybox.show(images, {
+                                startIndex: startIndex
+                            });
+                        } catch (error) {
+                            console.error("Error membuka FancyBox:", error);
+                            alert("Maaf, ada masalah membuka galeri. Silakan coba lagi.");
+                        }
+                    });
+                });
+            }
+        }, 1000); // Tunggu 1 detik setelah page load
+    } else {
+        console.error("FancyBox tidak tersedia di halaman");
+    }
+});
 </script>
 @endsection

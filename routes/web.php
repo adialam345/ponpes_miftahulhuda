@@ -6,6 +6,7 @@ use App\Http\Controllers\NewsController;
 use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\NavbarController;
 use App\Http\Controllers\PendidikanController;
+use App\Http\Controllers\GalleryController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -57,6 +58,10 @@ Route::get('/kontak', function () {
     return view('kontak');
 });
 
+// Gallery Routes
+Route::get('/galeri', [GalleryController::class, 'index'])->name('gallery.index');
+Route::get('/galeri/{id}', [GalleryController::class, 'show'])->name('gallery.show');
+
 // Registration Routes
 Route::get('/pendaftaran', [RegistrationController::class, 'index'])->name('registration.index');
 Route::get('/pendaftaran/{type}', [RegistrationController::class, 'show'])->name('registration.show');
@@ -87,6 +92,23 @@ Route::prefix('admin')->group(function () {
         Route::resource('registration', \App\Http\Controllers\Admin\RegistrationPageController::class, [
             'as' => 'admin'
         ]);
+
+        Route::resource('gallery', \App\Http\Controllers\Admin\GalleryController::class, [
+            'as' => 'admin'
+        ]);
+
+        Route::post('gallery/update-order', [\App\Http\Controllers\Admin\GalleryController::class, 'updateOrder'])
+             ->name('admin.gallery.update-order');
+
+        Route::resource('activities', \App\Http\Controllers\Admin\ActivityController::class, [
+            'as' => 'admin'
+        ]);
+        
+        Route::post('activities/update-order', [\App\Http\Controllers\Admin\ActivityController::class, 'updateOrder'])
+             ->name('admin.activities.update-order');
+         
+        Route::post('activities/{activity}/gallery/upload', [\App\Http\Controllers\Admin\GalleryController::class, 'uploadMultiple'])
+             ->name('admin.activities.gallery.upload');
 
         Route::post('logout', [AuthController::class, 'logout'])->name('admin.logout');
         Route::post('password/update', [AuthController::class, 'updatePassword'])->name('admin.password.update');

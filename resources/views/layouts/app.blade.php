@@ -483,7 +483,7 @@
                     </div>
                 </div>
                 <div class="dropdown">
-                    <a href="{{ url('/pendidikan') }}" class="nav-link">Pendidikan <i class="fas fa-chevron-down ms-1 fa-xs"></i></a>
+                    <a href="javascript:void(0);" class="nav-link">Pendidikan <i class="fas fa-chevron-down ms-1 fa-xs"></i></a>
                     <div class="dropdown-content">
                         <a href="{{ url('/kegiatan') }}">Kegiatan</a>
                         <a href="{{ url('/madin') }}">Madin</a>
@@ -504,6 +504,7 @@
                         <a href="{{ url('/syariah-smp') }}">Syariah SMP</a>
                     </div>
                 </div>
+                <a href="{{ route('gallery.index') }}" class="nav-link">Galeri</a>
                 <a href="{{ url('/kontak') }}" class="nav-link">Kontak & Alamat</a>
             </div>
         </div>
@@ -536,7 +537,9 @@
             const mobileMenuToggle = document.getElementById('mobileMenuToggle');
             const mobileMenu = document.getElementById('mobileMenu');
 
-            mobileMenuToggle.addEventListener('click', function() {
+            mobileMenuToggle.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
                 mobileMenu.classList.toggle('active');
                 this.innerHTML = mobileMenu.classList.contains('active') ? 
                     '<i class="fas fa-times"></i>' : 
@@ -547,37 +550,48 @@
             const dropdowns = document.querySelectorAll('.dropdown');
             const isMobile = () => window.innerWidth <= 991;
 
-            dropdowns.forEach(dropdown => {
-                const dropdownLink = dropdown.querySelector('a');
-
-                // Handle click on dropdown links
-                dropdownLink.addEventListener('click', function(e) {
-                    if (this.getAttribute('href') === 'javascript:void(0);') {
-                        e.preventDefault();
-                        
-                        // Only toggle on mobile
-                        if (isMobile()) {
-                            // Close other dropdowns
-                            dropdowns.forEach(otherDropdown => {
-                                if (otherDropdown !== dropdown && otherDropdown.classList.contains('active')) {
-                                    otherDropdown.classList.remove('active');
-                                }
-                            });
-                            
-                            // Toggle this dropdown
-                            dropdown.classList.toggle('active');
-                        }
+            // Remove existing click events
+            function setupMobileNavigation() {
+                // Clean up existing event listeners by cloning and replacing elements
+                dropdowns.forEach(dropdown => {
+                    const dropdownLink = dropdown.querySelector('a');
+                    const newLink = dropdownLink.cloneNode(true);
+                    dropdownLink.parentNode.replaceChild(newLink, dropdownLink);
+                    
+                    // Add new event listener
+                    if (newLink.getAttribute('href') === 'javascript:void(0);') {
+                        newLink.addEventListener('click', handleDropdownClick);
                     }
                 });
-            });
+            }
+            
+            // Dropdown click handler
+            function handleDropdownClick(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                if (isMobile()) {
+                    const dropdown = this.closest('.dropdown');
+                    
+                    // Close other dropdowns
+                    dropdowns.forEach(otherDropdown => {
+                        if (otherDropdown !== dropdown && otherDropdown.classList.contains('active')) {
+                            otherDropdown.classList.remove('active');
+                        }
+                    });
+                    
+                    // Toggle this dropdown with slight delay to prevent double-click issues
+                    setTimeout(() => {
+                        dropdown.classList.toggle('active');
+                    }, 10);
+                }
+            }
             
             // Setup resize handler
             function handleResize() {
                 if (isMobile()) {
                     // Add mobile-specific behaviors
-                    dropdowns.forEach(dropdown => {
-                        dropdown.classList.remove('hover-triggered');
-                    });
+                    setupMobileNavigation();
                 } else {
                     // Reset mobile menu when in desktop mode
                     if (mobileMenu.classList.contains('active')) {
@@ -595,8 +609,12 @@
             // Initial setup
             handleResize();
             
-            // Handle resize events
-            window.addEventListener('resize', handleResize);
+            // Prevent duplicate event listeners
+            let resizeTimeout;
+            window.addEventListener('resize', function() {
+                clearTimeout(resizeTimeout);
+                resizeTimeout = setTimeout(handleResize, 100);
+            });
             
             // Close mobile menu when clicking outside
             document.addEventListener('click', function(e) {
