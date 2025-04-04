@@ -161,21 +161,21 @@
                     </div>
                 </div>
 
-                <!-- Kartu Kelola Kegiatan -->
+                <!-- Kelola Foto Kegiatan -->
                 <div class="bg-white overflow-hidden shadow rounded-lg">
                     <div class="p-5">
                         <div class="flex items-center">
                             <div class="flex-shrink-0 bg-yellow-500 rounded-md p-3">
-                                <i class="fas fa-calendar-alt text-white text-xl"></i>
+                                <i class="fas fa-images text-white text-xl"></i>
                             </div>
                             <div class="ml-5 w-0 flex-1">
                                 <dl>
                                     <dt class="text-sm font-medium text-gray-500 truncate">
-                                        Kelola Kegiatan
+                                        Kelola Foto Kegiatan
                                     </dt>
                                     <dd>
                                         <div class="text-lg font-medium text-gray-900">
-                                            Galeri Kegiatan
+                                            Galeri Foto Kegiatan
                                         </div>
                                     </dd>
                                 </dl>
@@ -185,43 +185,11 @@
                     <div class="bg-gray-50 px-5 py-3">
                         <div class="text-sm">
                             <a href="{{ route('admin.activities.index') }}" class="font-medium text-yellow-700 hover:text-yellow-900">
-                                Kelola Kegiatan <i class="fas fa-arrow-right ml-1"></i>
+                                Kelola Foto Kegiatan <i class="fas fa-arrow-right ml-1"></i>
                             </a>
                         </div>
                     </div>
                 </div>
-
-                <!-- Kartu Kelola Galeri -->
-                <div class="bg-white overflow-hidden shadow rounded-lg divide-y divide-gray-200">
-                    <div class="px-4 py-5 sm:px-6">
-                        <div class="flex items-center">
-                            <div class="flex-shrink-0 bg-purple-500 rounded-md p-3">
-                                <i class="fas fa-images text-white text-xl"></i>
-                            </div>
-                            <div class="ml-5 w-0 flex-1">
-                                <dl>
-                                    <dt class="text-sm font-medium text-gray-500 truncate">
-                                        Kelola Galeri
-                                    </dt>
-                                    <dd>
-                                        <div class="text-lg font-medium text-gray-900">
-                                            Galeri Foto
-                                        </div>
-                                    </dd>
-                                </dl>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bg-gray-50 px-5 py-3">
-                        <div class="text-sm">
-                            <a href="{{ route('admin.gallery.index') }}" class="font-medium text-purple-700 hover:text-purple-900">
-                                Kelola Galeri <i class="fas fa-arrow-right ml-1"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Additional cards can be added here -->
             </div>
         </div>
     </div>

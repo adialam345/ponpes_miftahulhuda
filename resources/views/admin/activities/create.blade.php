@@ -2,6 +2,113 @@
 
 @section('title', 'Tambah Kegiatan Baru')
 
+@push('scripts')
+<script>
+    // Fungsi untuk menangani perubahan file thumbnail
+    function handleThumbnailChange(input) {
+        console.log('Thumbnail change triggered');
+        const fileNameElement = document.getElementById('file-name');
+        const preview = document.getElementById('thumbnailPreview');
+        
+        if (!input.files || input.files.length === 0) {
+            fileNameElement.textContent = 'Tidak ada file yang dipilih';
+            preview.innerHTML = '';
+            return;
+        }
+        
+        const file = input.files[0];
+        fileNameElement.textContent = file.name;
+        
+        // Preview thumbnail
+        preview.innerHTML = '';
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const img = document.createElement('img');
+            img.src = e.target.result;
+            img.classList.add('h-40', 'w-auto', 'object-cover', 'mt-2', 'rounded');
+            preview.appendChild(img);
+        };
+        reader.readAsDataURL(file);
+    }
+    
+    // Fungsi untuk menangani perubahan multiple files
+    function handleImagesChange(input) {
+        console.log('Images change triggered');
+        const previewContainer = document.getElementById('image-preview-container');
+        const imagesCount = document.getElementById('images-count');
+        
+        if (!input.files || input.files.length === 0) {
+            imagesCount.textContent = 'Tidak ada file yang dipilih';
+            previewContainer.innerHTML = '';
+            return;
+        }
+        
+        const files = Array.from(input.files);
+        
+        // Update text jumlah file yang dipilih
+        if (files.length === 1) {
+            imagesCount.textContent = files[0].name;
+        } else {
+            imagesCount.textContent = `${files.length} file dipilih (${files.map(f => f.name).join(', ')})`;
+        }
+        
+        // Bersihkan preview container
+        previewContainer.innerHTML = '';
+        
+        // Tampilkan preview untuk setiap file
+        files.slice(0, 10).forEach(file => {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const div = document.createElement('div');
+                div.className = 'relative';
+                
+                const img = document.createElement('img');
+                img.src = e.target.result;
+                img.className = 'h-24 w-full object-cover rounded';
+                img.title = file.name;
+                
+                const fileName = document.createElement('div');
+                fileName.className = 'absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-white text-xs p-1 truncate';
+                fileName.textContent = file.name;
+                
+                div.appendChild(img);
+                div.appendChild(fileName);
+                previewContainer.appendChild(div);
+            };
+            reader.readAsDataURL(file);
+        });
+        
+        // Tampilkan indikator jika ada lebih dari 10 file
+        if (files.length > 10) {
+            const moreDiv = document.createElement('div');
+            moreDiv.className = 'bg-gray-100 flex items-center justify-center h-24 rounded';
+            moreDiv.innerHTML = `<span class="text-gray-700">+${files.length - 10} file lainnya</span>`;
+            previewContainer.appendChild(moreDiv);
+        }
+    }
+    
+    // Inisialisasi saat halaman dimuat
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log('DOM Content Loaded');
+        const thumbnail = document.getElementById('thumbnail');
+        const images = document.getElementById('images');
+        
+        // Tambahkan event listener
+        if (thumbnail) {
+            thumbnail.addEventListener('change', function() {
+                handleThumbnailChange(this);
+            });
+        }
+        
+        if (images) {
+            images.addEventListener('change', function() {
+                handleImagesChange(this);
+            });
+        }
+    });
+</script>
+@endpush
+
 @section('content')
 <div class="py-6 bg-gray-50 min-h-screen">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
@@ -52,7 +159,7 @@
                         <div class="mt-1 flex items-center">
                             <label class="relative cursor-pointer bg-white py-2 px-3 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-green-500">
                                 <span>Pilih File</span>
-                                <input type="file" class="sr-only @error('thumbnail') border-red-500 @enderror" id="thumbnail" name="thumbnail" required>
+                                <input type="file" accept="image/jpeg,image/png,image/gif" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer" id="thumbnail" name="thumbnail" required>
                             </label>
                             <span class="ml-3 text-sm text-gray-500" id="file-name">Tidak ada file yang dipilih</span>
                         </div>
@@ -77,7 +184,7 @@
                         <div class="mt-1 flex items-center">
                             <label class="relative cursor-pointer bg-white py-2 px-3 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-green-500">
                                 <span>Pilih Beberapa File</span>
-                                <input type="file" class="sr-only @error('images.*') border-red-500 @enderror" id="images" name="images[]" multiple>
+                                <input type="file" accept="image/jpeg,image/png,image/gif" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer" id="images" name="images[]" multiple>
                             </label>
                             <span class="ml-3 text-sm text-gray-500" id="images-count">Tidak ada file yang dipilih</span>
                         </div>
@@ -116,66 +223,3 @@
     </div>
 </div>
 @endsection
-
-@section('scripts')
-<script>
-    // Display file name when selected for thumbnail
-    document.getElementById('thumbnail').addEventListener('change', function(e) {
-        const fileName = e.target.files[0]?.name || 'Tidak ada file yang dipilih';
-        document.getElementById('file-name').textContent = fileName;
-        
-        // Show preview
-        const preview = document.getElementById('thumbnailPreview');
-        preview.innerHTML = '';
-        
-        if (e.target.files && e.target.files[0]) {
-            const reader = new FileReader();
-            reader.onload = function(event) {
-                const img = document.createElement('img');
-                img.src = event.target.result;
-                img.classList.add('h-40', 'w-auto', 'object-cover', 'mt-2', 'rounded');
-                preview.appendChild(img);
-            }
-            reader.readAsDataURL(e.target.files[0]);
-        }
-    });
-    
-    // Display multiple files for images
-    document.getElementById('images').addEventListener('change', function(event) {
-        const files = event.target.files;
-        document.getElementById('images-count').textContent = files.length > 0 
-            ? `${files.length} file dipilih` 
-            : 'Tidak ada file yang dipilih';
-            
-        var previewContainer = document.getElementById('image-preview-container');
-        previewContainer.innerHTML = '';
-        
-        for (var i = 0; i < files.length; i++) {
-            if (i >= 10) {
-                const moreDiv = document.createElement('div');
-                moreDiv.className = 'bg-gray-100 flex items-center justify-center h-24 rounded';
-                moreDiv.innerHTML = `<span class="text-gray-700">+${files.length - 10} lainnya</span>`;
-                previewContainer.appendChild(moreDiv);
-                break;
-            }
-            
-            var reader = new FileReader();
-            reader.onload = (function(file) {
-                return function(e) {
-                    var div = document.createElement('div');
-                    div.className = 'relative';
-                    
-                    var img = document.createElement('img');
-                    img.src = e.target.result;
-                    img.className = 'h-24 w-full object-cover rounded';
-                    
-                    div.appendChild(img);
-                    previewContainer.appendChild(div);
-                };
-            })(files[i]);
-            
-            reader.readAsDataURL(files[i]);
-        }
-    });
-</script>
-@endsection 

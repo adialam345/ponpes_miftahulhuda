@@ -10,6 +10,7 @@
     <style>
         [x-cloak] { display: none !important; }
     </style>
+    @stack('scripts')
 </head>
 <body class="bg-gray-100" x-data="{ openPasswordModal: false, mobileMenu: false }">
     <div class="min-h-screen">
@@ -29,23 +30,15 @@
                         <a href="{{ route('admin.dashboard') }}" class="text-gray-600 hover:text-gray-900 flex items-center px-3 py-2 rounded-md text-sm font-medium">
                             <i class="fas fa-home mr-1"></i> Dashboard
                         </a>
-                        <div class="relative" x-data="{ open: false }">
-                            <button @click="open = !open" @click.away="open = false" class="text-gray-600 hover:text-gray-900 flex items-center px-3 py-2 rounded-md text-sm font-medium">
-                                <i class="fas fa-images mr-1"></i> Galeri
-                                <i class="fas fa-chevron-down ml-1 text-xs"></i>
-                            </button>
-                            <div x-show="open" 
-                                 x-transition:enter="transition ease-out duration-100"
-                                 x-transition:enter-start="transform opacity-0 scale-95"
-                                 x-transition:enter-end="transform opacity-100 scale-100"
-                                 x-transition:leave="transition ease-in duration-75"
-                                 x-transition:leave-start="transform opacity-100 scale-100"
-                                 x-transition:leave-end="transform opacity-0 scale-95"
-                                 class="absolute z-50 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5" 
-                                 x-cloak>
-                                <a href="{{ route('admin.activities.index') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Kelola Kegiatan</a>
-                            </div>
-                        </div>
+                        <a href="{{ route('admin.news.index') }}" class="text-gray-600 hover:text-gray-900 flex items-center px-3 py-2 rounded-md text-sm font-medium">
+                            <i class="fas fa-newspaper mr-1"></i> Kelola Berita
+                        </a>
+                        <a href="{{ route('admin.registration.index') }}" class="text-gray-600 hover:text-gray-900 flex items-center px-3 py-2 rounded-md text-sm font-medium">
+                            <i class="fas fa-user-plus mr-1"></i> Kelola Pendaftaran
+                        </a>
+                        <a href="{{ route('admin.activities.index') }}" class="text-gray-600 hover:text-gray-900 flex items-center px-3 py-2 rounded-md text-sm font-medium">
+                            <i class="fas fa-images mr-1"></i> Kelola Foto Kegiatan
+                        </a>
                         <button 
                             @click="openPasswordModal = true" 
                             class="text-gray-600 hover:text-gray-900 flex items-center px-3 py-2 rounded-md text-sm font-medium"
@@ -86,17 +79,15 @@
                     <a href="{{ route('admin.dashboard') }}" class="text-gray-600 hover:text-gray-900 hover:bg-gray-100 block px-3 py-2 rounded-md text-base font-medium">
                         <i class="fas fa-home mr-2"></i> Dashboard
                     </a>
-                    <div x-data="{ openGaleri: false }">
-                        <button @click="openGaleri = !openGaleri" class="w-full text-left text-gray-600 hover:text-gray-900 hover:bg-gray-100 flex items-center justify-between px-3 py-2 rounded-md text-base font-medium">
-                            <span><i class="fas fa-images mr-2"></i> Galeri</span>
-                            <i class="fas" :class="openGaleri ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
-                        </button>
-                        <div x-show="openGaleri" class="pl-4 space-y-1 mt-1">
-                            <a href="{{ route('admin.activities.index') }}" class="text-gray-600 hover:text-gray-900 hover:bg-gray-100 block px-3 py-2 rounded-md text-base font-medium">
-                                <i class="fas fa-calendar-alt mr-2"></i> Kelola Kegiatan
-                            </a>
-                        </div>
-                    </div>
+                    <a href="{{ route('admin.news.index') }}" class="text-gray-600 hover:text-gray-900 hover:bg-gray-100 block px-3 py-2 rounded-md text-base font-medium">
+                        <i class="fas fa-newspaper mr-2"></i> Kelola Berita
+                    </a>
+                    <a href="{{ route('admin.registration.index') }}" class="text-gray-600 hover:text-gray-900 hover:bg-gray-100 block px-3 py-2 rounded-md text-base font-medium">
+                        <i class="fas fa-user-plus mr-2"></i> Kelola Pendaftaran
+                    </a>
+                    <a href="{{ route('admin.activities.index') }}" class="text-gray-600 hover:text-gray-900 hover:bg-gray-100 block px-3 py-2 rounded-md text-base font-medium">
+                        <i class="fas fa-images mr-2"></i> Kelola Foto Kegiatan
+                    </a>
                     <button 
                         @click="openPasswordModal = true; mobileMenu = false" 
                         class="text-gray-600 hover:text-gray-900 hover:bg-gray-100 block w-full text-left px-3 py-2 rounded-md text-base font-medium"
