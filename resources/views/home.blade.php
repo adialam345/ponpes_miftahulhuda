@@ -176,7 +176,7 @@
                     <div class="stat-icon mb-2">
                         <i class="fas fa-users fa-2x text-primary-custom"></i>
                     </div>
-                    <h3 class="counter fw-bold fs-2">500</h3>
+                    <h3 class="counter fw-bold fs-2" data-target="500">0</h3>
                     <p class="stat-title text-muted">Jumlah Pengunjung</p>
                 </div>
             </div>
@@ -185,7 +185,7 @@
                     <div class="stat-icon mb-2">
                         <i class="fas fa-chalkboard-teacher fa-2x text-primary-custom"></i>
                     </div>
-                    <h3 class="counter fw-bold fs-2">50</h3>
+                    <h3 class="counter fw-bold fs-2" data-target="50">0</h3>
                     <p class="stat-title text-muted">Tenaga Pengajar</p>
                 </div>
             </div>
@@ -194,7 +194,7 @@
                     <div class="stat-icon mb-2">
                         <i class="fas fa-building fa-2x text-primary-custom"></i>
                     </div>
-                    <h3 class="counter fw-bold fs-2">10</h3>
+                    <h3 class="counter fw-bold fs-2" data-target="10">0</h3>
                     <p class="stat-title text-muted">Gedung Fasilitas</p>
                 </div>
             </div>
@@ -203,7 +203,7 @@
                     <div class="stat-icon mb-2">
                         <i class="fas fa-award fa-2x text-primary-custom"></i>
                     </div>
-                    <h3 class="counter fw-bold fs-2">20</h3>
+                    <h3 class="counter fw-bold fs-2" data-target="20">0</h3>
                     <p class="stat-title text-muted">Tahun Berdiri</p>
         </div>
             </div>
@@ -1048,6 +1048,55 @@ document.addEventListener('DOMContentLoaded', function() {
     } else {
         console.error("FancyBox tidak tersedia di halaman");
     }
+});
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const counters = document.querySelectorAll('.counter');
+    const duration = 3000; // Durasi total animasi dalam ms (2 detik)
+    const frameRate = 1000/60; // 60fps
+
+    // Fungsi untuk menjalankan animasi counter
+    const startCounting = (counter) => {
+        const target = parseInt(counter.getAttribute('data-target'));
+        const frames = duration/frameRate;
+        const increment = target/frames;
+        let current = 0;
+
+        const updateCount = () => {
+            if (current < target) {
+                current += increment;
+                counter.innerText = Math.min(Math.floor(current), target);
+                requestAnimationFrame(updateCount);
+            } else {
+                counter.innerText = target;
+            }
+        };
+
+        counter.innerText = '0';
+        requestAnimationFrame(updateCount);
+    };
+
+    // Buat Intersection Observer
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            // Jika elemen terlihat di viewport
+            if (entry.isIntersecting) {
+                startCounting(entry.target);
+                // Hentikan observasi setelah animasi dimulai
+                observer.unobserve(entry.target);
+            }
+        });
+    }, {
+        threshold: 0.5 // Trigger ketika 50% elemen terlihat
+    });
+
+    // Observe semua counter
+    counters.forEach(counter => {
+        counter.innerText = '0';
+        observer.observe(counter);
+    });
 });
 </script>
 @endsection
