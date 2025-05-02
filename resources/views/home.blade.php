@@ -378,35 +378,25 @@
                     ->whereHas('galleries', function($query) {
                         $query->active();
                     })
-                    ->with(['galleries' => function($query) {
-                        $query->active()
-                              ->orderBy('order', 'asc')
-                              ->limit(1);
+                    ->with(['firstGallery', 'galleries' => function($query) {
+                        $query->active()->orderBy('order', 'asc');
                     }])
                     ->withCount(['galleries' => function($query) {
                         $query->active();
                     }])
                     ->take(8)
                     ->get();
-
-                // Eager load remaining images for fancybox
-                $activityIds = $activities->pluck('id');
-                $otherImages = \App\Models\Gallery::whereIn('activity_id', $activityIds)
-                    ->where('is_active', true)
-                    ->orderBy('order', 'asc')
-                    ->get()
-                    ->groupBy('activity_id');
             @endphp
             
             @forelse($activities as $activity)
-                @if($activity->galleries->isNotEmpty())
+                @if($activity->firstGallery)
                 <div class="col-6 col-md-4 col-lg-3 gallery-item">
                     <div class="gallery-card">
-                        <img src="{{ asset('storage/' . $activity->galleries->first()->image) }}" alt="{{ $activity->title }}" class="img-fluid rounded">
+                        <img src="{{ asset('storage/' . $activity->firstGallery->image) }}" alt="{{ $activity->title }}" class="img-fluid rounded">
                         <div class="gallery-overlay">
-                            <a href="{{ asset('storage/' . $activity->galleries->first()->image) }}" class="gallery-icon" 
+                            <a href="{{ asset('storage/' . $activity->firstGallery->image) }}" class="gallery-icon" 
                                data-fancybox="gallery-{{ $activity->id }}" 
-                               data-caption="{{ $activity->title }} - {{ $activity->galleries->first()->title ?? 'Foto 1' }}">
+                               data-caption="{{ $activity->title }} - {{ $activity->firstGallery->title ?? 'Foto 1' }}">
                                 <i class="fas fa-search-plus"></i>
                             </a>
                         </div>
@@ -419,13 +409,13 @@
                 
                 <!-- Hidden links for additional gallery images -->
                 <div class="d-none" id="gallery-links-{{ $activity->id }}">
-                @foreach($otherImages[$activity->id] ?? [] as $otherImage)
-                    @if($otherImage->id !== $activity->galleries->first()->id)
-                    <a href="{{ asset('storage/' . $otherImage->image) }}" 
+                @foreach($activity->galleries as $gallery)
+                    @if($gallery->id !== $activity->firstGallery->id)
+                    <a href="{{ asset('storage/' . $gallery->image) }}" 
                        data-fancybox="gallery-{{ $activity->id }}" 
                        data-type="image"
-                       data-caption="{{ $activity->title }} - {{ $otherImage->title ?? 'Foto ' . ($loop->iteration + 1) }}">
-                       <img src="{{ asset('storage/' . $otherImage->image) }}" alt="{{ $otherImage->title ?? 'Foto ' . ($loop->iteration + 1) }}" style="display:none">
+                       data-caption="{{ $activity->title }} - {{ $gallery->title ?? 'Foto ' . ($loop->iteration + 1) }}">
+                       <img src="{{ asset('storage/' . $gallery->image) }}" alt="{{ $gallery->title ?? 'Foto ' . ($loop->iteration + 1) }}" style="display:none">
                     </a>
                     @endif
                 @endforeach

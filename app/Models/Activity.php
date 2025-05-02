@@ -45,6 +45,14 @@ class Activity extends Model
     }
 
     /**
+     * Get the first gallery for the activity.
+     */
+    public function firstGallery()
+    {
+        return $this->hasOne(Gallery::class)->where('is_active', true)->orderBy('order', 'asc');
+    }
+
+    /**
      * Scope a query to only include active activities.
      *
      * @param  \Illuminate\Database\Eloquent\Builder  $query
