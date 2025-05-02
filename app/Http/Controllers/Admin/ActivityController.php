@@ -16,7 +16,15 @@ class ActivityController extends Controller
      */
     public function index()
     {
-        $activities = Activity::orderBy('order', 'asc')->get();
+        $activities = Activity::with(['thumbnailGallery', 'galleries' => function($query) {
+            $query->active();
+        }])
+        ->withCount(['galleries' => function($query) {
+            $query->active();
+        }])
+        ->orderBy('order', 'asc')
+        ->get();
+        
         return view('admin.activities.index', compact('activities'));
     }
 
@@ -51,26 +59,36 @@ class ActivityController extends Controller
         // Handle thumbnail upload
         if ($request->hasFile('thumbnail')) {
             $thumbnail = $request->file('thumbnail');
-            $thumbnailName = 'activity-' . time() . '.' . $thumbnail->getClientOriginalExtension();
-            $thumbnailPath = $thumbnail->storeAs('activities', $thumbnailName, 'public');
-            $data['thumbnail'] = $thumbnailPath;
+            $thumbnailName = 'gallery-' . time() . '.' . $thumbnail->getClientOriginalExtension();
+            $thumbnailPath = $thumbnail->storeAs('gallery', $thumbnailName, 'public');
+            
+            // Create activity first
+            $activity = Activity::create($data);
+            
+            // Create gallery entry for thumbnail
+            Gallery::create([
+                'activity_id' => $activity->id,
+                'title' => $activity->title,
+                'description' => $activity->description,
+                'image' => $thumbnailPath,
+                'alt_text' => $activity->alt_text ?? $activity->title,
+                'is_active' => true,
+                'is_thumbnail' => true,
+                'order' => 1
+            ]);
+            
+            // Handle multiple image uploads if provided
+            if ($request->hasFile('images')) {
+                $this->saveGalleryImages($request->file('images'), $activity);
+            }
+            
+            return redirect()->route('admin.activities.index')
+                            ->with('success', 'Kegiatan berhasil ditambahkan.');
         }
         
-        // Set default order if not provided
-        if (empty($data['order'])) {
-            $lastOrder = Activity::max('order');
-            $data['order'] = $lastOrder ? $lastOrder + 1 : 1;
-        }
-        
-        $activity = Activity::create($data);
-        
-        // Handle multiple image uploads if provided
-        if ($request->hasFile('images')) {
-            $this->saveGalleryImages($request->file('images'), $activity);
-        }
-        
-        return redirect()->route('admin.activities.index')
-                         ->with('success', 'Kegiatan berhasil ditambahkan.');
+        return redirect()->back()
+                        ->withInput()
+                        ->withErrors(['thumbnail' => 'Thumbnail wajib diupload.']);
     }
 
     /**
@@ -119,15 +137,25 @@ class ActivityController extends Controller
         
         // Handle thumbnail upload
         if ($request->hasFile('thumbnail')) {
-            // Delete previous thumbnail
-            if ($activity->thumbnail && Storage::disk('public')->exists($activity->thumbnail)) {
-                Storage::disk('public')->delete($activity->thumbnail);
-            }
-            
             $thumbnail = $request->file('thumbnail');
-            $thumbnailName = 'activity-' . time() . '.' . $thumbnail->getClientOriginalExtension();
-            $thumbnailPath = $thumbnail->storeAs('activities', $thumbnailName, 'public');
-            $data['thumbnail'] = $thumbnailPath;
+            $thumbnailName = 'gallery-' . time() . '.' . $thumbnail->getClientOriginalExtension();
+            $thumbnailPath = $thumbnail->storeAs('gallery', $thumbnailName, 'public');
+            
+            // Reset all thumbnails for this activity
+            Gallery::where('activity_id', $activity->id)
+                  ->update(['is_thumbnail' => false]);
+            
+            // Create new gallery entry for thumbnail
+            Gallery::create([
+                'activity_id' => $activity->id,
+                'title' => $activity->title,
+                'description' => $activity->description,
+                'image' => $thumbnailPath,
+                'alt_text' => $activity->alt_text ?? $activity->title,
+                'is_active' => true,
+                'is_thumbnail' => true,
+                'order' => 1
+            ]);
         }
         
         $activity->update($data);
@@ -204,6 +232,7 @@ class ActivityController extends Controller
                 'image' => $path,
                 'alt_text' => $activity->alt_text ?? $activity->title,
                 'is_active' => true,
+                'is_thumbnail' => false,
                 'order' => $order++,
             ]);
         }

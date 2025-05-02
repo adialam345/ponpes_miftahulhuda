@@ -19,7 +19,7 @@ class GalleryController extends Controller
             ->whereHas('galleries', function($query) {
                 $query->active();
             })
-            ->with(['firstGallery', 'galleries' => function($query) {
+            ->with(['thumbnailGallery', 'galleries' => function($query) {
                 $query->active()->ordered();
             }])
             ->withCount(['galleries' => function($query) {

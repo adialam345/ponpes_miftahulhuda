@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('image');
             $table->string('alt_text')->nullable();
             $table->boolean('is_active')->default(true);
+            $table->boolean('is_thumbnail')->default(false);
             $table->integer('order')->default(0);
             $table->timestamps();
         });

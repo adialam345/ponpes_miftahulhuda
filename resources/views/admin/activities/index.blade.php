@@ -48,8 +48,8 @@
                             <tr data-id="{{ $activity->id }}" data-order="{{ $activity->order }}">
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $loop->iteration }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    @if($activity->thumbnail)
-                                    <img src="{{ asset('storage/' . $activity->thumbnail) }}" alt="{{ $activity->alt_text }}" class="h-16 w-auto object-cover rounded">
+                                    @if($activity->thumbnailGallery)
+                                    <img src="{{ asset('storage/' . $activity->thumbnailGallery->image) }}" alt="{{ $activity->thumbnailGallery->alt_text }}" class="h-16 w-auto object-cover rounded">
                                     @else
                                     <div class="h-16 w-24 bg-gray-200 rounded flex items-center justify-center">
                                         <span class="text-gray-500 text-xs">No Image</span>

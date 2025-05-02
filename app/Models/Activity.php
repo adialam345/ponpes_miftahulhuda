@@ -49,7 +49,28 @@ class Activity extends Model
      */
     public function firstGallery()
     {
-        return $this->hasOne(Gallery::class)->where('is_active', true)->orderBy('order', 'asc');
+        return $this->hasOne(Gallery::class)
+                    ->where('is_active', true)
+                    ->oldest('order');
+    }
+
+    /**
+     * Get the thumbnail gallery for the activity.
+     */
+    public function thumbnailGallery()
+    {
+        return $this->hasOne(Gallery::class)
+                    ->where('is_active', true)
+                    ->where(function($query) {
+                        $query->where('is_thumbnail', true)
+                              ->orWhereRaw('id = (
+                                  SELECT MIN(g2.id) 
+                                  FROM galleries g2 
+                                  WHERE g2.activity_id = galleries.activity_id 
+                                  AND g2.is_active = true
+                              )');
+                    })
+                    ->orderBy('order', 'asc');
     }
 
     /**
