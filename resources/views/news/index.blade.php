@@ -3,6 +3,19 @@
 @section('title', 'Berita & Pengumuman - Pondok Pesantren Miftahul Huda')
 
 @section('content')
+
+@if (session('success'))
+<script>
+    Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "{{ session('success') }}",
+        showConfirmButton: false,
+        timer: 1500
+    });
+</script>
+@endif
+
 <div class="container pt-2 pb-4" style="margin-top: 0px;">
     <div class="text-center mb-3">
         <h1 class="text-green-700 fw-bold display-5">Berita & Pengumuman</h1>
