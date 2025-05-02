@@ -19,8 +19,8 @@ class GalleryController extends Controller
             ->whereHas('galleries', function($query) {
                 $query->active();
             })
-            ->with(['galleries' => function($query) {
-                $query->active()->ordered()->limit(1);
+            ->with(['firstGallery', 'galleries' => function($query) {
+                $query->active()->ordered();
             }])
             ->withCount(['galleries' => function($query) {
                 $query->active();

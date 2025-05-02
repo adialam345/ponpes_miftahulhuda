@@ -16,11 +16,11 @@
         <!-- Gallery Activities Grid -->
         <div class="row g-4">
             @forelse($activities as $activity)
-                @if($activity->galleries->isNotEmpty())
+                @if($activity->firstGallery)
                 <div class="col-6 col-md-4 col-lg-3 gallery-item">
                     <a href="{{ route('gallery.show', $activity->id) }}" class="text-decoration-none">
                         <div class="gallery-card">
-                            <img src="{{ asset('storage/' . $activity->galleries->first()->image) }}" alt="{{ $activity->title }}" class="img-fluid rounded">
+                            <img src="{{ asset('storage/' . $activity->firstGallery->image) }}" alt="{{ $activity->title }}" class="img-fluid rounded">
                             <div class="gallery-overlay">
                                 <div class="gallery-view">
                                     <i class="fas fa-images me-1"></i> Lihat Album
