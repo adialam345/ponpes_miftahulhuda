@@ -34,7 +34,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="col-lg-4 mb-4 mb-lg-0">
                 <div class="contact-card card h-100 border-0 shadow-sm">
                     <div class="card-body p-4 text-center">
@@ -48,7 +48,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="col-lg-4">
                 <div class="contact-card card h-100 border-0 shadow-sm">
                     <div class="card-body p-4 text-center">
@@ -89,13 +89,12 @@
                 <p class="text-muted mb-0">Temukan lokasi kami dengan mudah menggunakan peta di bawah ini</p>
             </div>
         </div>
-        
+
         <div class="row">
             <div class="col-12">
                 <div class="map-container rounded-lg shadow-sm p-2 bg-white">
                     <div class="ratio ratio-16x9">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3960.2988887168456!2d107.86235611477422!3d-6.9797756949688195!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e68c29c66a0c837%3A0xce7fab28d1596d5f!2sPonpes%20Miftahul%20Huda!5e0!3m2!1sid!2sid!4v1656925437772!5m2!1sid!2sid" 
-                            width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" class="rounded-lg"></iframe>
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3953.18734914186!2d111.50891517575458!3d-7.769948192249411!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e79a2fa84ad929d%3A0x3d2178186495597!2sPondok%20Pesantren%20Miftahul%20Huda%20Doho!5e0!3m2!1sid!2sid!4v1746159464197!5m2!1sid!2sid" width="800" height="600" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>                            width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" class="rounded-lg"></iframe>
                     </div>
                 </div>
             </div>
@@ -114,7 +113,7 @@
                 <p class="text-muted mb-0">Silakan isi formulir di bawah ini untuk mengirim pesan atau pertanyaan kepada kami</p>
             </div>
         </div>
-        
+
         <div class="row justify-content-center">
             <div class="col-lg-8">
                 <div class="contact-form-container card border-0 shadow-sm">
@@ -177,7 +176,7 @@
                 <p class="text-muted mb-0">Beberapa pilihan transportasi untuk menuju ke Pondok Pesantren Miftahul Huda</p>
             </div>
         </div>
-        
+
         <div class="row g-4">
             <div class="col-md-6 col-lg-4 mb-4">
                 <div class="transport-card card h-100 border-0 shadow-sm">
@@ -195,7 +194,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="col-md-6 col-lg-4 mb-4">
                 <div class="transport-card card h-100 border-0 shadow-sm">
                     <div class="card-body p-4">
@@ -212,7 +211,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="col-md-6 col-lg-4 mb-4">
                 <div class="transport-card card h-100 border-0 shadow-sm">
                     <div class="card-body p-4">
@@ -240,7 +239,7 @@
         padding: 4rem 0;
         position: relative;
     }
-    
+
     .hero-bg {
         position: absolute;
         top: 0;
@@ -251,7 +250,7 @@
         clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
         z-index: -1;
     }
-    
+
     /* Section Styling */
     .title-underline {
         height: 4px;
@@ -259,19 +258,19 @@
         background-color: var(--primary-color);
         margin-top: 5px;
     }
-    
+
     /* Contact Card Styles */
     .contact-card {
         border-radius: 12px;
         overflow: hidden;
         transition: all 0.3s ease;
     }
-    
+
     .contact-card:hover {
         transform: translateY(-10px);
         box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1) !important;
     }
-    
+
     .contact-icon {
         display: flex;
         align-items: center;
@@ -283,19 +282,19 @@
         margin-bottom: 1rem;
         transition: all 0.3s ease;
     }
-    
+
     .contact-card:hover .contact-icon {
         background-color: var(--primary-color);
         color: white;
     }
-    
+
     /* Social Links */
     .social-links {
         display: flex;
         justify-content: center;
         gap: 15px;
     }
-    
+
     .social-link {
         display: flex;
         align-items: center;
@@ -308,42 +307,42 @@
         transition: all 0.3s ease;
         font-size: 1.1rem;
     }
-    
+
     .social-link:hover {
         background-color: var(--primary-color);
         color: white;
         transform: translateY(-3px);
     }
-    
+
     /* Form Styling */
     .contact-form-container {
         border-radius: 12px;
     }
-    
+
     .form-control {
         padding: 0.75rem;
         border-radius: 8px;
         border: 1px solid #dee2e6;
         transition: all 0.3s ease;
     }
-    
+
     .form-control:focus {
         border-color: var(--primary-color);
         box-shadow: 0 0 0 0.25rem rgba(10, 93, 54, 0.15);
     }
-    
+
     /* Transport Card Styles */
     .transport-card {
         border-radius: 12px;
         overflow: hidden;
         transition: all 0.3s ease;
     }
-    
+
     .transport-card:hover {
         transform: translateY(-10px);
         box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1) !important;
     }
-    
+
     .transport-icon {
         display: flex;
         align-items: center;
@@ -355,7 +354,7 @@
         font-size: 1.2rem;
         transition: all 0.3s ease;
     }
-    
+
     .transport-card:hover .transport-icon {
         background-color: var(--primary-color);
         color: white;
@@ -366,7 +365,7 @@
     document.addEventListener('DOMContentLoaded', function() {
         // Add animation classes when elements enter viewport
         const animatedElements = document.querySelectorAll('.contact-card, .map-container, .contact-form-container, .transport-card');
-        
+
         const animateOnScroll = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -375,7 +374,7 @@
                 }
             });
         }, { threshold: 0.1 });
-        
+
         animatedElements.forEach(element => {
             animateOnScroll.observe(element);
         });
