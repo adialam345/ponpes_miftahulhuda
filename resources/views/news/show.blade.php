@@ -2,6 +2,60 @@
 
 @section('title', $news->title . ' - Pondok Pesantren Miftahul Huda')
 
+@push('styles')
+<style>
+    .news-content {
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        white-space: pre-wrap;
+        max-width: 100%;
+        line-height: 1.6;
+    }
+    
+    .news-content img {
+        max-width: 100%;
+        height: auto;
+        margin: 1rem 0;
+    }
+    
+    /* Fix for long strings without spaces */
+    .news-content * {
+        max-width: 100%;
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+        -ms-word-break: break-all;
+        word-break: break-word;
+        -ms-hyphens: auto;
+        -moz-hyphens: auto;
+        -webkit-hyphens: auto;
+        hyphens: auto;
+    }
+
+    /* Container styles */
+    .news-container {
+        max-width: 100%;
+        padding: 1.5rem;
+        background: white;
+        border-radius: 0.5rem;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Text formatting */
+    .news-content p {
+        margin-bottom: 1rem;
+    }
+
+    .news-content a {
+        color: var(--primary-color);
+        text-decoration: none;
+    }
+
+    .news-content a:hover {
+        text-decoration: underline;
+    }
+</style>
+@endpush
+
 @section('content')
 <div class="container pt-2 pb-4" style="margin-top: 0px;">
     <div class="row">
@@ -14,7 +68,7 @@
                 </ol>
             </nav>
 
-            <div class="bg-white p-4 shadow rounded">
+            <div class="news-container">
                 <h1 class="text-green-700 fw-bold mb-2">{{ $news->title }}</h1>
                 
                 <div class="d-flex align-items-center text-muted mb-3">
