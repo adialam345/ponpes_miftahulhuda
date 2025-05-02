@@ -379,13 +379,23 @@
                         $query->active();
                     })
                     ->with(['galleries' => function($query) {
-                        $query->active()->ordered();
+                        $query->active()
+                              ->orderBy('order', 'asc')
+                              ->limit(1);
                     }])
                     ->withCount(['galleries' => function($query) {
                         $query->active();
                     }])
                     ->take(8)
                     ->get();
+
+                // Eager load remaining images for fancybox
+                $activityIds = $activities->pluck('id');
+                $otherImages = \App\Models\Gallery::whereIn('activity_id', $activityIds)
+                    ->where('is_active', true)
+                    ->orderBy('order', 'asc')
+                    ->get()
+                    ->groupBy('activity_id');
             @endphp
             
             @forelse($activities as $activity)
@@ -407,23 +417,17 @@
                     </div>
                 </div>
                 
-                @php
-                // Tambahkan kode ini untuk menyiapkan link lainnya untuk fancybox tapi tersembunyi
-                $otherImages = \App\Models\Gallery::where('activity_id', $activity->id)
-                                ->where('id', '!=', $activity->galleries->first()->id)
-                                ->where('is_active', true)
-                                ->get();
-                @endphp
-                
                 <!-- Hidden links for additional gallery images -->
                 <div class="d-none" id="gallery-links-{{ $activity->id }}">
-                @foreach($otherImages as $index => $otherImage)
-                <a href="{{ asset('storage/' . $otherImage->image) }}" 
-                   data-fancybox="gallery-{{ $activity->id }}" 
-                   data-type="image"
-                   data-caption="{{ $activity->title }} - {{ $otherImage->title ?? 'Foto ' . ($index + 2) }}">
-                   <img src="{{ asset('storage/' . $otherImage->image) }}" alt="{{ $otherImage->title ?? 'Foto ' . ($index + 2) }}" style="display:none">
-                </a>
+                @foreach($otherImages[$activity->id] ?? [] as $otherImage)
+                    @if($otherImage->id !== $activity->galleries->first()->id)
+                    <a href="{{ asset('storage/' . $otherImage->image) }}" 
+                       data-fancybox="gallery-{{ $activity->id }}" 
+                       data-type="image"
+                       data-caption="{{ $activity->title }} - {{ $otherImage->title ?? 'Foto ' . ($loop->iteration + 1) }}">
+                       <img src="{{ asset('storage/' . $otherImage->image) }}" alt="{{ $otherImage->title ?? 'Foto ' . ($loop->iteration + 1) }}" style="display:none">
+                    </a>
+                    @endif
                 @endforeach
                 </div>
                 @endif
