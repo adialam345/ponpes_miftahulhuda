@@ -197,7 +197,7 @@
                     file:text-sm file:font-semibold
                     file:bg-indigo-50 file:text-indigo-700
                     hover:file:bg-indigo-100">
-                <p class="text-gray-500 text-xs mt-1">Format: JPEG, PNG, JPG, GIF. Ukuran maksimum: 2MB.</p>
+                <p class="text-gray-500 text-xs mt-1">Format: JPEG, PNG, JPG, GIF. Ukuran maksimum: 10MB.</p>
                 @error('image')
                 <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                 @enderror
