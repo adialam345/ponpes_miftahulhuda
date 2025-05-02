@@ -37,10 +37,10 @@ class ActivityController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
             'activity_date' => 'nullable|date',
-            'thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif|max:10240',
             'alt_text' => 'nullable|string|max:255',
             'is_active' => 'boolean',
-            'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240',
         ]);
 
         $data = $request->except('images');
@@ -103,10 +103,10 @@ class ActivityController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
             'activity_date' => 'nullable|date',
-            'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240',
             'alt_text' => 'nullable|string|max:255',
             'is_active' => 'boolean',
-            'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240',
         ]);
 
         $activity = Activity::findOrFail($id);

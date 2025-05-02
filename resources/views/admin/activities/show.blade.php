@@ -146,7 +146,7 @@
                         <div class="custom-file">
                             <input type="file" class="custom-file-input" id="modalImages" name="images[]" multiple required>
                             <label class="custom-file-label" for="modalImages">Pilih file...</label>
-                            <small class="form-text text-muted">Format: JPG, PNG, GIF. Maks: 2MB per file.</small>
+                            <small class="form-text text-muted">Format: JPG, PNG, GIF. Maks: 10MB per file.</small>
                         </div>
                         <div id="modal-preview-container" class="row mt-3"></div>
                     </div>

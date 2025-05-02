@@ -74,7 +74,7 @@
                             <p class="mt-1 text-sm text-gray-500">Deskripsi umum halaman pendaftaran.</p>
                         </div>
                         <div class="p-4">
-                            <!-- Word-like Text Editor Toolbar -->
+                             
                             <div class="border border-gray-300 rounded-t-md bg-gray-100 p-2 flex flex-wrap items-center gap-1">
                                 <!-- Font Family & Size -->
                                 <div class="flex items-center border-r border-gray-300 pr-2 mr-2">

@@ -163,7 +163,7 @@
                             </label>
                             <span class="ml-3 text-sm text-gray-500" id="file-name">Tidak ada file yang dipilih</span>
                         </div>
-                        <p class="mt-1 text-sm text-gray-500">Format: JPG, PNG, GIF. Ukuran maksimal: 2MB.</p>
+                        <p class="mt-1 text-sm text-gray-500">Format: JPG, PNG, GIF. Ukuran maksimal: 10MB.</p>
                         @error('thumbnail')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
@@ -188,7 +188,7 @@
                             </label>
                             <span class="ml-3 text-sm text-gray-500" id="images-count">Tidak ada file yang dipilih</span>
                         </div>
-                        <p class="mt-1 text-sm text-gray-500">Format: JPG, PNG, GIF. Ukuran maksimal: 2MB per foto.</p>
+                        <p class="mt-1 text-sm text-gray-500">Format: JPG, PNG, GIF. Ukuran maksimal: 10MB per foto.</p>
                         @error('images.*')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
