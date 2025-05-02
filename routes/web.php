@@ -110,6 +110,9 @@ Route::prefix('admin')->group(function () {
         Route::post('activities/{activity}/gallery/upload', [\App\Http\Controllers\Admin\GalleryController::class, 'uploadMultiple'])
              ->name('admin.activities.gallery.upload');
 
+        Route::post('activities/{activity}/gallery/chunk-upload', [\App\Http\Controllers\Admin\GalleryController::class, 'handleChunkUpload'])
+             ->name('admin.activities.gallery.chunk-upload');
+
         Route::post('logout', [AuthController::class, 'logout'])->name('admin.logout');
         Route::post('password/update', [AuthController::class, 'updatePassword'])->name('admin.password.update');
     });

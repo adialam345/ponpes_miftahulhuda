@@ -146,7 +146,7 @@
                         <div class="custom-file">
                             <input type="file" class="custom-file-input" id="modalImages" name="images[]" multiple required>
                             <label class="custom-file-label" for="modalImages">Pilih file...</label>
-                            <small class="form-text text-muted">Format: JPG, PNG, GIF. Maks: 10MB per file.</small>
+                            <small class="form-text text-muted">Format: JPG, PNG, GIF. Maks: 10MB per file. Maksimal 20 foto sekaligus dengan total ukuran tidak melebihi 40MB.</small>
                         </div>
                         <div id="modal-preview-container" class="row mt-3"></div>
                     </div>
@@ -189,44 +189,106 @@
 
 @section('scripts')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/resumablejs@1.1.0/resumable.min.js"></script>
 <script>
-    // Preview gambar untuk modal tambah foto
-    document.getElementById('modalImages').addEventListener('change', function(event) {
-        var files = event.target.files;
+    // Inisialisasi Resumable.js untuk chunked upload
+    var resumable = new Resumable({
+        target: '{{ route('admin.activities.gallery.chunk-upload', $activity->id) }}',
+        query: {_token: '{{ csrf_token() }}'},
+        chunkSize: 1*1024*1024, // 1MB per chunk
+        simultaneousUploads: 3,
+        testChunks: false,
+        throttleProgressCallbacks: 1,
+        maxFiles: 20,
+        maxFileSize: 100*1024*1024 // 100MB max per file
+    });
+
+    // Assign browse file to modalImages
+    resumable.assignBrowse(document.getElementById('modalImages'));
+
+    resumable.on('fileAdded', function(file) {
+        // Update UI
         var previewContainer = document.getElementById('modal-preview-container');
-        previewContainer.innerHTML = '';
         
-        for (var i = 0; i < files.length; i++) {
-            if (i >= 10) {
-                var moreDiv = document.createElement('div');
-                moreDiv.className = 'col-md-2 mb-2 d-flex justify-content-center align-items-center bg-light rounded';
-                moreDiv.style.height = '100px';
-                moreDiv.innerHTML = '<span>+' + (files.length - 10) + ' lainnya</span>';
-                previewContainer.appendChild(moreDiv);
-                break;
-            }
-            
+        // Clear preview if this is first file
+        if (resumable.files.length === 1) {
+            previewContainer.innerHTML = '';
+        }
+        
+        // Check total files
+        if (resumable.files.length > 20) {
+            alert('Maksimal 20 foto yang dapat diunggah sekaligus');
+            resumable.removeFile(file);
+            return;
+        }
+        
+        // Add preview
+        if (resumable.files.length <= 10) {
             var reader = new FileReader();
-            reader.onload = (function(file) {
-                return function(e) {
-                    var col = document.createElement('div');
-                    col.className = 'col-md-2 mb-2';
-                    
-                    var img = document.createElement('img');
-                    img.src = e.target.result;
-                    img.className = 'img-fluid rounded';
-                    img.style.height = '100px';
-                    img.style.objectFit = 'cover';
-                    
-                    col.appendChild(img);
-                    previewContainer.appendChild(col);
-                };
-            })(files[i]);
-            
-            reader.readAsDataURL(files[i]);
+            reader.onload = function(e) {
+                var col = document.createElement('div');
+                col.className = 'col-md-2 mb-2';
+                
+                var img = document.createElement('img');
+                img.src = e.target.result;
+                img.className = 'img-fluid rounded';
+                img.style.height = '100px';
+                img.style.objectFit = 'cover';
+                
+                var progress = document.createElement('div');
+                progress.className = 'progress mt-1';
+                progress.innerHTML = '<div class="progress-bar" role="progressbar" style="width: 0%"></div>';
+                
+                col.appendChild(img);
+                col.appendChild(progress);
+                previewContainer.appendChild(col);
+                
+                file.previewElement = col;
+            };
+            reader.readAsDataURL(file.file);
+        } else if (resumable.files.length === 11) {
+            var moreDiv = document.createElement('div');
+            moreDiv.className = 'col-12 text-center mt-2';
+            moreDiv.innerHTML = '+ ' + (resumable.files.length - 10) + ' file lainnya';
+            previewContainer.appendChild(moreDiv);
         }
     });
-    
+
+    resumable.on('fileProgress', function(file) {
+        if (file.previewElement) {
+            var progressBar = file.previewElement.querySelector('.progress-bar');
+            if (progressBar) {
+                progressBar.style.width = Math.floor(file.progress() * 100) + '%';
+            }
+        }
+    });
+
+    resumable.on('fileSuccess', function(file, response) {
+        if (file.previewElement) {
+            file.previewElement.classList.add('upload-success');
+        }
+    });
+
+    resumable.on('fileError', function(file, response) {
+        alert('Error uploading ' + file.fileName);
+    });
+
+    resumable.on('complete', function() {
+        if (resumable.progress() === 1) {
+            window.location.reload();
+        }
+    });
+
+    // Override form submit to use Resumable.js
+    document.querySelector('#addPhotosModal form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        if (resumable.files.length > 0) {
+            resumable.upload();
+        } else {
+            alert('Pilih foto terlebih dahulu');
+        }
+    });
+
     // Fungsi untuk sortable gallery
     var sortableGallery = document.getElementById('sortable-gallery');
     if (sortableGallery) {

@@ -193,6 +193,28 @@ class GalleryController extends Controller
      */
     public function uploadMultiple(Request $request, $activityId)
     {
+        // Validasi jumlah file dan ukuran total
+        if ($request->hasFile('images')) {
+            $totalSize = 0;
+            foreach ($request->file('images') as $image) {
+                $totalSize += $image->getSize();
+            }
+            
+            // Konversi 40MB ke bytes (40 * 1024 * 1024)
+            if ($totalSize > 41943040) {
+                return redirect()->back()->withErrors([
+                    'images' => 'Total ukuran semua foto tidak boleh melebihi 40MB'
+                ]);
+            }
+            
+            // Batasi maksimal 20 foto sekaligus
+            if (count($request->file('images')) > 20) {
+                return redirect()->back()->withErrors([
+                    'images' => 'Maksimal 20 foto yang dapat diunggah sekaligus'
+                ]);
+            }
+        }
+
         $request->validate([
             'images' => 'required|array',
             'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:10240',
@@ -222,5 +244,91 @@ class GalleryController extends Controller
         
         return redirect()->route('admin.activities.show', $activityId)
                          ->with('success', 'Semua foto berhasil diupload ke galeri kegiatan.');
+    }
+
+    /**
+     * Handle chunked file upload
+     */
+    public function handleChunkUpload(Request $request, $activityId)
+    {
+        if (!$request->hasFile('file')) {
+            return response()->json(['error' => 'No file uploaded'], 400);
+        }
+
+        $file = $request->file('file');
+        $resumableIdentifier = $request->input('resumableIdentifier');
+        $resumableChunkNumber = $request->input('resumableChunkNumber');
+        $resumableTotalChunks = $request->input('resumableTotalChunks');
+        $resumableFilename = $request->input('resumableFilename');
+
+        // Buat direktori temporary untuk menyimpan chunks
+        $tempDirectory = storage_path('app/chunks/' . $resumableIdentifier);
+        if (!file_exists($tempDirectory)) {
+            mkdir($tempDirectory, 0777, true);
+        }
+
+        // Simpan chunk
+        $chunkFile = $tempDirectory . '/' . $resumableChunkNumber;
+        $file->move($tempDirectory, $resumableChunkNumber);
+
+        // Cek apakah semua chunk sudah terupload
+        $uploadedChunks = count(glob($tempDirectory . '/*'));
+        if ($uploadedChunks == $resumableTotalChunks) {
+            // Gabungkan semua chunk
+            $finalPath = storage_path('app/public/gallery/gallery-' . time() . '-' . rand(1000, 9999) . '-' . $resumableFilename);
+            $this->combineChunks($tempDirectory, $finalPath, $resumableTotalChunks);
+
+            // Hapus direktori temporary
+            $this->cleanupChunks($tempDirectory);
+
+            // Simpan ke database
+            $relativePath = 'gallery/gallery-' . time() . '-' . rand(1000, 9999) . '-' . $resumableFilename;
+            $activity = Activity::findOrFail($activityId);
+            $lastOrder = Gallery::where('activity_id', $activityId)->max('order');
+            $order = $lastOrder ? $lastOrder + 1 : 1;
+
+            Gallery::create([
+                'activity_id' => $activityId,
+                'title' => $activity->title,
+                'description' => $activity->description,
+                'image' => $relativePath,
+                'alt_text' => $activity->title,
+                'is_active' => true,
+                'order' => $order,
+            ]);
+
+            return response()->json(['success' => true]);
+        }
+
+        return response()->json(['success' => true, 'chunksUploaded' => $uploadedChunks]);
+    }
+
+    /**
+     * Combine all chunks into final file
+     */
+    private function combineChunks($chunksDirectory, $finalPath, $totalChunks)
+    {
+        $out = fopen($finalPath, 'wb');
+
+        for ($i = 1; $i <= $totalChunks; $i++) {
+            $chunkFile = $chunksDirectory . '/' . $i;
+            $in = fopen($chunkFile, 'rb');
+            stream_copy_to_stream($in, $out);
+            fclose($in);
+        }
+
+        fclose($out);
+    }
+
+    /**
+     * Clean up chunks directory
+     */
+    private function cleanupChunks($directory)
+    {
+        $files = glob($directory . '/*');
+        foreach ($files as $file) {
+            unlink($file);
+        }
+        rmdir($directory);
     }
 }
