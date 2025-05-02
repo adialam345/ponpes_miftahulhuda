@@ -379,7 +379,7 @@
                         $query->active();
                     })
                     ->with(['galleries' => function($query) {
-                        $query->active()->ordered()->limit(1);
+                        $query->active()->ordered();
                     }])
                     ->withCount(['galleries' => function($query) {
                         $query->active();
