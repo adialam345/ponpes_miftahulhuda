@@ -35,65 +35,51 @@
             <h6 class="text-uppercase fw-bold text-primary-custom"><i class="fas fa-newspaper me-2"></i>Terkini</h6>
             <h2 class="fw-bold mb-2">Berita & Pengumuman Terbaru</h2>
             <div class="title-underline mx-auto"></div>
-    </div>
+        </div>
 
-            @php
-                $news = \App\Models\News::where('status', 'published')
-                    ->orderBy('published_at', 'desc')
+        @php
+            $news = \App\Models\News::where('status', 'published')
+                ->orderBy('published_at', 'desc')
                 ->take(5)
-                    ->get();
-            @endphp
+                ->get();
+        @endphp
 
         @if($news->count() > 0)
         <!-- News Slider -->
         <div class="news-slider-container position-relative mb-4">
-            <div id="newsCarousel" class="carousel slide" data-bs-ride="carousel">
-                <div class="carousel-indicators">
-                    @foreach($news as $index => $item)
-                        <button type="button" data-bs-target="#newsCarousel" data-bs-slide-to="{{ $index }}" class="{{ $index == 0 ? 'active' : '' }}" aria-current="{{ $index == 0 ? 'true' : 'false' }}" aria-label="Slide {{ $index + 1 }}"></button>
-                    @endforeach
-                </div>
-                
-                <div class="carousel-inner rounded-3 shadow-lg">
-                    @foreach($news as $index => $item)
-                    <div class="carousel-item {{ $index == 0 ? 'active' : '' }}" data-bs-interval="6000">
+            <div class="swiper newsSwiper">
+                <div class="swiper-wrapper">
+                    @foreach($news as $item)
+                    <div class="swiper-slide">
                         <a href="{{ route('news.show', $item->id) }}" class="text-decoration-none">
-                            <div class="position-relative">
-                    @if($item->image)
-                                <img src="{{ asset('storage/' . $item->image) }}" class="d-block w-100" alt="{{ $item->title }}" style="height: 500px; object-fit: cover;">
-                    @else
-                                <div class="bg-light d-flex justify-content-center align-items-center" style="height: 500px;">
+                            <div class="news-card">
+                                @if($item->image)
+                                <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->title }}" class="news-image">
+                                @else
+                                <div class="news-image-placeholder">
                                     <i class="fas fa-newspaper fa-4x text-secondary"></i>
-                    </div>
-                    @endif
-                                <div class="carousel-caption d-none d-md-block">
-                                    <h3 class="fs-4 text-white mb-2">{{ $item->title }}</h3>
-                                    <p class="small mb-2 text-white">
-                            <i class="fas fa-calendar-alt me-1"></i> {{ $item->published_at->format('d M Y') }}
-                        </p>
-                                    <p class="text-white">{{ \Illuminate\Support\Str::limit(strip_tags($item->content), 150) }}</p>
                                 </div>
-                                <!-- Mobile Caption (visible on small screens) -->
-                                <div class="d-md-none position-absolute bottom-0 start-0 end-0 bg-dark bg-opacity-75 p-3 text-white">
-                                    <h5 class="fs-6">{{ $item->title }}</h5>
+                                @endif
+                                <div class="news-content">
+                                    <h3 class="news-title">{{ $item->title }}</h3>
+                                    <p class="news-date">
+                                        <i class="fas fa-calendar-alt me-1"></i> 
+                                        {{ $item->published_at->format('d M Y') }}
+                                    </p>
+                                    <p class="news-excerpt">
+                                        {{ \Illuminate\Support\Str::limit(strip_tags($item->content), 150) }}
+                                    </p>
                                 </div>
                             </div>
                         </a>
                     </div>
                     @endforeach
                 </div>
-                
-                <button class="carousel-control-prev" type="button" data-bs-target="#newsCarousel" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#newsCarousel" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                </button>
+                <div class="swiper-pagination"></div>
             </div>
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
         </div>
-        
         @else
         <div class="text-center p-5 bg-light rounded-3 shadow-sm">
             <i class="fas fa-newspaper fa-3x text-gray-400 mb-3"></i>
@@ -477,94 +463,162 @@
     
     /* Section Styling */
     .section-header {
-        margin-bottom: 3rem;
+        margin-bottom: 1rem;
     }
     
     .title-underline {
         height: 4px;
         width: 50px;
         background-color: var(--primary-color);
-        margin-top: 15px;
+        margin-top: 10px;
+        margin-bottom: 0;
     }
     
     /* News Slider Custom Styles */
     .news-section {
         background-color: #fff;
+        padding: 1rem 0;
+        overflow: hidden;
     }
     
     .news-slider-container {
-        margin-bottom: 2rem;
-        max-width: 1000px;
+        padding: 0;
+        max-width: 100%;
         margin-left: auto;
         margin-right: auto;
+        overflow: visible;
     }
     
-    .carousel-item img {
+    .swiper {
         width: 100%;
-        border-radius: 8px;
+        padding: 30px 0;
+        overflow: visible;
     }
     
-    .carousel-caption {
-        bottom: 0;
-        left: 0;
-        right: 0;
+    .swiper-slide {
+        background-position: center;
+        background-size: cover;
+        width: 600px;
+        height: 500px;
+        transition: transform 0.6s ease;
+    }
+    
+    .swiper-slide-active {
+        transform: scale(1.1);
+        z-index: 2;
+    }
+    
+    .news-card {
+        width: 100%;
+        height: 100%;
+        background: #fff;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        transition: transform 0.3s ease;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .news-card:hover {
+        transform: translateY(-5px);
+    }
+    
+    .news-image {
+        width: 100%;
+        height: 360px;
+        object-fit: cover;
+    }
+    
+    .news-image-placeholder {
+        width: 100%;
+        height: 360px;
+        background: #f8f9fa;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .news-content {
         padding: 20px;
-        background: linear-gradient(0deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 80%, transparent 100%);
-        border-radius: 0 0 8px 8px;
-        text-align: left;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
     }
     
-    /* Make carousel indicators more visible */
-    .carousel-indicators [data-bs-target] {
-        width: 12px;
-        height: 12px;
+    .news-title {
+        font-size: 1.25rem;
+        font-weight: bold;
+        color: #2d3748;
+        margin-bottom: 10px;
+        line-height: 1.3;
+    }
+    
+    .news-date {
+        font-size: 0.9rem;
+        color: #718096;
+        margin-bottom: 10px;
+    }
+    
+    .news-excerpt {
+        font-size: 1rem;
+        color: #4a5568;
+        line-height: 1.4;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+    
+    .swiper-button-next,
+    .swiper-button-prev {
+        color: var(--primary-color);
+        background: rgba(255, 255, 255, 0.9);
+        width: 50px;
+        height: 50px;
         border-radius: 50%;
-        margin-right: 6px;
-        margin-left: 6px;
-        background-color: var(--primary-color);
-        opacity: 0.5;
-        transition: all 0.3s ease;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     }
     
-    .carousel-indicators .active {
-        opacity: 1;
+    .swiper-button-next:after,
+    .swiper-button-prev:after {
+        font-size: 22px;
+    }
+    
+    .swiper-pagination-bullet {
+        background: var(--primary-color);
+        width: 10px;
+        height: 10px;
+    }
+    
+    .swiper-pagination-bullet-active {
+        background: var(--primary-color);
         transform: scale(1.2);
     }
     
-    /* Carousel controls styling */
-    .carousel-control-prev, .carousel-control-next {
-        width: 10%;
-        opacity: 0.7;
-        z-index: 10;
-    }
-    
-    .carousel-control-prev:hover, .carousel-control-next:hover {
-        opacity: 1;
-    }
-    
-    .carousel-item a {
-        cursor: pointer;
-        display: block;
-        position: relative;
-        overflow: hidden;
-        border-radius: 8px;
-    }
-    
-    .carousel-item a::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(0, 0, 0, 0.2);
-        z-index: 1;
-        opacity: 0;
-        transition: opacity 0.3s ease;
-    }
-    
-    .carousel-item a:hover::before {
-        opacity: 1;
+    @media (max-width: 768px) {
+        .swiper-slide {
+            width: 340px;
+            height: 440px;
+        }
+        
+        .news-image,
+        .news-image-placeholder {
+            height: 300px;
+        }
+        
+        .news-title {
+            font-size: 1.1rem;
+        }
+        
+        .news-excerpt {
+            font-size: 0.9rem;
+            -webkit-line-clamp: 2;
+        }
+        
+        .news-content {
+            padding: 15px;
+        }
     }
     
     /* Features Section Styles */
@@ -1093,4 +1147,47 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 </script>
+
+@push('scripts')
+<script>
+    var swiper = new Swiper(".newsSwiper", {
+        effect: "coverflow",
+        grabCursor: true,
+        centeredSlides: true,
+        slidesPerView: 2.5,
+        initialSlide: 1,
+        spaceBetween: -250,
+        coverflowEffect: {
+            rotate: 8,
+            stretch: 20,
+            depth: 350,
+            modifier: 2,
+            scale: 0.85,
+            slideShadows: true,
+        },
+        pagination: {
+            el: ".swiper-pagination",
+            clickable: true,
+        },
+        navigation: {
+            nextEl: ".swiper-button-next",
+            prevEl: ".swiper-button-prev",
+        },
+        breakpoints: {
+            320: {
+                slidesPerView: 1.5,
+                spaceBetween: -150
+            },
+            640: {
+                slidesPerView: 2,
+                spaceBetween: -200
+            },
+            1024: {
+                slidesPerView: 2.5,
+                spaceBetween: -250
+            }
+        }
+    });
+</script>
+@endpush
 @endsection
