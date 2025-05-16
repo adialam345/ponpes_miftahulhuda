@@ -30,7 +30,7 @@
                             <i class="fas fa-map-marked-alt fa-2x text-primary-custom"></i>
                         </div>
                         <h3 class="contact-title h4 fw-bold mb-3">Alamat</h3>
-                        <p class="mb-0">Jl. Pesantren No. 123, Desa Tanjung Sari<br>Kecamatan Sukamaju<br>Kabupaten Cianjur, Jawa Barat 43253</p>
+                        <p class="mb-0">Jl. Wisata Tani Gang Pesantren No. 1<br>RT.29/RW.04, Desa Doho<br>Kecamatan Dolopo<br>Kabupaten Madiun, Jawa Timur 63174</p>
                     </div>
                 </div>
             </div>
@@ -42,9 +42,8 @@
                             <i class="fas fa-phone-alt fa-2x text-primary-custom"></i>
                         </div>
                         <h3 class="contact-title h4 fw-bold mb-3">Telepon</h3>
-                        <p class="mb-2"><strong>Kantor:</strong> (0263) 123-4567</p>
-                        <p class="mb-2"><strong>WhatsApp Admin:</strong> +62 812-3456-7890</p>
-                        <p class="mb-0"><strong>Pengasuh:</strong> +62 815-6789-0123</p>
+                        <p class="mb-2"><strong>WhatsApp Admin:</strong> +62 822-6081-2597</p>
+                        <p class="mb-0"><strong>Pengasuh:</strong> +62 821-4385-5976</p>
                     </div>
                 </div>
             </div>
@@ -56,19 +55,19 @@
                             <i class="fas fa-envelope fa-2x text-primary-custom"></i>
                         </div>
                         <h3 class="contact-title h4 fw-bold mb-3">Email & Media Sosial</h3>
-                        <p class="mb-3"><strong>Email:</strong> info@miftahulhuda.sch.id</p>
+                        <p class="mb-3"><strong>Email:</strong> miftahulhuda.doho@gmail.com</p>
                         <div class="social-links">
-                            <a href="#" class="social-link" title="Facebook">
+                            <a href="https://www.facebook.com/ponpesmiftahul.hudadoho.5/?locale=id_ID" class="social-link" title="Facebook" target="_blank" rel="noopener noreferrer">
                                 <i class="fab fa-facebook-f"></i>
                             </a>
-                            <a href="#" class="social-link" title="Instagram">
+                            <a href="https://www.instagram.com/pondok.doho?utm_source=ig_web_button_share_sheet&amp;igsh=ZDNlZDc0MzIxNw==" class="social-link" title="Instagram" target="_blank" rel="noopener noreferrer">
                                 <i class="fab fa-instagram"></i>
                             </a>
-                            <a href="#" class="social-link" title="YouTube">
+                            <a href="https://www.youtube.com/@pondokdoho-ponpesmiftahulh5066" class="social-link" title="YouTube" target="_blank" rel="noopener noreferrer">
                                 <i class="fab fa-youtube"></i>
                             </a>
-                            <a href="#" class="social-link" title="Twitter">
-                                <i class="fab fa-twitter"></i>
+                            <a href="https://www.tiktok.com/@miftahulhuda.doho?is_from_webapp=1&sender_device=pc" class="social-link" title="Tiktok" target="_blank" rel="noopener noreferrer">
+                                <i class="fab fa-tiktok"></i>
                             </a>
                         </div>
                     </div>
@@ -158,73 +157,6 @@
                                 </div>
                             </div>
                         </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Transportation Section -->
-<section class="transportation-section py-5 bg-light-custom">
-    <div class="container">
-        <div class="row justify-content-center mb-5">
-            <div class="col-lg-8 text-center">
-                <h6 class="text-uppercase fw-bold text-primary-custom"><i class="fas fa-bus me-2"></i>Transportasi</h6>
-                <h2 class="fw-bold mb-2">Cara Menuju Pesantren</h2>
-                <div class="title-underline mx-auto mb-4"></div>
-                <p class="text-muted mb-0">Beberapa pilihan transportasi untuk menuju ke Pondok Pesantren Miftahul Huda</p>
-            </div>
-        </div>
-
-        <div class="row g-4">
-            <div class="col-md-6 col-lg-4 mb-4">
-                <div class="transport-card card h-100 border-0 shadow-sm">
-                    <div class="card-body p-4">
-                        <div class="d-flex align-items-center mb-3">
-                            <div class="transport-icon me-3">
-                                <i class="fas fa-car text-primary-custom"></i>
-                            </div>
-                            <h3 class="card-title h5 fw-bold mb-0">Kendaraan Pribadi</h3>
-                        </div>
-                        <p class="card-text">Dari Bandung: arah ke Cianjur, lalu ikuti jalan menuju Desa Tanjung Sari. Pesantren berada sekitar 2 km dari pusat desa.</p>
-                        <p class="card-text small text-muted mb-0">
-                            <i class="fas fa-clock me-1"></i> Estimasi waktu: 1,5 jam dari Bandung
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-6 col-lg-4 mb-4">
-                <div class="transport-card card h-100 border-0 shadow-sm">
-                    <div class="card-body p-4">
-                        <div class="d-flex align-items-center mb-3">
-                            <div class="transport-icon me-3">
-                                <i class="fas fa-bus-alt text-primary-custom"></i>
-                            </div>
-                            <h3 class="card-title h5 fw-bold mb-0">Angkutan Umum</h3>
-                        </div>
-                        <p class="card-text">Naik bus jurusan Bandung-Cianjur, turun di Terminal Cianjur. Lanjutkan dengan angkot jurusan Tanjung Sari.</p>
-                        <p class="card-text small text-muted mb-0">
-                            <i class="fas fa-clock me-1"></i> Estimasi waktu: 2,5 jam dari Bandung
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-6 col-lg-4 mb-4">
-                <div class="transport-card card h-100 border-0 shadow-sm">
-                    <div class="card-body p-4">
-                        <div class="d-flex align-items-center mb-3">
-                            <div class="transport-icon me-3">
-                                <i class="fas fa-shuttle-van text-primary-custom"></i>
-                            </div>
-                            <h3 class="card-title h5 fw-bold mb-0">Antar-Jemput</h3>
-                        </div>
-                        <p class="card-text">Pesantren menyediakan layanan antar-jemput dari terminal Cianjur dengan pemberitahuan minimal 1 hari sebelumnya.</p>
-                        <p class="card-text small text-muted mb-0">
-                            <i class="fas fa-phone-alt me-1"></i> Hubungi: +62 812-3456-7890
-                        </p>
                     </div>
                 </div>
             </div>
@@ -330,35 +262,72 @@
         border-color: var(--primary-color);
         box-shadow: 0 0 0 0.25rem rgba(10, 93, 54, 0.15);
     }
-
-    /* Transport Card Styles */
-    .transport-card {
-        border-radius: 12px;
-        overflow: hidden;
-        transition: all 0.3s ease;
-    }
-
-    .transport-card:hover {
-        transform: translateY(-10px);
-        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1) !important;
-    }
-
-    .transport-icon {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 45px;
-        height: 45px;
-        background-color: var(--light-color);
-        border-radius: 50%;
-        font-size: 1.2rem;
-        transition: all 0.3s ease;
-    }
-
-    .transport-card:hover .transport-icon {
+    .btn-custom {
         background-color: var(--primary-color);
         color: white;
+        border-radius: 8px;
+        transition: all 0.3s ease;
     }
+    .btn-custom:hover {
+        background-color: var(--primary-color-dark);
+        transform: translateY(-3px);
+    }
+    /* Map Section */
+    .map-container {
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    }
+    .map-container iframe {
+        border-radius: 12px;
+    }
+    .map-container .ratio {
+        overflow: hidden;
+        border-radius: 12px;
+    }
+    .map-container .ratio iframe {
+        border-radius: 12px;
+    }
+    /* Responsive Styles */
+    @media (max-width: 768px) {
+        .contact-card {
+            margin-bottom: 20px;
+        }
+        .contact-form-container {
+            padding: 2rem;
+        }
+    }
+    @media (max-width: 576px) {
+        .contact-card {
+            margin-bottom: 15px;
+        }
+        .contact-form-container {
+            padding: 1.5rem;
+        }
+    }
+    /* Animation */
+    .animate__animated {
+        visibility: hidden;
+    }
+    .animate__animated.animate__fadeInUp {
+        visibility: visible;
+        animation-duration: 1s;
+        animation-fill-mode: both;
+    }
+    .animate__animated.animate__fadeInUp {
+        animation-name: fadeInUp;
+    }
+    @keyframes fadeInUp {
+        0% {
+            opacity: 0;
+            transform: translate3d(0, 100%, 0);
+        }
+        100% {
+            opacity: 1;
+            transform: none;
+        }
+    }
+    /* Light and Dark Mode */
 </style>
 
 <script>

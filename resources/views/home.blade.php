@@ -6,7 +6,7 @@
 <!-- Hero Section -->
 <section class="hero-section position-relative">
     <div class="hero-bg"></div>
-    <div class="container position-relative pt-3 pb-4">
+    <div class="container position-relative pt-5 pb-5">
         <div class="row align-items-center">
             <div class="col-lg-6 mb-4 mb-lg-0">
                 <div class="animate__animated animate__fadeInLeft">
@@ -15,22 +15,22 @@
                     </h1>
                     <p class="text-gray-600 mb-4 fs-5">Menjadi lembaga pendidikan Islam yang mencetak generasi berakhlak mulia, berilmu, dan siap menghadapi tantangan masa depan.</p>
                     <div class="d-flex flex-wrap gap-3">
-                        <a href="{{ url('/pesantren') }}" class="btn btn-outline-custom">Tentang Kami</a>
-            </div>
-        </div>
+                        <a href="{{ url('/pesantren') }}" class="btn btn-custom">Tentang Kami</a>
+                    </div>
+                </div>
             </div>
             <div class="col-lg-6 text-center">
                 <div class="hero-image-container animate__animated animate__fadeInRight">
-                    <img src="{{ asset('images/hero-image.png') }}" alt="Santri Belajar" class="hero-image rounded-lg" onerror="this.onerror=null; this.src='https://source.unsplash.com/random/800x600/?islamic,school'; this.className+=' fallback-img'">
-        </div>
+                    <img src="{{ asset('images/hero-image.png') }}" alt="Santri Belajar" class="hero-image rounded-lg shadow-lg" onerror="this.onerror=null; this.src='https://source.unsplash.com/random/800x600/?islamic,school'; this.className+=' fallback-img'">
+                </div>
             </div>
         </div>
-            </div>
+    </div>
 </section>
 
 <!-- News Slider Section -->
-<section class="news-section">
-    <div class="container py-5">
+<section class="news-section py-5">
+    <div class="container">
         <div class="section-header text-center mb-4">
             <h6 class="text-uppercase fw-bold text-primary-custom"><i class="fas fa-newspaper me-2"></i>Terkini</h6>
             <h2 class="fw-bold mb-2">Berita & Pengumuman Terbaru</h2>
@@ -63,7 +63,7 @@
                                 <div class="news-content">
                                     <h3 class="news-title">{{ $item->title }}</h3>
                                     <p class="news-date">
-                                        <i class="fas fa-calendar-alt me-1"></i> 
+                                        <i class="fas fa-calendar-alt me-1"></i>
                                         {{ $item->published_at->format('d M Y') }}
                                     </p>
                                     <p class="news-excerpt">
@@ -86,8 +86,8 @@
             <p class="text-muted">Belum ada berita atau pengumuman terbaru.</p>
         </div>
         @endif
-        
-        <div class="text-center mt-3">
+
+        <div class="text-center mt-4">
             <a href="{{ route('news.index') }}" class="btn btn-custom">
                 <i class="fas fa-arrow-right me-2"></i>Lihat Semua Berita
             </a>
@@ -103,7 +103,7 @@
             <h2 class="fw-bold mb-2">Informasi Umum</h2>
             <div class="title-underline mx-auto"></div>
         </div>
-        
+
         <div class="row g-4">
             <div class="col-md-4 mb-4">
                 <div class="feature-card card h-100 border-0 shadow-sm">
@@ -119,7 +119,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="col-md-4 mb-4">
                 <div class="feature-card card h-100 border-0 shadow-sm">
                     <div class="card-body p-4">
@@ -132,8 +132,8 @@
                             Selengkapnya <i class="fas fa-arrow-right ms-1"></i>
                         </a>
                     </div>
-        </div>
-    </div>
+                </div>
+            </div>
 
             <div class="col-md-4 mb-4">
                 <div class="feature-card card h-100 border-0 shadow-sm">
@@ -163,7 +163,7 @@
                         <i class="fas fa-users fa-2x text-primary-custom"></i>
                     </div>
                     <h3 class="counter fw-bold fs-2" data-target="500">0</h3>
-                    <p class="stat-title text-muted">Jumlah Pengunjung</p>
+                    <p class="stat-title text-muted">Jumlah Santri</p>
                 </div>
             </div>
             <div class="col-6 col-md-3 mb-4 mb-md-0">
@@ -191,7 +191,7 @@
                     </div>
                     <h3 class="counter fw-bold fs-2" data-target="20">0</h3>
                     <p class="stat-title text-muted">Tahun Berdiri</p>
-        </div>
+                </div>
             </div>
         </div>
     </div>
@@ -206,7 +206,7 @@
             <div class="title-underline mx-auto"></div>
             <p class="text-muted mt-3 col-md-8 mx-auto">Berikut adalah jadwal kegiatan dan program unggulan di Pondok Pesantren Miftahul Huda yang membantu mengembangkan potensi para santri.</p>
         </div>
-        
+
         <div class="row g-4">
             <div class="col-md-6 col-lg-4 mb-4">
                 <div class="schedule-card card h-100 border-0 shadow-sm hover-card">
@@ -250,7 +250,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="col-md-6 col-lg-4 mb-4">
                 <div class="schedule-card card h-100 border-0 shadow-sm hover-card">
                     <div class="card-header bg-success text-white d-flex align-items-center py-3">
@@ -293,7 +293,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="col-md-6 col-lg-4 mb-4">
                 <div class="schedule-card card h-100 border-0 shadow-sm hover-card">
                     <div class="card-header bg-warning text-dark d-flex align-items-center py-3">
@@ -337,7 +337,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="text-center mt-4">
             <a href="{{ url('/kegiatan') }}" class="btn btn-outline-custom">
                 Lihat Semua Kegiatan <i class="fas fa-arrow-right ms-2"></i>
@@ -355,7 +355,7 @@
             <div class="title-underline mx-auto"></div>
             <p class="text-muted mt-3 col-md-8 mx-auto">Melihat lebih dekat kehidupan dan aktivitas santri di Pondok Pesantren Miftahul Huda.</p>
         </div>
-        
+
         <div class="row g-3">
             @php
                 // Dapatkan aktivitas yang aktif dan memiliki galeri
@@ -373,15 +373,15 @@
                     ->take(8)
                     ->get();
             @endphp
-            
+
             @forelse($activities as $activity)
                 @if($activity->firstGallery)
                 <div class="col-6 col-md-4 col-lg-3 gallery-item">
                     <div class="gallery-card">
                         <img src="{{ asset('storage/' . $activity->firstGallery->image) }}" alt="{{ $activity->title }}" class="img-fluid rounded">
                         <div class="gallery-overlay">
-                            <a href="{{ asset('storage/' . $activity->firstGallery->image) }}" class="gallery-icon" 
-                               data-fancybox="gallery-{{ $activity->id }}" 
+                            <a href="{{ asset('storage/' . $activity->firstGallery->image) }}" class="gallery-icon"
+                               data-fancybox="gallery-{{ $activity->id }}"
                                data-caption="{{ $activity->title }} - {{ $activity->firstGallery->title ?? 'Foto 1' }}">
                                 <i class="fas fa-search-plus"></i>
                             </a>
@@ -392,13 +392,13 @@
                         <small class="text-muted">{{ $activity->galleries_count }} foto</small>
                     </div>
                 </div>
-                
+
                 <!-- Hidden links for additional gallery images -->
                 <div class="d-none" id="gallery-links-{{ $activity->id }}">
                 @foreach($activity->galleries as $gallery)
                     @if($gallery->id !== $activity->firstGallery->id)
-                    <a href="{{ asset('storage/' . $gallery->image) }}" 
-                       data-fancybox="gallery-{{ $activity->id }}" 
+                    <a href="{{ asset('storage/' . $gallery->image) }}"
+                       data-fancybox="gallery-{{ $activity->id }}"
                        data-type="image"
                        data-caption="{{ $activity->title }} - {{ $gallery->title ?? 'Foto ' . ($loop->iteration + 1) }}">
                        <img src="{{ asset('storage/' . $gallery->image) }}" alt="{{ $gallery->title ?? 'Foto ' . ($loop->iteration + 1) }}" style="display:none">
@@ -416,7 +416,7 @@
                 </div>
             @endforelse
         </div>
-        
+
         <div class="text-center mt-4">
             <a href="{{ route('gallery.index') }}" class="btn btn-outline-custom">
                 Lihat Semua Galeri <i class="fas fa-arrow-right ms-2"></i>
@@ -429,317 +429,10 @@
     /* Hero Section Styles */
     .hero-section {
         overflow: hidden;
-        padding: 3rem 0 2rem;
+        padding: 5rem 0 4rem;
         position: relative;
-    }
-    
-    .hero-bg {
-        position: absolute;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        background-color: var(--light-color);
-        clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
-        z-index: -1;
-    }
-    
-    .hero-image-container {
-        position: relative;
-        padding: 1rem;
-    }
-    
-    .hero-image {
-        width: 100%;
-        max-height: 450px;
-        object-fit: cover;
-        border-radius: 12px;
-        transition: all 0.5s ease;
-    }
-    
-    .hero-image:hover {
-        transform: scale(1.02);
-    }
-    
-    /* Section Styling */
-    .section-header {
-        margin-bottom: 1rem;
-    }
-    
-    .title-underline {
-        height: 4px;
-        width: 50px;
-        background-color: var(--primary-color);
-        margin-top: 10px;
-        margin-bottom: 0;
-    }
-    
-    /* News Slider Custom Styles */
-    .news-section {
-        background-color: #fff;
-        padding: 1rem 0;
-        overflow: hidden;
-    }
-    
-    .news-slider-container {
-        padding: 0;
-        max-width: 100%;
-        margin-left: auto;
-        margin-right: auto;
-        overflow: visible;
-    }
-    
-    .swiper {
-        width: 100%;
-        padding: 30px 0;
-        overflow: visible;
-    }
-    
-    .swiper-slide {
-        background-position: center;
-        background-size: cover;
-        width: 600px;
-        height: 500px;
-        transition: transform 0.6s ease;
-    }
-    
-    .swiper-slide-active {
-        transform: scale(1.1);
-        z-index: 2;
-    }
-    
-    .news-card {
-        width: 100%;
-        height: 100%;
-        background: #fff;
-        border-radius: 15px;
-        overflow: hidden;
-        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-        transition: transform 0.3s ease;
-        display: flex;
-        flex-direction: column;
-    }
-    
-    .news-card:hover {
-        transform: translateY(-5px);
-    }
-    
-    .news-image {
-        width: 100%;
-        height: 360px;
-        object-fit: cover;
-    }
-    
-    .news-image-placeholder {
-        width: 100%;
-        height: 360px;
-        background: #f8f9fa;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-    
-    .news-content {
-        padding: 20px;
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-    }
-    
-    .news-title {
-        font-size: 1.25rem;
-        font-weight: bold;
-        color: #2d3748;
-        margin-bottom: 10px;
-        line-height: 1.3;
-    }
-    
-    .news-date {
-        font-size: 0.9rem;
-        color: #718096;
-        margin-bottom: 10px;
-    }
-    
-    .news-excerpt {
-        font-size: 1rem;
-        color: #4a5568;
-        line-height: 1.4;
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-    }
-    
-    .swiper-button-next,
-    .swiper-button-prev {
-        color: var(--primary-color);
-        background: rgba(255, 255, 255, 0.9);
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    }
-    
-    .swiper-button-next:after,
-    .swiper-button-prev:after {
-        font-size: 22px;
-    }
-    
-    .swiper-pagination-bullet {
-        background: var(--primary-color);
-        width: 10px;
-        height: 10px;
-    }
-    
-    .swiper-pagination-bullet-active {
-        background: var(--primary-color);
-        transform: scale(1.2);
-    }
-    
-    @media (max-width: 768px) {
-        .swiper-slide {
-            width: 340px;
-            height: 440px;
-        }
-        
-        .news-image,
-        .news-image-placeholder {
-            height: 300px;
-        }
-        
-        .news-title {
-            font-size: 1.1rem;
-        }
-        
-        .news-excerpt {
-            font-size: 0.9rem;
-            -webkit-line-clamp: 2;
-        }
-        
-        .news-content {
-            padding: 15px;
-        }
-    }
-    
-    /* Features Section Styles */
-    .feature-card {
-        border-radius: 12px;
-        overflow: hidden;
-        transition: all 0.3s ease;
-    }
-    
-    .feature-card:hover {
-        transform: translateY(-10px);
-        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1) !important;
-    }
-    
-    .feature-icon {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        width: 60px;
-        height: 60px;
-        background-color: var(--light-color);
-        border-radius: 50%;
-        margin-bottom: 1rem;
-    }
-    
-    .feature-link {
-        color: var(--primary-color);
-        text-decoration: none;
-        font-weight: 600;
-        transition: all 0.3s ease;
-        display: inline-block;
-        margin-top: 1rem;
-    }
-    
-    .feature-link:hover {
-        color: var(--secondary-color);
-        transform: translateX(5px);
-    }
-    
-    /* Stats Section Styles */
-    .stats-section {
-        padding: 4rem 0;
-        background-color: #fff;
-    }
-    
-    .stat-card {
-        padding: 1.5rem;
-        transition: all 0.3s ease;
-    }
-    
-    .stat-card:hover .stat-icon {
-        transform: scale(1.2);
-    }
-    
-    .stat-icon {
-        display: inline-block;
-        transition: all 0.3s ease;
-    }
-    
-    .counter {
-        color: var(--dark-color);
-        margin-bottom: 0.5rem;
-    }
-    
-    /* Media Queries */
-    @media (max-width: 767px) {
-        .carousel-item img, .carousel-item .bg-light {
-            height: 300px !important;
-        }
-        
-        .hero-section {
-            padding: 2rem 0 1rem;
-        }
-        
-        .feature-card {
-            margin-bottom: 1.5rem;
-        }
     }
 
-    /* Schedule Section Styles */
-    .schedule-section {
-        position: relative;
-    }
-    
-    .schedule-list {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-    }
-    
-    .schedule-card {
-        transition: all 0.3s ease;
-        border-radius: 10px;
-        overflow: hidden;
-    }
-    
-    .hover-card:hover {
-        transform: translateY(-8px);
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1) !important;
-    }
-    
-    .schedule-time {
-        min-width: 70px;
-        font-size: 0.9rem;
-    }
-    
-    .card-header {
-        border-bottom: 0;
-    }
-    
-    /* Hero Parallax Effect */
-    .hero-section {
-        overflow: hidden;
-        padding: 4rem 0 3rem;
-        position: relative;
-        background-attachment: fixed;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: cover;
-    }
-    
     .hero-bg {
         position: absolute;
         top: 0;
@@ -753,28 +446,282 @@
         background-blend-mode: overlay;
         opacity: 0.1;
     }
-    
-    /* Animation for schedule cards */
-    @keyframes slideInRight {
-        from {
-            transform: translateX(50px);
-            opacity: 0;
+
+    .hero-image-container {
+        position: relative;
+        padding: 1rem;
+    }
+
+    .hero-image {
+        width: 100%;
+        max-height: 450px;
+        object-fit: cover;
+        border-radius: 12px;
+        transition: all 0.5s ease;
+    }
+
+    .hero-image:hover {
+        transform: scale(1.02);
+    }
+
+    /* Section Styling */
+    .section-header {
+        margin-bottom: 2rem;
+    }
+
+    .title-underline {
+        height: 4px;
+        width: 50px;
+        background-color: var(--primary-color);
+        margin-top: 10px;
+        margin-bottom: 0;
+    }
+
+    /* News Slider Custom Styles */
+    .news-section {
+        background-color: #fff;
+        padding: 4rem 0;
+        overflow: hidden;
+    }
+
+    .news-slider-container {
+        padding: 0;
+        max-width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+        overflow: visible;
+    }
+
+    .swiper {
+        width: 100%;
+        padding: 30px 0;
+        overflow: visible;
+    }
+
+    .swiper-slide {
+        background-position: center;
+        background-size: cover;
+        width: 600px;
+        height: 500px;
+        transition: transform 0.6s ease;
+    }
+
+    .swiper-slide-active {
+        transform: scale(1.1);
+        z-index: 2;
+    }
+
+    .news-card {
+        width: 100%;
+        height: 100%;
+        background: #fff;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        transition: transform 0.3s ease;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .news-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .news-image {
+        width: 100%;
+        height: 360px;
+        object-fit: cover;
+    }
+
+    .news-image-placeholder {
+        width: 100%;
+        height: 360px;
+        background: #f8f9fa;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .news-content {
+        padding: 20px;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .news-title {
+        font-size: 1.25rem;
+        font-weight: bold;
+        color: #2d3748;
+        margin-bottom: 10px;
+        line-height: 1.3;
+    }
+
+    .news-date {
+        font-size: 0.9rem;
+        color: #718096;
+        margin-bottom: 10px;
+    }
+
+    .news-excerpt {
+        font-size: 1rem;
+        color: #4a5568;
+        line-height: 1.4;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .swiper-button-next,
+    .swiper-button-prev {
+        color: var(--primary-color);
+        background: rgba(255, 255, 255, 0.9);
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    .swiper-button-next:after,
+    .swiper-button-prev:after {
+        font-size: 22px;
+    }
+
+    .swiper-pagination-bullet {
+        background: var(--primary-color);
+        width: 10px;
+        height: 10px;
+    }
+
+    .swiper-pagination-bullet-active {
+        background: var(--primary-color);
+        transform: scale(1.2);
+    }
+
+    @media (max-width: 768px) {
+        .swiper-slide {
+            width: 340px;
+            height: 440px;
         }
-        to {
-            transform: translateX(0);
-            opacity: 1;
+
+        .news-image,
+        .news-image-placeholder {
+            height: 300px;
+        }
+
+        .news-title {
+            font-size: 1.1rem;
+        }
+
+        .news-excerpt {
+            font-size: 0.9rem;
+            -webkit-line-clamp: 2;
+        }
+
+        .news-content {
+            padding: 15px;
         }
     }
-    
-    .animate-slide-in {
-        animation: slideInRight 0.5s ease forwards;
+
+    /* Features Section Styles */
+    .feature-card {
+        border-radius: 12px;
+        overflow: hidden;
+        transition: all 0.3s ease;
+    }
+
+    .feature-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1) !important;
+    }
+
+    .feature-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 60px;
+        height: 60px;
+        background-color: var(--light-color);
+        border-radius: 50%;
+        margin-bottom: 1rem;
+    }
+
+    .feature-link {
+        color: var(--primary-color);
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        display: inline-block;
+        margin-top: 1rem;
+    }
+
+    .feature-link:hover {
+        color: var(--secondary-color);
+        transform: translateX(5px);
+    }
+
+    /* Stats Section Styles */
+    .stats-section {
+        padding: 4rem 0;
+        background-color: #fff;
+    }
+
+    .stat-card {
+        padding: 1.5rem;
+        transition: all 0.3s ease;
+    }
+
+    .stat-card:hover .stat-icon {
+        transform: scale(1.2);
+    }
+
+    .stat-icon {
+        display: inline-block;
+        transition: all 0.3s ease;
+    }
+
+    .counter {
+        color: var(--dark-color);
+        margin-bottom: 0.5rem;
+    }
+
+    /* Schedule Section Styles */
+    .schedule-section {
+        position: relative;
+    }
+
+    .schedule-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .schedule-card {
+        transition: all 0.3s ease;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    .hover-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1) !important;
+    }
+
+    .schedule-time {
+        min-width: 70px;
+        font-size: 0.9rem;
+    }
+
+    .card-header {
+        border-bottom: 0;
     }
 
     /* Gallery Section Styles */
     .gallery-section {
         background-color: #fff;
     }
-    
+
     .gallery-card {
         position: relative;
         margin-bottom: 15px;
@@ -783,23 +730,23 @@
         box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
         transition: all 0.3s ease;
     }
-    
+
     .gallery-card:hover {
         transform: translateY(-5px);
         box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
     }
-    
+
     .gallery-card img {
         transition: all 0.5s ease;
         width: 100%;
         aspect-ratio: 1 / 1;
         object-fit: cover;
     }
-    
+
     .gallery-card:hover img {
         transform: scale(1.05);
     }
-    
+
     .gallery-overlay {
         position: absolute;
         top: 0;
@@ -813,11 +760,11 @@
         opacity: 0;
         transition: all 0.3s ease;
     }
-    
+
     .gallery-card:hover .gallery-overlay {
         opacity: 1;
     }
-    
+
     .gallery-icon {
         width: 50px;
         height: 50px;
@@ -832,125 +779,132 @@
         transition: all 0.3s ease;
         text-decoration: none;
     }
-    
+
     .gallery-card:hover .gallery-icon {
         transform: scale(1);
     }
-    
-    /* Fancybox Custom Styles */
-    .fancybox__container {
-        --fancybox-bg: rgba(0, 0, 0, 0.9);
-    }
-    
-    .fancybox__nav {
-        --carousel-button-bg: rgba(0, 0, 0, 0.5);
-        --carousel-button-svg-width: 24px;
-        --carousel-button-svg-height: 24px;
-        --carousel-button-svg-stroke-width: 2.5;
-    }
-    
-    .fancybox__nav .carousel__button {
-        visibility: visible;
-        opacity: 0.7;
-        background-color: rgba(0, 0, 0, 0.6);
-        border-radius: 50%;
-        width: 48px;
-        height: 48px;
-    }
-    
-    .fancybox__nav .carousel__button:hover {
-        opacity: 1;
-        background-color: rgba(0, 0, 0, 0.8);
-    }
-    
-    .fancybox__thumbs {
-        background-color: rgba(0, 0, 0, 0.3);
-    }
-    
-    /* Ensure images are properly loaded in fancybox */
-    .fancybox__content img {
-        display: block;
-        max-width: 100%;
-        max-height: 100%;
-    }
-    
-    .fancybox__slide {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-    
-    /* Loading indicator for images */
-    .fancybox-loading {
-        border: 6px solid rgba(100, 100, 100, 0.4);
-        border-top: 6px solid var(--primary-color);
-        border-radius: 50%;
-        width: 50px;
-        height: 50px;
-        animation: fancybox-rotate 1s linear infinite;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        margin-top: -25px;
-        margin-left: -25px;
-        z-index: 99999;
-    }
-    
-    @keyframes fancybox-rotate {
-        0% {
-            transform: rotate(0deg);
+
+    /* Animation for schedule cards */
+    @keyframes slideInRight {
+        from {
+            transform: translateX(50px);
+            opacity: 0;
         }
-        100% {
-            transform: rotate(360deg);
+        to {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+
+    .animate-slide-in {
+        animation: slideInRight 0.5s ease forwards;
+    }
+
+    /* Media Queries */
+    @media (max-width: 767px) {
+        .hero-section {
+            padding: 3rem 0 2rem;
+        }
+
+        .feature-card {
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-image {
+            max-height: 350px;
         }
     }
 </style>
 
+@push('scripts')
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Initialize the Bootstrap carousel with auto-play
-        var newsCarousel = new bootstrap.Carousel(document.getElementById('newsCarousel'), {
-            interval: 6000,  // 6 seconds per slide
-            wrap: true,      // Continuous loop
-            keyboard: true,  // Allow keyboard navigation
-            pause: 'hover'   // Pause on mouse hover
+        // Initialize Swiper
+        var swiper = new Swiper(".newsSwiper", {
+            effect: "coverflow",
+            grabCursor: true,
+            centeredSlides: true,
+            slidesPerView: 2.5,
+            initialSlide: 1,
+            spaceBetween: -250,
+            coverflowEffect: {
+                rotate: 8,
+                stretch: 20,
+                depth: 350,
+                modifier: 2,
+                scale: 0.85,
+                slideShadows: true,
+            },
+            pagination: {
+                el: ".swiper-pagination",
+                clickable: true,
+            },
+            navigation: {
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev",
+            },
+            breakpoints: {
+                320: {
+                    slidesPerView: 1.5,
+                    spaceBetween: -150
+                },
+                640: {
+                    slidesPerView: 2,
+                    spaceBetween: -200
+                },
+                1024: {
+                    slidesPerView: 2.5,
+                    spaceBetween: -250
+                }
+            }
         });
-        
-        // Simple animation for counter numbers
+
+        // Counter animation
         const counters = document.querySelectorAll('.counter');
-        
-        counters.forEach(counter => {
-            const target = +counter.innerText;
-            const increment = target / 20;
-            
-            const updateCounter = () => {
-                const count = +counter.innerText.replace(/,/g, '');
-                if (count < target) {
-                    counter.innerText = Math.ceil(count + increment);
-                    setTimeout(updateCounter, 100);
+        const duration = 3000; // Total animation duration in ms (3 seconds)
+        const frameRate = 1000/60; // 60fps
+
+        // Function to animate counters
+        const startCounting = (counter) => {
+            const target = parseInt(counter.getAttribute('data-target'));
+            const frames = duration/frameRate;
+            const increment = target/frames;
+            let current = 0;
+
+            const updateCount = () => {
+                if (current < target) {
+                    current += increment;
+                    counter.innerText = Math.min(Math.floor(current), target);
+                    requestAnimationFrame(updateCount);
                 } else {
                     counter.innerText = target;
                 }
             };
-            
+
             counter.innerText = '0';
-            
-            // Start counter animation when element is in viewport
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        updateCounter();
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, { threshold: 0.5 });
-            
-            observer.observe(counter);
+            requestAnimationFrame(updateCount);
+        };
+
+        // Create Intersection Observer for counters
+        const counterObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    startCounting(entry.target);
+                    counterObserver.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.5 // Trigger when 50% of element is visible
         });
-        
+
+        // Observe all counters
+        counters.forEach(counter => {
+            counter.innerText = '0';
+            counterObserver.observe(counter);
+        });
+
         // Add animation classes when elements enter viewport
         const animatedElements = document.querySelectorAll('.feature-card, .stat-card');
-        
         const animateOnScroll = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -959,15 +913,13 @@
                 }
             });
         }, { threshold: 0.1 });
-        
+
         animatedElements.forEach(element => {
             animateOnScroll.observe(element);
         });
 
         // Animate schedule cards on scroll
         const scheduleCards = document.querySelectorAll('.schedule-card');
-        let delay = 0;
-        
         const animateSchedules = new IntersectionObserver((entries) => {
             entries.forEach((entry, index) => {
                 if (entry.isIntersecting) {
@@ -978,14 +930,13 @@
                 }
             });
         }, { threshold: 0.1 });
-        
+
         scheduleCards.forEach(card => {
             animateSchedules.observe(card);
         });
-        
+
         // Animate gallery items on scroll
         const galleryItems = document.querySelectorAll('.gallery-item');
-        
         const animateGallery = new IntersectionObserver((entries) => {
             entries.forEach((entry, index) => {
                 if (entry.isIntersecting) {
@@ -996,198 +947,40 @@
                 }
             });
         }, { threshold: 0.1 });
-        
+
         galleryItems.forEach(item => {
             animateGallery.observe(item);
         });
-    });
-</script>
 
-<!-- Include Fancybox for Gallery -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css"/>
-<script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
-<script src="{{ asset('js/custom-gallery.js') }}"></script>
-
-<script>
-// Debugging helper untuk FancyBox
-document.addEventListener('DOMContentLoaded', function() {
-    // Log ketika FancyBox tersedia
-    if (typeof Fancybox !== 'undefined') {
-        console.log("FancyBox tersedia di halaman");
-        
-        // Tambahkan class untuk memastikan link terdeteksi dengan benar
-        document.querySelectorAll('[data-fancybox]').forEach(function(el) {
-            el.classList.add('fancybox-enabled');
-        });
-        
-        // Event listener untuk debugging
-        document.querySelectorAll('.gallery-card .gallery-icon').forEach(link => {
-            link.addEventListener('click', function(e) {
-                const galleryId = this.getAttribute('data-fancybox');
-                console.log("Mengklik galeri:", galleryId);
-                
-                // Hitung jumlah gambar dalam galeri ini
-                const totalImages = document.querySelectorAll(`[data-fancybox="${galleryId}"]`).length;
-                console.log(`Galeri ${galleryId} berisi ${totalImages} gambar`);
-                
-                // Log semua URL gambar untuk debugging
-                const imageUrls = [];
-                document.querySelectorAll(`[data-fancybox="${galleryId}"]`).forEach(item => {
-                    imageUrls.push(item.getAttribute('href'));
-                });
-                console.log("URLs gambar dalam galeri:", imageUrls);
-                
-                // Coba untuk me-reset FancyBox jika ada masalah
-                if (totalImages > 0 && typeof Fancybox.show === 'function') {
-                    console.log("FancyBox.show tersedia");
-                } else {
-                    console.error("FancyBox.show tidak tersedia atau tidak ada gambar");
-                }
+        // Initialize Fancybox for gallery
+        if (typeof Fancybox !== 'undefined') {
+            Fancybox.bind("[data-fancybox]", {
+                // Fancybox options
+                Carousel: {
+                    infinite: false,
+                },
+                Thumbs: {
+                    autoStart: true,
+                },
+                Toolbar: {
+                    display: [
+                        { id: "prev", position: "center" },
+                        { id: "counter", position: "center" },
+                        { id: "next", position: "center" },
+                        "zoom",
+                        "slideshow",
+                        "fullscreen",
+                        "download",
+                        "close",
+                    ],
+                },
             });
-        });
-        
-        // Inisialisasi alternatif jika script utama gagal
-        setTimeout(function() {
-            // Cek apakah FancyBox sudah berjalan dengan benar
-            if (typeof window.initFancyBox === 'function') {
-                console.log("Mencoba inisialisasi FancyBox alternatif");
-                window.initFancyBox();
-            } else {
-                console.log("FancyBox helper tidak tersedia");
-                
-                // Jika helper tidak tersedia, gunakan metode langsung sederhana
-                document.querySelectorAll('.gallery-card .gallery-icon').forEach(function(el) {
-                    el.addEventListener('click', function(e) {
-                        e.preventDefault();
-                        const galleryId = this.getAttribute('data-fancybox');
-                        
-                        // Kumpulkan semua gambar dengan galleryId yang sama
-                        const images = [];
-                        document.querySelectorAll(`[data-fancybox="${galleryId}"]`).forEach(item => {
-                            images.push({
-                                src: item.getAttribute('href'),
-                                caption: item.getAttribute('data-caption') || ''
-                            });
-                        });
-                        
-                        // Cari indeks gambar yang diklik
-                        const currentSrc = this.getAttribute('href');
-                        let startIndex = 0;
-                        for (let i = 0; i < images.length; i++) {
-                            if (images[i].src === currentSrc) {
-                                startIndex = i;
-                                break;
-                            }
-                        }
-                        
-                        // Buka galeri dengan Fancybox API
-                        try {
-                            Fancybox.show(images, {
-                                startIndex: startIndex
-                            });
-                        } catch (error) {
-                            console.error("Error membuka FancyBox:", error);
-                            alert("Maaf, ada masalah membuka galeri. Silakan coba lagi.");
-                        }
-                    });
-                });
-            }
-        }, 1000); // Tunggu 1 detik setelah page load
-    } else {
-        console.error("FancyBox tidak tersedia di halaman");
-    }
-});
-</script>
-
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-    const counters = document.querySelectorAll('.counter');
-    const duration = 3000; // Durasi total animasi dalam ms (2 detik)
-    const frameRate = 1000/60; // 60fps
-
-    // Fungsi untuk menjalankan animasi counter
-    const startCounting = (counter) => {
-        const target = parseInt(counter.getAttribute('data-target'));
-        const frames = duration/frameRate;
-        const increment = target/frames;
-        let current = 0;
-
-        const updateCount = () => {
-            if (current < target) {
-                current += increment;
-                counter.innerText = Math.min(Math.floor(current), target);
-                requestAnimationFrame(updateCount);
-            } else {
-                counter.innerText = target;
-            }
-        };
-
-        counter.innerText = '0';
-        requestAnimationFrame(updateCount);
-    };
-
-    // Buat Intersection Observer
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            // Jika elemen terlihat di viewport
-            if (entry.isIntersecting) {
-                startCounting(entry.target);
-                // Hentikan observasi setelah animasi dimulai
-                observer.unobserve(entry.target);
-            }
-        });
-    }, {
-        threshold: 0.5 // Trigger ketika 50% elemen terlihat
-    });
-
-    // Observe semua counter
-    counters.forEach(counter => {
-        counter.innerText = '0';
-        observer.observe(counter);
-    });
-});
-</script>
-
-@push('scripts')
-<script>
-    var swiper = new Swiper(".newsSwiper", {
-        effect: "coverflow",
-        grabCursor: true,
-        centeredSlides: true,
-        slidesPerView: 2.5,
-        initialSlide: 1,
-        spaceBetween: -250,
-        coverflowEffect: {
-            rotate: 8,
-            stretch: 20,
-            depth: 350,
-            modifier: 2,
-            scale: 0.85,
-            slideShadows: true,
-        },
-        pagination: {
-            el: ".swiper-pagination",
-            clickable: true,
-        },
-        navigation: {
-            nextEl: ".swiper-button-next",
-            prevEl: ".swiper-button-prev",
-        },
-        breakpoints: {
-            320: {
-                slidesPerView: 1.5,
-                spaceBetween: -150
-            },
-            640: {
-                slidesPerView: 2,
-                spaceBetween: -200
-            },
-            1024: {
-                slidesPerView: 2.5,
-                spaceBetween: -250
-            }
         }
     });
 </script>
 @endpush
+
+<!-- Include Fancybox for Gallery -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css"/>
+<script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
 @endsection
