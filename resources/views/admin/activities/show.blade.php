@@ -2,319 +2,433 @@
 
 @section('title', 'Detail Kegiatan')
 
-@section('content')
-<div class="py-6 bg-gray-50 min-h-screen">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-        <div class="flex justify-between items-center mb-4">
-            <div>
-                <h1 class="text-2xl font-semibold text-gray-900">Detail Kegiatan</h1>
-                <p class="text-sm text-gray-600">Kelola informasi dan galeri foto kegiatan</p>
-            </div>
-            <div class="flex space-x-2">
-                <a href="{{ route('admin.activities.edit', $activity->id) }}" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                    <i class="fas fa-edit mr-2"></i> Edit
-                </a>
-                <a href="{{ route('admin.activities.index') }}" class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                    <i class="fas fa-arrow-left mr-2"></i> Kembali
-                </a>
-            </div>
-        </div>
+@push('styles')
+<style>
+    .gallery-item {
+        position: relative;
+        transition: all 0.3s ease;
+        cursor: grab;
+    }
 
-        <div class="bg-white shadow-sm rounded-md overflow-hidden mb-6">
-            <div class="border-b border-gray-200 px-4 py-4">
-                <h3 class="text-lg font-medium leading-6 text-gray-900">Informasi Kegiatan</h3>
-            </div>
-            <div class="p-6">
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <!-- Kolom Informasi -->
-                    <div class="md:col-span-2">
-                        <dl class="divide-y divide-gray-200">
-                            <div class="py-3 grid grid-cols-3 gap-4">
-                                <dt class="text-sm font-medium text-gray-500">Judul</dt>
-                                <dd class="text-sm text-gray-900 col-span-2">{{ $activity->title }}</dd>
-                            </div>
-                            <div class="py-3 grid grid-cols-3 gap-4">
-                                <dt class="text-sm font-medium text-gray-500">Deskripsi</dt>
-                                <dd class="text-sm text-gray-900 col-span-2">{!! nl2br(e($activity->description)) !!}</dd>
-                            </div>
-                            <div class="py-3 grid grid-cols-3 gap-4">
-                                <dt class="text-sm font-medium text-gray-500">Tanggal Kegiatan</dt>
-                                <dd class="text-sm text-gray-900 col-span-2">
-                                    {{ $activity->activity_date ? $activity->activity_date->format('d F Y') : 'Tidak ada tanggal' }}
-                                </dd>
-                            </div>
-                            <div class="py-3 grid grid-cols-3 gap-4">
-                                <dt class="text-sm font-medium text-gray-500">Status</dt>
-                                <dd class="text-sm col-span-2">
-                                    @if($activity->is_active)
-                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Aktif</span>
-                                    @else
-                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">Tidak Aktif</span>
-                                    @endif
-                                </dd>
-                            </div>
-                            <div class="py-3 grid grid-cols-3 gap-4">
-                                <dt class="text-sm font-medium text-gray-500">Dibuat pada</dt>
-                                <dd class="text-sm text-gray-900 col-span-2">{{ $activity->created_at->format('d F Y, H:i') }}</dd>
-                            </div>
-                            <div class="py-3 grid grid-cols-3 gap-4">
-                                <dt class="text-sm font-medium text-gray-500">Terakhir diupdate</dt>
-                                <dd class="text-sm text-gray-900 col-span-2">{{ $activity->updated_at->format('d F Y, H:i') }}</dd>
-                            </div>
-                        </dl>
-                    </div>
-                    
-                    <!-- Kolom Thumbnail -->
-                    <div class="md:col-span-1">
-                        <h4 class="text-sm font-medium text-gray-500 mb-2">Thumbnail</h4>
-                        @if($activity->thumbnail)
-                            <img src="{{ asset('storage/'.$activity->thumbnail) }}" alt="{{ $activity->alt_text }}" class="w-full h-auto rounded-md shadow">
-                            <p class="mt-2 text-xs text-gray-500">{{ $activity->alt_text }}</p>
-                        @else
-                            <div class="border border-gray-200 rounded-md p-4 text-center text-gray-400">
-                                <i class="fas fa-image text-3xl mb-2"></i>
-                                <p>Tidak ada thumbnail</p>
-                            </div>
-                        @endif
-                    </div>
-                </div>
-            </div>
-        </div>
+    .gallery-item:active {
+        cursor: grabbing;
+    }
 
-        <!-- Galeri Foto -->
-        <div class="bg-white shadow-sm rounded-md overflow-hidden mb-6">
-            <div class="border-b border-gray-200 px-4 py-4 flex justify-between items-center">
-                <h3 class="text-lg font-medium leading-6 text-gray-900">Galeri Foto</h3>
-                <button type="button" data-toggle="modal" data-target="#addPhotosModal" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
-                    <i class="fas fa-plus mr-2"></i> Tambah Foto
-                </button>
-            </div>
-            <div class="p-6">
-                @if($activity->galleries->count() > 0)
-                    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4" id="sortable-gallery">
-                        @foreach($activity->galleries->sortBy('order') as $gallery)
-                            <div class="relative group gallery-item" data-id="{{ $gallery->id }}">
-                                <div class="relative h-40 overflow-hidden rounded-md shadow-sm border border-gray-200">
-                                    <img src="{{ asset('storage/'.$gallery->image) }}" alt="{{ $gallery->alt_text }}" class="w-full h-full object-cover">
-                                    <div class="absolute inset-0 bg-black bg-opacity-20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                                        <div class="flex space-x-2">
-                                            <button type="button" onclick="openImageModal('{{ asset('storage/'.$gallery->image) }}', '{{ $gallery->title }}', '{{ $gallery->description }}')" class="p-2 bg-white rounded-full text-gray-700 hover:text-blue-500">
-                                                <i class="fas fa-eye"></i>
-                                            </button>
-                                            <button type="button" onclick="deleteImage({{ $gallery->id }})" class="p-2 bg-white rounded-full text-gray-700 hover:text-red-500">
-                                                <i class="fas fa-trash"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="mt-1 text-sm text-gray-700 truncate">{{ $gallery->title ?: 'Tanpa Judul' }}</div>
-                                <div class="text-xs text-gray-500">Urutan: {{ $gallery->order }}</div>
-                                <div class="absolute top-1 left-1 cursor-move handle">
-                                    <i class="fas fa-grip-lines text-white drop-shadow-md"></i>
-                                </div>
-                            </div>
-                        @endforeach
-                    </div>
-                    <p class="mt-4 text-sm text-gray-500"><i class="fas fa-info-circle mr-1"></i> Anda dapat mengatur urutan foto dengan drag and drop.</p>
-                @else
-                    <div class="text-center py-8">
-                        <i class="fas fa-images text-gray-300 text-5xl mb-3"></i>
-                        <p class="text-gray-500">Belum ada foto di galeri ini</p>
-                        <p class="text-sm text-gray-400 mt-1">Klik tombol "Tambah Foto" untuk menambahkan foto</p>
-                    </div>
-                @endif
-            </div>
-        </div>
-    </div>
-</div>
+    .gallery-item.sortable-ghost {
+        opacity: 0.5;
+        transform: scale(0.95);
+    }
 
-<!-- Modal Tambah Foto -->
-<div class="modal fade" id="addPhotosModal" tabindex="-1" role="dialog" aria-labelledby="addPhotosModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="addPhotosModalLabel">Tambah Foto ke Galeri</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <form action="{{ route('admin.activities.add-images', $activity->id) }}" method="POST" enctype="multipart/form-data">
-                @csrf
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label for="images">Pilih Foto <span class="text-danger">*</span></label>
-                        <div class="custom-file">
-                            <input type="file" class="custom-file-input" id="modalImages" name="images[]" multiple required>
-                            <label class="custom-file-label" for="modalImages">Pilih file...</label>
-                            <small class="form-text text-muted">Format: JPG, PNG, GIF. Maks: 10MB per file. Maksimal 20 foto sekaligus dengan total ukuran tidak melebihi 40MB.</small>
-                        </div>
-                        <div id="modal-preview-container" class="row mt-3"></div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn btn-primary">Upload Foto</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
+    .gallery-item.sortable-chosen {
+        transform: scale(1.05);
+        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.2);
+        z-index: 1000;
+    }
 
-<!-- Modal Lihat Gambar -->
-<div class="modal fade" id="viewImageModal" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="viewImageTitle">Detail Foto</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="text-center">
-                    <img id="viewImageSrc" src="" alt="Detail foto" class="img-fluid rounded mb-3">
-                </div>
-                <div id="viewImageDescription" class="text-muted"></div>
-            </div>
-        </div>
-    </div>
-</div>
+    .gallery-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        border-radius: 0.5rem;
+    }
 
-<!-- Form Hapus Gambar -->
-<form id="delete-image-form" action="" method="POST" style="display: none;">
-    @csrf
-    @method('DELETE')
-</form>
-@endsection
+    .gallery-item:hover .gallery-overlay {
+        opacity: 1;
+    }
 
-@section('scripts')
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/resumablejs@1.1.0/resumable.min.js"></script>
+    .drag-handle {
+        position: absolute;
+        top: 0.5rem;
+        left: 0.5rem;
+        background: rgba(0, 0, 0, 0.7);
+        color: white;
+        padding: 0.25rem;
+        border-radius: 0.25rem;
+        cursor: grab;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .gallery-item:hover .drag-handle {
+        opacity: 1;
+    }
+
+    .info-card {
+        background: white;
+        border-radius: 1rem;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        margin-bottom: 1.5rem;
+    }
+
+    .section-header {
+        background: linear-gradient(135deg, #f0fdf4 0%, #e0f2fe 100%);
+        padding: 1rem 1.5rem;
+        border-bottom: 1px solid #e5e7eb;
+    }
+
+    .thumbnail-container {
+        position: relative;
+        overflow: hidden;
+        border-radius: 0.75rem;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+    }
+
+    .thumbnail-container:hover {
+        transform: scale(1.02);
+        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+    }
+
+    .upload-progress {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: rgba(16, 185, 129, 0.2);
+        overflow: hidden;
+    }
+
+    .upload-progress-bar {
+        height: 100%;
+        background: linear-gradient(90deg, #10b981, #059669);
+        transition: width 0.3s ease;
+        width: 0%;
+    }
+
+    .fade-in {
+        animation: fadeIn 0.5s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .empty-gallery {
+        background: linear-gradient(135deg, #f0fdf4 0%, #e0f2fe 100%);
+        border-radius: 1rem;
+        padding: 3rem 2rem;
+        text-align: center;
+    }
+
+    .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+    }
+
+    .modal-overlay.active {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .modal-content {
+        background: white;
+        border-radius: 1rem;
+        max-width: 90vw;
+        max-height: 90vh;
+        overflow: auto;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        transform: scale(0.95);
+        transition: transform 0.3s ease;
+    }
+
+    .modal-overlay.active .modal-content {
+        transform: scale(1);
+    }
+
+    .upload-area {
+        border: 2px dashed #d1d5db;
+        border-radius: 0.75rem;
+        padding: 2rem;
+        text-align: center;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+    .upload-area:hover,
+    .upload-area.dragover {
+        border-color: #10b981;
+        background-color: #f0fdf4;
+    }
+
+    .preview-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+        gap: 1rem;
+        margin-top: 1rem;
+    }
+
+    .preview-item {
+        position: relative;
+        aspect-ratio: 1;
+        border-radius: 0.5rem;
+        overflow: hidden;
+        background: #f3f4f6;
+    }
+
+    .preview-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .remove-preview {
+        position: absolute;
+        top: 0.25rem;
+        right: 0.25rem;
+        background: rgba(239, 68, 68, 0.9);
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 1.5rem;
+        height: 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        font-size: 0.75rem;
+    }
+</style>
+@endpush
+
+@push('scripts')
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+
 <script>
-    // Inisialisasi Resumable.js untuk chunked upload
-    var resumable = new Resumable({
-        target: '{{ route('admin.activities.gallery.chunk-upload', $activity->id) }}',
-        query: {_token: '{{ csrf_token() }}'},
-        chunkSize: 1*1024*1024, // 1MB per chunk
-        simultaneousUploads: 3,
-        testChunks: false,
-        throttleProgressCallbacks: 1,
-        maxFiles: 20,
-        maxFileSize: 100*1024*1024 // 100MB max per file
+    let selectedFiles = [];
+    let uploadProgress = {};
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', function() {
+        lucide.createIcons();
+        initSortable();
+        setupFileUpload();
+
+        // Show success message if exists
+        @if(session('success'))
+            showAlert('success', "{{ session('success') }}");
+        @endif
+
+        @if(session('error'))
+            showAlert('error', "{{ session('error') }}");
+        @endif
     });
 
-    // Assign browse file to modalImages
-    resumable.assignBrowse(document.getElementById('modalImages'));
+    // Initialize sortable gallery
+    function initSortable() {
+        const gallery = document.getElementById('sortable-gallery');
+        if (gallery) {
+            new Sortable(gallery, {
+                handle: '.drag-handle',
+                animation: 150,
+                ghostClass: 'sortable-ghost',
+                chosenClass: 'sortable-chosen',
+                onEnd: function(evt) {
+                    updateGalleryOrder();
+                }
+            });
+        }
+    }
 
-    resumable.on('fileAdded', function(file) {
-        // Update UI
-        var previewContainer = document.getElementById('modal-preview-container');
-        
-        // Clear preview if this is first file
-        if (resumable.files.length === 1) {
-            previewContainer.innerHTML = '';
+    // Setup file upload
+    function setupFileUpload() {
+        const uploadArea = document.getElementById('upload-area');
+        const fileInput = document.getElementById('file-input');
+
+        // Drag and drop events
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            uploadArea.addEventListener(eventName, preventDefaults, false);
+        });
+
+        ['dragenter', 'dragover'].forEach(eventName => {
+            uploadArea.addEventListener(eventName, () => uploadArea.classList.add('dragover'), false);
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            uploadArea.addEventListener(eventName, () => uploadArea.classList.remove('dragover'), false);
+        });
+
+        uploadArea.addEventListener('drop', handleDrop, false);
+        uploadArea.addEventListener('click', () => fileInput.click());
+        fileInput.addEventListener('change', handleFileSelect);
+
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
         }
-        
-        // Check total files
-        if (resumable.files.length > 20) {
-            alert('Maksimal 20 foto yang dapat diunggah sekaligus');
-            resumable.removeFile(file);
-            return;
+
+        function handleDrop(e) {
+            const dt = e.dataTransfer;
+            const files = dt.files;
+            handleFiles(files);
         }
-        
-        // Add preview
-        if (resumable.files.length <= 10) {
-            var reader = new FileReader();
+
+        function handleFileSelect(e) {
+            const files = e.target.files;
+            handleFiles(files);
+        }
+
+        function handleFiles(files) {
+            const validFiles = [];
+
+            for (let file of files) {
+                // Validate file type
+                if (!file.type.startsWith('image/')) {
+                    showAlert('error', `File ${file.name} bukan gambar yang valid`);
+                    continue;
+                }
+
+                // Validate file size (10MB)
+                if (file.size > 10 * 1024 * 1024) {
+                    showAlert('error', `File ${file.name} terlalu besar. Maksimal 10MB`);
+                    continue;
+                }
+
+                validFiles.push(file);
+            }
+
+            if (validFiles.length > 0) {
+                selectedFiles = [...selectedFiles, ...validFiles];
+                updatePreview();
+
+                if (selectedFiles.length > 20) {
+                    selectedFiles = selectedFiles.slice(0, 20);
+                    showAlert('warning', 'Maksimal 20 foto dapat diunggah sekaligus');
+                }
+            }
+        }
+    }
+
+    // Update preview
+    function updatePreview() {
+        const container = document.getElementById('preview-container');
+        const counter = document.getElementById('file-counter');
+
+        container.innerHTML = '';
+        counter.textContent = `${selectedFiles.length} foto dipilih`;
+
+        selectedFiles.forEach((file, index) => {
+            const reader = new FileReader();
             reader.onload = function(e) {
-                var col = document.createElement('div');
-                col.className = 'col-md-2 mb-2';
-                
-                var img = document.createElement('img');
-                img.src = e.target.result;
-                img.className = 'img-fluid rounded';
-                img.style.height = '100px';
-                img.style.objectFit = 'cover';
-                
-                var progress = document.createElement('div');
-                progress.className = 'progress mt-1';
-                progress.innerHTML = '<div class="progress-bar" role="progressbar" style="width: 0%"></div>';
-                
-                col.appendChild(img);
-                col.appendChild(progress);
-                previewContainer.appendChild(col);
-                
-                file.previewElement = col;
+                const div = document.createElement('div');
+                div.className = 'preview-item';
+                div.innerHTML = `
+                    <img src="${e.target.result}" alt="Preview">
+                    <button type="button" class="remove-preview" onclick="removeFile(${index})">
+                        <i data-lucide="x" class="w-3 h-3"></i>
+                    </button>
+                    <div class="upload-progress" id="progress-${index}">
+                        <div class="upload-progress-bar"></div>
+                    </div>
+                `;
+                container.appendChild(div);
+                lucide.createIcons();
             };
-            reader.readAsDataURL(file.file);
-        } else if (resumable.files.length === 11) {
-            var moreDiv = document.createElement('div');
-            moreDiv.className = 'col-12 text-center mt-2';
-            moreDiv.innerHTML = '+ ' + (resumable.files.length - 10) + ' file lainnya';
-            previewContainer.appendChild(moreDiv);
-        }
-    });
-
-    resumable.on('fileProgress', function(file) {
-        if (file.previewElement) {
-            var progressBar = file.previewElement.querySelector('.progress-bar');
-            if (progressBar) {
-                progressBar.style.width = Math.floor(file.progress() * 100) + '%';
-            }
-        }
-    });
-
-    resumable.on('fileSuccess', function(file, response) {
-        if (file.previewElement) {
-            file.previewElement.classList.add('upload-success');
-        }
-    });
-
-    resumable.on('fileError', function(file, response) {
-        alert('Error uploading ' + file.fileName);
-    });
-
-    resumable.on('complete', function() {
-        if (resumable.progress() === 1) {
-            window.location.reload();
-        }
-    });
-
-    // Override form submit to use Resumable.js
-    document.querySelector('#addPhotosModal form').addEventListener('submit', function(e) {
-        e.preventDefault();
-        if (resumable.files.length > 0) {
-            resumable.upload();
-        } else {
-            alert('Pilih foto terlebih dahulu');
-        }
-    });
-
-    // Fungsi untuk sortable gallery
-    var sortableGallery = document.getElementById('sortable-gallery');
-    if (sortableGallery) {
-        new Sortable(sortableGallery, {
-            handle: '.handle',
-            animation: 150,
-            onEnd: function(evt) {
-                updateGalleryOrder();
-            }
+            reader.readAsDataURL(file);
         });
     }
-    
-    // Fungsi untuk update urutan galeri
+
+    // Remove file from selection
+    function removeFile(index) {
+        selectedFiles.splice(index, 1);
+        updatePreview();
+    }
+
+    // Upload files
+    async function uploadFiles() {
+        if (selectedFiles.length === 0) {
+            showAlert('error', 'Pilih foto terlebih dahulu');
+            return;
+        }
+
+        const formData = new FormData();
+        selectedFiles.forEach((file, index) => {
+            formData.append('images[]', file);
+        });
+        formData.append('_token', '{{ csrf_token() }}');
+
+        try {
+            // Show loading
+            Swal.fire({
+                title: 'Mengunggah...',
+                text: `Sedang mengunggah ${selectedFiles.length} foto`,
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                }
+            });
+
+            const response = await fetch('{{ route("admin.activities.add-images", $activity->id) }}', {
+                method: 'POST',
+                body: formData
+            });
+
+            const data = await response.json();
+
+            Swal.close();
+
+            if (response.ok && data.success) {
+                showAlert('success', `${data.uploaded_count} foto berhasil diunggah`);
+                closeModal('addPhotosModal');
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1500);
+            } else {
+                showAlert('error', data.message || 'Gagal mengunggah foto');
+            }
+        } catch (error) {
+            Swal.close();
+            showAlert('error', 'Terjadi kesalahan saat mengunggah foto');
+            console.error('Upload error:', error);
+        }
+    }
+
+    // Update gallery order
     function updateGalleryOrder() {
-        var items = document.querySelectorAll('.gallery-item');
-        var orderData = [];
-        
-        items.forEach(function(item, index) {
+        const items = document.querySelectorAll('.gallery-item');
+        const orderData = [];
+
+        items.forEach((item, index) => {
             orderData.push({
                 id: item.getAttribute('data-id'),
                 order: index + 1
             });
         });
-        
-        // Kirim update ke server
-        fetch('{{ route('admin.galleries.update-order') }}', {
+
+        // Show loading
+        Swal.fire({
+            title: 'Menyimpan...',
+            text: 'Sedang menyimpan urutan foto',
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading();
+            }
+        });
+
+        fetch('{{ route("admin.galleries.update-order") }}', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -324,38 +438,420 @@
         })
         .then(response => response.json())
         .then(data => {
+            Swal.close();
             if (data.success) {
-                // Update urutan yang ditampilkan
-                items.forEach(function(item, index) {
-                    item.querySelector('.text-xs.text-gray-500').textContent = 'Urutan: ' + (index + 1);
+                // Update order display
+                items.forEach((item, index) => {
+                    const orderElement = item.querySelector('.order-number');
+                    if (orderElement) {
+                        orderElement.textContent = index + 1;
+                    }
                 });
-                
-                toastr.success('Urutan berhasil diperbarui');
+
+                showAlert('success', 'Urutan foto berhasil diperbarui');
             } else {
-                toastr.error('Gagal memperbarui urutan');
+                showAlert('error', 'Gagal memperbarui urutan foto');
             }
         })
         .catch(error => {
-            toastr.error('Terjadi kesalahan saat memperbarui urutan');
+            Swal.close();
+            showAlert('error', 'Terjadi kesalahan saat memperbarui urutan');
             console.error('Error:', error);
         });
     }
-    
-    // Fungsi untuk melihat detail gambar
-    function openImageModal(src, title, description) {
-        document.getElementById('viewImageSrc').src = src;
-        document.getElementById('viewImageTitle').textContent = title || 'Detail Foto';
-        document.getElementById('viewImageDescription').textContent = description || '';
-        $('#viewImageModal').modal('show');
+
+    // View image in modal
+    function viewImage(src, title, description) {
+        Swal.fire({
+            html: `
+                <div class="text-center">
+                    <img src="${src}" alt="${title}" class="max-h-[70vh] max-w-full mx-auto rounded-lg">
+                    ${title ? `<h3 class="text-lg font-semibold mt-4">${title}</h3>` : ''}
+                    ${description ? `<p class="text-slate-600 mt-2">${description}</p>` : ''}
+                </div>
+            `,
+            showConfirmButton: false,
+            width: 'auto',
+            padding: '1rem',
+            background: '#ffffff',
+            showCloseButton: true
+        });
     }
-    
-    // Fungsi untuk menghapus gambar
-    function deleteImage(id) {
-        if (confirm('Apakah Anda yakin ingin menghapus foto ini?')) {
-            var form = document.getElementById('delete-image-form');
-            form.action = '/admin/galleries/' + id;
-            form.submit();
+
+    // Delete image
+    function deleteImage(id, title) {
+        Swal.fire({
+            title: 'Konfirmasi Hapus',
+            html: `Apakah Anda yakin ingin menghapus foto <strong>"${title}"</strong>?<br><br>Tindakan ini tidak dapat dibatalkan.`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#ef4444',
+            cancelButtonColor: '#6b7280',
+            confirmButtonText: 'Ya, Hapus',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Show loading
+                Swal.fire({
+                    title: 'Menghapus...',
+                    text: 'Sedang menghapus foto',
+                    allowOutsideClick: false,
+                    didOpen: () => {
+                        Swal.showLoading();
+                    }
+                });
+
+                // Submit delete form
+                const form = document.createElement('form');
+                form.method = 'POST';
+                form.action = `{{ url('admin/galleries') }}/${id}`;
+
+                const csrfToken = document.createElement('input');
+                csrfToken.type = 'hidden';
+                csrfToken.name = '_token';
+                csrfToken.value = '{{ csrf_token() }}';
+
+                const methodInput = document.createElement('input');
+                methodInput.type = 'hidden';
+                methodInput.name = '_method';
+                methodInput.value = 'DELETE';
+
+                form.appendChild(csrfToken);
+                form.appendChild(methodInput);
+
+                document.body.appendChild(form);
+                form.submit();
+            }
+        });
+    }
+
+    // Modal functions
+    function openModal(modalId) {
+        const modal = document.getElementById(modalId);
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal(modalId) {
+        const modal = document.getElementById(modalId);
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+
+        // Reset form if it's upload modal
+        if (modalId === 'addPhotosModal') {
+            selectedFiles = [];
+            updatePreview();
         }
     }
+
+    // Show alert
+    function showAlert(type, message) {
+        const icons = {
+            success: 'success',
+            error: 'error',
+            warning: 'warning',
+            info: 'info'
+        };
+
+        Swal.fire({
+            icon: icons[type],
+            title: type === 'success' ? 'Berhasil!' : type === 'error' ? 'Error!' : 'Informasi',
+            text: message,
+            timer: 3000,
+            timerProgressBar: true,
+            showConfirmButton: false,
+            toast: true,
+            position: 'top-end'
+        });
+    }
 </script>
+@endpush
+
+@section('content')
+<div class="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 py-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <!-- Header -->
+        <div class="mb-8">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between">
+                <div class="mb-4 md:mb-0">
+                    <h1 class="text-3xl font-bold text-slate-900 flex items-center">
+                        <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center mr-3">
+                            <i data-lucide="eye" class="w-5 h-5 text-white"></i>
+                        </div>
+                        Detail Kegiatan
+                    </h1>
+                    <p class="text-slate-600 mt-1">Kelola informasi dan galeri foto kegiatan</p>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-3">
+                    <a href="{{ route('admin.activities.edit', $activity->id) }}"
+                       class="inline-flex items-center justify-center px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-medium rounded-lg shadow-sm hover:from-blue-700 hover:to-purple-700 hover:shadow-md transition-all duration-200">
+                        <i data-lucide="edit" class="w-4 h-4 mr-2"></i>
+                        Edit Kegiatan
+                    </a>
+                    <a href="{{ route('admin.activities.index') }}"
+                       class="inline-flex items-center justify-center px-4 py-2 bg-white border border-slate-300 rounded-lg shadow-sm text-sm font-medium text-slate-700 hover:bg-slate-50 hover:shadow-md transition-all duration-200">
+                        <i data-lucide="arrow-left" class="w-4 h-4 mr-2"></i>
+                        Kembali
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Activity Information -->
+        <div class="info-card fade-in">
+            <div class="section-header">
+                <h3 class="text-lg font-semibold text-slate-900 flex items-center">
+                    <i data-lucide="info" class="w-5 h-5 mr-2 text-emerald-600"></i>
+                    Informasi Kegiatan
+                </h3>
+            </div>
+            <div class="p-6">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <!-- Information Column -->
+                    <div class="lg:col-span-2">
+                        <dl class="space-y-4">
+                            <div class="flex flex-col sm:flex-row sm:items-center">
+                                <dt class="text-sm font-medium text-slate-500 w-32 flex items-center">
+                                    <i data-lucide="type" class="w-4 h-4 mr-2"></i>
+                                    Judul
+                                </dt>
+                                <dd class="text-sm text-slate-900 font-medium mt-1 sm:mt-0">{{ $activity->title }}</dd>
+                            </div>
+
+                            @if($activity->description)
+                            <div class="flex flex-col sm:flex-row">
+                                <dt class="text-sm font-medium text-slate-500 w-32 flex items-center">
+                                    <i data-lucide="file-text" class="w-4 h-4 mr-2"></i>
+                                    Deskripsi
+                                </dt>
+                                <dd class="text-sm text-slate-900 mt-1 sm:mt-0">{!! nl2br(e($activity->description)) !!}</dd>
+                            </div>
+                            @endif
+
+                            <div class="flex flex-col sm:flex-row sm:items-center">
+                                <dt class="text-sm font-medium text-slate-500 w-32 flex items-center">
+                                    <i data-lucide="calendar" class="w-4 h-4 mr-2"></i>
+                                    Tanggal
+                                </dt>
+                                <dd class="text-sm text-slate-900 mt-1 sm:mt-0">
+                                    {{ $activity->activity_date ? $activity->activity_date->format('d F Y') : 'Tidak ada tanggal' }}
+                                </dd>
+                            </div>
+
+                            <div class="flex flex-col sm:flex-row sm:items-center">
+                                <dt class="text-sm font-medium text-slate-500 w-32 flex items-center">
+                                    <i data-lucide="toggle-left" class="w-4 h-4 mr-2"></i>
+                                    Status
+                                </dt>
+                                <dd class="mt-1 sm:mt-0">
+                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium {{ $activity->is_active ? 'bg-emerald-100 text-emerald-800' : 'bg-red-100 text-red-800' }}">
+                                        <i data-lucide="{{ $activity->is_active ? 'check-circle' : 'x-circle' }}" class="w-3 h-3 mr-1"></i>
+                                        {{ $activity->is_active ? 'Aktif' : 'Tidak Aktif' }}
+                                    </span>
+                                </dd>
+                            </div>
+
+                            <div class="flex flex-col sm:flex-row sm:items-center">
+                                <dt class="text-sm font-medium text-slate-500 w-32 flex items-center">
+                                    <i data-lucide="clock" class="w-4 h-4 mr-2"></i>
+                                    Dibuat
+                                </dt>
+                                <dd class="text-sm text-slate-900 mt-1 sm:mt-0">{{ $activity->created_at->format('d F Y, H:i') }}</dd>
+                            </div>
+
+                            <div class="flex flex-col sm:flex-row sm:items-center">
+                                <dt class="text-sm font-medium text-slate-500 w-32 flex items-center">
+                                    <i data-lucide="refresh-cw" class="w-4 h-4 mr-2"></i>
+                                    Diperbarui
+                                </dt>
+                                <dd class="text-sm text-slate-900 mt-1 sm:mt-0">{{ $activity->updated_at->format('d F Y, H:i') }}</dd>
+                            </div>
+                        </dl>
+                    </div>
+
+                    <!-- Thumbnail Column -->
+                    <div class="lg:col-span-1">
+                        <h4 class="text-sm font-medium text-slate-700 mb-3 flex items-center">
+                            <i data-lucide="image" class="w-4 h-4 mr-2"></i>
+                            Thumbnail
+                        </h4>
+                        @if($activity->thumbnail)
+                            <div class="thumbnail-container cursor-pointer" onclick="viewImage('{{ asset('storage/'.$activity->thumbnail) }}', '{{ $activity->title }}', '{{ $activity->alt_text }}')">
+                                <img src="{{ asset('storage/'.$activity->thumbnail) }}"
+                                     alt="{{ $activity->alt_text }}"
+                                     class="w-full h-auto rounded-lg">
+                                <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300 rounded-lg">
+                                    <i data-lucide="zoom-in" class="w-6 h-6 text-white"></i>
+                                </div>
+                            </div>
+                            @if($activity->alt_text)
+                                <p class="mt-2 text-xs text-slate-500">{{ $activity->alt_text }}</p>
+                            @endif
+                        @else
+                            <div class="border-2 border-dashed border-slate-300 rounded-lg p-8 text-center text-slate-400">
+                                <i data-lucide="image-off" class="w-12 h-12 mx-auto mb-2"></i>
+                                <p class="text-sm">Tidak ada thumbnail</p>
+                            </div>
+                        @endif
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gallery Section -->
+        <div class="info-card fade-in" style="animation-delay: 0.1s;">
+            <div class="section-header">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-lg font-semibold text-slate-900 flex items-center">
+                        <i data-lucide="images" class="w-5 h-5 mr-2 text-emerald-600"></i>
+                        Galeri Foto
+                        <span class="ml-2 bg-slate-100 text-slate-700 px-2 py-0.5 rounded-full text-xs font-medium">
+                            {{ $activity->galleries->count() }} foto
+                        </span>
+                    </h3>
+                    <button
+                        onclick="openModal('addPhotosModal')"
+                        class="inline-flex items-center px-3 py-2 bg-gradient-to-r from-emerald-600 to-blue-600 text-white font-medium rounded-lg shadow-sm hover:from-emerald-700 hover:to-blue-700 transition-all duration-200"
+                    >
+                        <i data-lucide="plus" class="w-4 h-4 mr-2"></i>
+                        Tambah Foto
+                    </button>
+                </div>
+            </div>
+            <div class="p-6">
+                @if($activity->galleries->count() > 0)
+                    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4" id="sortable-gallery">
+                        @foreach($activity->galleries->sortBy('order') as $gallery)
+                            <div class="gallery-item" data-id="{{ $gallery->id }}">
+                                <div class="relative aspect-square bg-slate-200 rounded-lg overflow-hidden">
+                                    <img src="{{ asset('storage/'.$gallery->image) }}"
+                                         alt="{{ $gallery->alt_text }}"
+                                         class="w-full h-full object-cover">
+
+                                    <!-- Drag Handle -->
+                                    <div class="drag-handle">
+                                        <i data-lucide="grip-vertical" class="w-3 h-3"></i>
+                                    </div>
+
+                                    <!-- Order Number -->
+                                    <div class="absolute top-2 right-2 bg-black bg-opacity-70 text-white text-xs px-1.5 py-0.5 rounded">
+                                        <span class="order-number">{{ $gallery->order }}</span>
+                                    </div>
+
+                                    <!-- Overlay -->
+                                    <div class="gallery-overlay">
+                                        <div class="flex space-x-2">
+                                            <button
+                                                onclick="viewImage('{{ asset('storage/'.$gallery->image) }}', '{{ $gallery->title }}', '{{ $gallery->description }}')"
+                                                class="p-2 bg-white rounded-full text-slate-700 hover:text-blue-600 transition-colors duration-200"
+                                            >
+                                                <i data-lucide="eye" class="w-4 h-4"></i>
+                                            </button>
+                                            <button
+                                                onclick="deleteImage('{{ $gallery->id }}', '{{ $gallery->title ?: 'Foto' }}')"
+                                                class="p-2 bg-white rounded-full text-slate-700 hover:text-red-600 transition-colors duration-200"
+                                            >
+                                                <i data-lucide="trash-2" class="w-4 h-4"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                @if($gallery->title)
+                                    <div class="mt-2 text-sm text-slate-700 truncate">{{ $gallery->title }}</div>
+                                @endif
+                            </div>
+                        @endforeach
+                    </div>
+
+                    <div class="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                        <div class="flex items-start">
+                            <i data-lucide="info" class="w-5 h-5 text-blue-600 mr-2 mt-0.5"></i>
+                            <div class="text-sm text-blue-800">
+                                <p class="font-medium">Tips Mengelola Galeri:</p>
+                                <ul class="mt-1 list-disc list-inside space-y-1">
+                                    <li>Drag dan drop foto untuk mengatur urutan</li>
+                                    <li>Klik ikon mata untuk melihat foto dalam ukuran penuh</li>
+                                    <li>Klik ikon sampah untuk menghapus foto</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                @else
+                    <div class="empty-gallery">
+                        <div class="w-16 h-16 bg-slate-200 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i data-lucide="images" class="w-8 h-8 text-slate-400"></i>
+                        </div>
+                        <h3 class="text-lg font-medium text-slate-900 mb-1">Belum Ada Foto</h3>
+                        <p class="text-slate-500 mb-4">Belum ada foto di galeri kegiatan ini.</p>
+                        <button
+                            onclick="openModal('addPhotosModal')"
+                            class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-emerald-600 to-blue-600 text-white font-medium rounded-lg shadow-sm hover:from-emerald-700 hover:to-blue-700 transition-all duration-200"
+                        >
+                            <i data-lucide="plus" class="w-4 h-4 mr-2"></i>
+                            Tambah Foto Pertama
+                        </button>
+                    </div>
+                @endif
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add Photos Modal -->
+<div id="addPhotosModal" class="modal-overlay" onclick="if(event.target === this) closeModal('addPhotosModal')">
+    <div class="modal-content w-full max-w-4xl mx-4">
+        <div class="p-6 border-b border-slate-200">
+            <div class="flex items-center justify-between">
+                <h3 class="text-lg font-semibold text-slate-900 flex items-center">
+                    <i data-lucide="upload" class="w-5 h-5 mr-2 text-emerald-600"></i>
+                    Tambah Foto ke Galeri
+                </h3>
+                <button onclick="closeModal('addPhotosModal')" class="text-slate-400 hover:text-slate-600 transition-colors duration-200">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="p-6">
+            <!-- Upload Area -->
+            <div id="upload-area" class="upload-area">
+                <div class="text-center">
+                    <i data-lucide="upload-cloud" class="w-12 h-12 text-slate-400 mx-auto mb-4"></i>
+                    <div class="text-lg font-medium text-slate-900 mb-2">
+                        Drag & drop foto di sini atau klik untuk memilih
+                    </div>
+                    <p class="text-sm text-slate-500">
+                        Format: JPG, PNG, GIF. Maksimal: 10MB per foto, 20 foto sekaligus
+                    </p>
+                </div>
+                <input type="file" id="file-input" multiple accept="image/*" class="hidden">
+            </div>
+
+            <!-- File Counter -->
+            <div class="mt-4 text-sm text-slate-600">
+                <span id="file-counter">0 foto dipilih</span>
+            </div>
+
+            <!-- Preview Container -->
+            <div id="preview-container" class="preview-grid"></div>
+        </div>
+
+        <div class="p-6 border-t border-slate-200 flex justify-end space-x-3">
+            <button
+                onclick="closeModal('addPhotosModal')"
+                class="px-4 py-2 border border-slate-300 rounded-lg text-slate-700 hover:bg-slate-50 transition-colors duration-200"
+            >
+                Batal
+            </button>
+            <button
+                onclick="uploadFiles()"
+                class="px-4 py-2 bg-gradient-to-r from-emerald-600 to-blue-600 text-white rounded-lg hover:from-emerald-700 hover:to-blue-700 transition-all duration-200"
+            >
+                Upload Foto
+            </button>
+        </div>
+    </div>
+</div>
 @endsection

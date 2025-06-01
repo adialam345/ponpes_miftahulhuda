@@ -2,474 +2,892 @@
 
 @section('title', 'Edit Berita - Admin')
 
+@push('styles')
+<style>
+.editor-toolbar {
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    border-bottom: 1px solid #e2e8f0;
+    border-radius: 0.75rem 0.75rem 0 0;
+}
+
+.editor-btn {
+    transition: all 0.2s ease;
+    border-radius: 0.375rem;
+}
+
+.editor-btn:hover {
+    background-color: #e2e8f0;
+    transform: translateY(-1px);
+}
+
+.editor-btn.active {
+    background-color: #10b981;
+    color: white;
+}
+
+.editor-content {
+    min-height: 400px;
+    max-height: 600px;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    line-height: 1.6;
+    border-radius: 0 0 0.75rem 0.75rem;
+}
+
+.editor-content:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+}
+
+.color-picker {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 0.25rem;
+    padding: 0.75rem;
+}
+
+.color-btn {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 0.375rem;
+    border: 2px solid transparent;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.color-btn:hover {
+    transform: scale(1.1);
+    border-color: #64748b;
+}
+
+.template-item {
+    transition: all 0.2s ease;
+    border-radius: 0.5rem;
+}
+
+.template-item:hover {
+    background-color: #f0fdf4;
+    transform: translateX(4px);
+}
+
+.form-section {
+    background: white;
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+}
+
+.section-header {
+    background: linear-gradient(135deg, #f0fdf4 0%, #e0f2fe 100%);
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.image-preview {
+    position: relative;
+    display: inline-block;
+    border-radius: 0.75rem;
+    overflow: hidden;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.image-preview img {
+    transition: transform 0.3s ease;
+}
+
+.image-preview:hover img {
+    transform: scale(1.05);
+}
+
+.upload-area {
+    border: 2px dashed #d1d5db;
+    border-radius: 0.75rem;
+    padding: 2rem;
+    text-align: center;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.upload-area:hover,
+.upload-area.dragover {
+    border-color: #10b981;
+    background-color: #f0fdf4;
+}
+
+.btn-primary {
+    background: linear-gradient(90deg, #10b981, #3b82f6);
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(90deg, #059669, #2563eb);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.5);
+}
+
+.btn-secondary {
+    background: white;
+    color: #64748b;
+    border: 1px solid #e2e8f0;
+    transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+    background: #f8fafc;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+.input-field {
+    transition: all 0.3s ease;
+}
+
+.input-field:focus {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+}
+</style>
+@endpush
+
+@push('scripts')
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+let editor, hiddenContent;
+
+document.addEventListener('DOMContentLoaded', function() {
+    lucide.createIcons();
+    initializeEditor();
+    setupImageUpload();
+    setupFormValidation();
+
+    // Show success message if exists
+    @if(session('success'))
+        showAlert('success', "{{ session('success') }}");
+    @endif
+
+    @if(session('error'))
+        showAlert('error', "{{ session('error') }}");
+    @endif
+});
+
+function initializeEditor() {
+    editor = document.getElementById('editor-content');
+    hiddenContent = document.getElementById('hidden-content');
+
+    if (!editor || !hiddenContent) return;
+
+    // Initialize content
+    hiddenContent.value = editor.innerHTML;
+
+    // Update hidden field on content change
+    editor.addEventListener('input', function() {
+        hiddenContent.value = editor.innerHTML;
+    });
+
+    // Setup toolbar buttons
+    setupToolbarButtons();
+    setupColorPickers();
+    setupTemplates();
+    setupKeyboardShortcuts();
+}
+
+function setupToolbarButtons() {
+    // Font family
+    document.getElementById('font-family')?.addEventListener('change', function() {
+        document.execCommand('fontName', false, this.value);
+        editor.focus();
+    });
+
+    // Font size
+    document.getElementById('font-size')?.addEventListener('change', function() {
+        document.execCommand('fontSize', false, this.value);
+        editor.focus();
+    });
+
+    // Formatting buttons
+    const formatButtons = [
+        { id: 'bold-btn', command: 'bold' },
+        { id: 'italic-btn', command: 'italic' },
+        { id: 'underline-btn', command: 'underline' },
+        { id: 'strikethrough-btn', command: 'strikeThrough' },
+        { id: 'align-left-btn', command: 'justifyLeft' },
+        { id: 'align-center-btn', command: 'justifyCenter' },
+        { id: 'align-right-btn', command: 'justifyRight' },
+        { id: 'align-justify-btn', command: 'justifyFull' },
+        { id: 'list-ul-btn', command: 'insertUnorderedList' },
+        { id: 'list-ol-btn', command: 'insertOrderedList' },
+        { id: 'indent-btn', command: 'indent' },
+        { id: 'outdent-btn', command: 'outdent' }
+    ];
+
+    formatButtons.forEach(btn => {
+        const element = document.getElementById(btn.id);
+        if (element) {
+            element.addEventListener('click', function() {
+                document.execCommand(btn.command, false, null);
+                updateButtonStates();
+                editor.focus();
+            });
+        }
+    });
+
+    // Link buttons
+    document.getElementById('link-btn')?.addEventListener('click', function() {
+        const url = prompt('Masukkan URL:');
+        if (url) {
+            document.execCommand('createLink', false, url);
+            editor.focus();
+        }
+    });
+
+    document.getElementById('unlink-btn')?.addEventListener('click', function() {
+        document.execCommand('unlink', false, null);
+        editor.focus();
+    });
+
+    // Clear formatting
+    document.getElementById('clear-format-btn')?.addEventListener('click', function() {
+        document.execCommand('removeFormat', false, null);
+        editor.focus();
+    });
+}
+
+function setupColorPickers() {
+    // Text color picker
+    const textColorBtn = document.getElementById('text-color-btn');
+    const textColorDropdown = document.getElementById('text-color-dropdown');
+
+    if (textColorBtn && textColorDropdown) {
+        textColorBtn.addEventListener('click', function() {
+            textColorDropdown.classList.toggle('hidden');
+            document.getElementById('bg-color-dropdown')?.classList.add('hidden');
+        });
+
+        textColorDropdown.querySelectorAll('.color-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const color = this.getAttribute('data-color');
+                document.execCommand('foreColor', false, color);
+                textColorDropdown.classList.add('hidden');
+                editor.focus();
+            });
+        });
+    }
+
+    // Background color picker
+    const bgColorBtn = document.getElementById('bg-color-btn');
+    const bgColorDropdown = document.getElementById('bg-color-dropdown');
+
+    if (bgColorBtn && bgColorDropdown) {
+        bgColorBtn.addEventListener('click', function() {
+            bgColorDropdown.classList.toggle('hidden');
+            document.getElementById('text-color-dropdown')?.classList.add('hidden');
+        });
+
+        bgColorDropdown.querySelectorAll('.color-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const color = this.getAttribute('data-color');
+                document.execCommand('hiliteColor', false, color);
+                bgColorDropdown.classList.add('hidden');
+                editor.focus();
+            });
+        });
+    }
+
+    // Close dropdowns when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!textColorBtn?.contains(e.target) && !textColorDropdown?.contains(e.target)) {
+            textColorDropdown?.classList.add('hidden');
+        }
+        if (!bgColorBtn?.contains(e.target) && !bgColorDropdown?.contains(e.target)) {
+            bgColorDropdown?.classList.add('hidden');
+        }
+    });
+}
+
+function setupTemplates() {
+    const templateBtn = document.getElementById('template-btn');
+    const templateDropdown = document.getElementById('template-dropdown');
+
+    if (templateBtn && templateDropdown) {
+        templateBtn.addEventListener('click', function() {
+            templateDropdown.classList.toggle('hidden');
+        });
+
+        const templates = {
+            'news-intro': `
+                <h2 style="font-size: 20px; font-weight: bold; color: #059669; margin-bottom: 16px;">📰 Informasi Penting</h2>
+                <p style="margin-bottom: 12px; color: #374151;">Assalamu'alaikum warahmatullahi wabarakatuh,</p>
+                <p style="margin-bottom: 12px; color: #374151;">Dengan hormat kami sampaikan informasi penting berikut:</p>
+                <p style="margin-bottom: 12px; color: #374151;">[Silahkan isi konten berita di sini dengan informasi yang relevan]</p>
+                <p style="margin-bottom: 12px; color: #374151;">Demikian informasi yang dapat kami sampaikan. Jazakumullahu khairan.</p>
+                <p style="color: #374151;">Wassalamu'alaikum warahmatullahi wabarakatuh</p>
+            `,
+            'news-event': `
+                <h2 style="font-size: 20px; font-weight: bold; color: #059669; margin-bottom: 16px;">📅 Undangan Acara</h2>
+                <p style="margin-bottom: 12px; color: #374151;">Assalamu'alaikum warahmatullahi wabarakatuh,</p>
+                <p style="margin-bottom: 12px; color: #374151;">Dengan hormat kami mengundang Bapak/Ibu untuk menghadiri acara:</p>
+                <div style="background: #f0fdf4; padding: 16px; border-radius: 8px; margin: 16px 0; border-left: 4px solid #10b981;">
+                    <p style="margin-bottom: 8px;"><strong>📍 Acara:</strong> [Nama Acara]</p>
+                    <p style="margin-bottom: 8px;"><strong>📅 Tanggal:</strong> [Tanggal Acara]</p>
+                    <p style="margin-bottom: 8px;"><strong>🕐 Waktu:</strong> [Waktu Acara]</p>
+                    <p style="margin-bottom: 8px;"><strong>🏢 Tempat:</strong> [Lokasi Acara]</p>
+                </div>
+                <p style="margin-bottom: 12px; color: #374151;">[Deskripsi acara dan informasi tambahan]</p>
+                <p style="color: #374151;">Atas perhatian dan kehadirannya, kami ucapkan terima kasih.</p>
+            `,
+            'news-announcement': `
+                <h2 style="font-size: 20px; font-weight: bold; color: #059669; margin-bottom: 16px;">📢 Pengumuman Penting</h2>
+                <p style="margin-bottom: 12px; color: #374151;">Assalamu'alaikum warahmatullahi wabarakatuh,</p>
+                <p style="margin-bottom: 12px; color: #374151;">Dengan hormat kami sampaikan pengumuman kepada seluruh [target audience] bahwa:</p>
+                <div style="background: #fef3c7; padding: 16px; border-radius: 8px; margin: 16px 0; border-left: 4px solid #f59e0b;">
+                    <ul style="margin: 0; padding-left: 20px; color: #374151;">
+                        <li style="margin-bottom: 8px;">Poin pengumuman pertama</li>
+                        <li style="margin-bottom: 8px;">Poin pengumuman kedua</li>
+                        <li style="margin-bottom: 8px;">Poin pengumuman ketiga</li>
+                    </ul>
+                </div>
+                <p style="margin-bottom: 12px; color: #374151;">Untuk informasi lebih lanjut, silahkan hubungi [kontak person].</p>
+                <p style="color: #374151;">Demikian pengumuman ini kami sampaikan. Jazakumullahu khairan.</p>
+            `
+        };
+
+        templateDropdown.querySelectorAll('[data-template]').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const templateName = this.getAttribute('data-template');
+                if (templates[templateName]) {
+                    document.execCommand('insertHTML', false, templates[templateName]);
+                    templateDropdown.classList.add('hidden');
+                    editor.focus();
+                    hiddenContent.value = editor.innerHTML;
+                }
+            });
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!templateBtn.contains(e.target) && !templateDropdown.contains(e.target)) {
+                templateDropdown.classList.add('hidden');
+            }
+        });
+    }
+}
+
+function setupKeyboardShortcuts() {
+    editor.addEventListener('keydown', function(e) {
+        if (e.ctrlKey || e.metaKey) {
+            switch(e.key) {
+                case 'b':
+                    e.preventDefault();
+                    document.execCommand('bold', false, null);
+                    break;
+                case 'i':
+                    e.preventDefault();
+                    document.execCommand('italic', false, null);
+                    break;
+                case 'u':
+                    e.preventDefault();
+                    document.execCommand('underline', false, null);
+                    break;
+            }
+            updateButtonStates();
+        }
+    });
+}
+
+function updateButtonStates() {
+    const buttons = [
+        { id: 'bold-btn', command: 'bold' },
+        { id: 'italic-btn', command: 'italic' },
+        { id: 'underline-btn', command: 'underline' }
+    ];
+
+    buttons.forEach(btn => {
+        const element = document.getElementById(btn.id);
+        if (element) {
+            if (document.queryCommandState(btn.command)) {
+                element.classList.add('active');
+            } else {
+                element.classList.remove('active');
+            }
+        }
+    });
+}
+
+function setupImageUpload() {
+    const uploadArea = document.getElementById('upload-area');
+    const fileInput = document.getElementById('image-input');
+    const previewContainer = document.getElementById('image-preview');
+
+    if (!uploadArea || !fileInput) return;
+
+    // Drag and drop events
+    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+        uploadArea.addEventListener(eventName, preventDefaults, false);
+    });
+
+    ['dragenter', 'dragover'].forEach(eventName => {
+        uploadArea.addEventListener(eventName, () => uploadArea.classList.add('dragover'), false);
+    });
+
+    ['dragleave', 'drop'].forEach(eventName => {
+        uploadArea.addEventListener(eventName, () => uploadArea.classList.remove('dragover'), false);
+    });
+
+    uploadArea.addEventListener('drop', handleDrop, false);
+    uploadArea.addEventListener('click', () => fileInput.click());
+    fileInput.addEventListener('change', handleFileSelect);
+
+    function preventDefaults(e) {
+        e.preventDefault();
+        e.stopPropagation();
+    }
+
+    function handleDrop(e) {
+        const dt = e.dataTransfer;
+        const files = dt.files;
+        handleFiles(files);
+    }
+
+    function handleFileSelect(e) {
+        const files = e.target.files;
+        handleFiles(files);
+    }
+
+    function handleFiles(files) {
+        if (files.length > 0) {
+            const file = files[0];
+
+            // Validate file type
+            if (!file.type.startsWith('image/')) {
+                showAlert('error', 'File harus berupa gambar');
+                return;
+            }
+
+            // Validate file size (10MB)
+            if (file.size > 10 * 1024 * 1024) {
+                showAlert('error', 'Ukuran file maksimal 10MB');
+                return;
+            }
+
+            // Show preview
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                if (previewContainer) {
+                    previewContainer.innerHTML = `
+                        <div class="image-preview">
+                            <img src="${e.target.result}" alt="Preview" class="h-32 w-auto object-cover rounded-lg">
+                            <p class="text-xs text-slate-500 mt-2">Gambar baru yang akan diupload</p>
+                        </div>
+                    `;
+                }
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+}
+
+function setupFormValidation() {
+    const form = document.querySelector('form');
+
+    if (form) {
+        form.addEventListener('submit', function(e) {
+            // Update hidden content field
+            if (editor && hiddenContent) {
+                hiddenContent.value = editor.innerHTML;
+            }
+
+            // Validate required fields
+            const title = document.getElementById('title').value.trim();
+            const content = hiddenContent.value.trim();
+
+            if (!title) {
+                e.preventDefault();
+                showAlert('error', 'Judul berita harus diisi');
+                return;
+            }
+
+            if (!content || content === '<br>' || content === '<div><br></div>') {
+                e.preventDefault();
+                showAlert('error', 'Konten berita harus diisi');
+                return;
+            }
+
+            // Show loading
+            Swal.fire({
+                title: 'Menyimpan...',
+                text: 'Sedang memperbarui berita',
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                }
+            });
+        });
+    }
+}
+
+function showAlert(type, message) {
+    const icons = {
+        success: 'success',
+        error: 'error',
+        warning: 'warning',
+        info: 'info'
+    };
+
+    Swal.fire({
+        icon: icons[type],
+        title: type === 'success' ? 'Berhasil!' : type === 'error' ? 'Error!' : 'Informasi',
+        text: message,
+        timer: 3000,
+        timerProgressBar: true,
+        showConfirmButton: false,
+        toast: true,
+        position: 'top-end'
+    });
+}
+</script>
+@endpush
+
 @section('content')
-<div class="container py-4">
-    <div class="mb-4">
-        <h1 class="text-2xl font-semibold">Edit Berita</h1>
-        <p class="text-gray-500">Edit informasi berita yang sudah ada</p>
+<div class="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 py-8">
+<div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+
+    <!-- Header -->
+    <div class="mb-8">
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between">
+            <div class="mb-4 md:mb-0">
+                <h1 class="text-3xl font-bold text-slate-900 flex items-center">
+                    <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center mr-3">
+                        <i data-lucide="edit" class="w-5 h-5 text-white"></i>
+                    </div>
+                    Edit Berita
+                </h1>
+                <p class="text-slate-600 mt-1">Perbarui informasi berita yang sudah ada</p>
+            </div>
+            <div class="flex flex-col sm:flex-row gap-3">
+                <a href="{{ route('admin.news.index') }}"
+                   class="inline-flex items-center justify-center px-4 py-2 bg-white border border-slate-300 rounded-lg shadow-sm text-sm font-medium text-slate-700 hover:bg-slate-50 hover:shadow-md transition-all duration-200">
+                    <i data-lucide="arrow-left" class="w-4 h-4 mr-2"></i>
+                    Kembali
+                </a>
+            </div>
+        </div>
     </div>
 
-    <div class="bg-white shadow rounded-lg p-6">
-        <form action="{{ route('admin.news.update', $news->id) }}" method="POST" enctype="multipart/form-data">
-            @csrf
-            @method('PUT')
+    <form action="{{ route('admin.news.update', $news->id) }}" method="POST" enctype="multipart/form-data">
+        @csrf
+        @method('PUT')
 
-            <div class="mb-4">
-                <label for="title" class="block text-sm font-medium text-gray-700">Judul Berita</label>
-                <input type="text" name="title" id="title" value="{{ old('title', $news->title) }}" required
-                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
-                @error('title')
-                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                @enderror
+        <!-- Basic Information -->
+        <div class="form-section fade-in">
+            <div class="section-header">
+                <h3 class="text-lg font-semibold text-slate-900 flex items-center">
+                    <i data-lucide="info" class="w-5 h-5 mr-2 text-blue-600"></i>
+                    Informasi Dasar
+                </h3>
             </div>
+            <div class="p-6 space-y-6">
+                <div>
+                    <label for="title" class="block text-sm font-medium text-slate-700 mb-2">
+                        <i data-lucide="type" class="w-4 h-4 inline mr-1"></i>
+                        Judul Berita
+                    </label>
+                    <input
+                        type="text"
+                        name="title"
+                        id="title"
+                        value="{{ old('title', $news->title) }}"
+                        required
+                        class="input-field block w-full px-3 py-2 border border-slate-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+                        placeholder="Masukkan judul berita yang menarik..."
+                    >
+                    @error('title')
+                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
 
-            <div class="mb-4">
-                <label for="content" class="block text-sm font-medium text-gray-700 mb-2">Konten Berita</label>
-                <div class="p-4">
-                    <!-- Word-like Text Editor Toolbar -->
-                    <div class="border border-gray-300 rounded-t-md bg-gray-100 p-2 flex flex-wrap items-center gap-1">
-                        <!-- Font Family & Size -->
-                        <div class="flex items-center border-r border-gray-300 pr-2 mr-2">
-                            <select id="font-family" class="text-sm border border-gray-300 rounded mr-1 focus:outline-none focus:ring-1 focus:ring-green-500">
-                                <option value="Arial, sans-serif">Arial</option>
-                                <option value="'Times New Roman', serif">Times New Roman</option>
-                                <option value="'Courier New', monospace">Courier New</option>
-                                <option value="Georgia, serif">Georgia</option>
-                                <option value="Verdana, sans-serif">Verdana</option>
-                                <option value="'Trebuchet MS', sans-serif">Trebuchet MS</option>
-                            </select>
-                            <select id="font-size" class="text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-green-500">
-                                <option value="1">8pt</option>
-                                <option value="2">10pt</option>
-                                <option value="3" selected="">12pt</option>
-                                <option value="4">14pt</option>
-                                <option value="5">18pt</option>
-                                <option value="6">24pt</option>
-                                <option value="7">36pt</option>
-                            </select>
-                        </div>
-                        
-                        <!-- Text Formatting -->
-                        <div class="flex items-center border-r border-gray-300 pr-2 mr-2">
-                            <button type="button" id="bold-btn" class="p-1.5 rounded hover:bg-gray-200" title="Bold (Ctrl+B)">
-                                <i class="fas fa-bold"></i>
-                            </button>
-                            <button type="button" id="italic-btn" class="p-1.5 rounded hover:bg-gray-200" title="Italic (Ctrl+I)">
-                                <i class="fas fa-italic"></i>
-                            </button>
-                            <button type="button" id="underline-btn" class="p-1.5 rounded hover:bg-gray-200" title="Underline (Ctrl+U)">
-                                <i class="fas fa-underline"></i>
-                            </button>
-                            <button type="button" id="strikethrough-btn" class="p-1.5 rounded hover:bg-gray-200" title="Strikethrough">
-                                <i class="fas fa-strikethrough"></i>
-                            </button>
-                        </div>
-                        
-                        <!-- Colors -->
-                        <div class="flex items-center border-r border-gray-300 pr-2 mr-2">
-                            <div class="relative">
-                                <button type="button" id="text-color-btn" class="p-1.5 rounded hover:bg-gray-200 flex items-center" title="Text Color">
-                                    <i class="fas fa-font"></i>
-                                    <span class="ml-1 w-2 h-2 bg-black rounded-full"></span>
+                <div>
+                    <label for="status" class="block text-sm font-medium text-slate-700 mb-2">
+                        <i data-lucide="toggle-left" class="w-4 h-4 inline mr-1"></i>
+                        Status Publikasi
+                    </label>
+                    <select
+                        name="status"
+                        id="status"
+                        required
+                        class="input-field block w-full px-3 py-2 border border-slate-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+                    >
+                        <option value="draft" {{ (old('status', $news->status) == 'draft') ? 'selected' : '' }}>
+                            📝 Draft - Belum dipublikasikan
+                        </option>
+                        <option value="published" {{ (old('status', $news->status) == 'published') ? 'selected' : '' }}>
+                            ✅ Publikasikan - Tampilkan di website
+                        </option>
+                    </select>
+                    @error('status')
+                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
+            </div>
+        </div>
+
+        <!-- Content Editor -->
+        <div class="form-section fade-in" style="animation-delay: 0.1s;">
+            <div class="section-header">
+                <h3 class="text-lg font-semibold text-slate-900 flex items-center">
+                    <i data-lucide="file-text" class="w-5 h-5 mr-2 text-blue-600"></i>
+                    Konten Berita
+                </h3>
+            </div>
+            <div class="p-6">
+                <div class="border border-slate-300 rounded-xl overflow-hidden shadow-sm">
+                    <!-- Editor Toolbar -->
+                    <div class="editor-toolbar p-3">
+                        <div class="flex flex-wrap items-center gap-1">
+                            <!-- Font Controls -->
+                            <div class="flex items-center border-r border-slate-300 pr-3 mr-3">
+                                <select id="font-family" class="text-sm border border-slate-300 rounded mr-2 px-2 py-1 focus:outline-none focus:ring-1 focus:ring-blue-500">
+                                    <option value="Inter, sans-serif">Inter</option>
+                                    <option value="Arial, sans-serif">Arial</option>
+                                    <option value="'Times New Roman', serif">Times New Roman</option>
+                                    <option value="Georgia, serif">Georgia</option>
+                                    <option value="Verdana, sans-serif">Verdana</option>
+                                </select>
+                                <select id="font-size" class="text-sm border border-slate-300 rounded px-2 py-1 focus:outline-none focus:ring-1 focus:ring-blue-500">
+                                    <option value="1">8pt</option>
+                                    <option value="2">10pt</option>
+                                    <option value="3" selected>12pt</option>
+                                    <option value="4">14pt</option>
+                                    <option value="5">18pt</option>
+                                    <option value="6">24pt</option>
+                                    <option value="7">36pt</option>
+                                </select>
+                            </div>
+
+                            <!-- Text Formatting -->
+                            <div class="flex items-center border-r border-slate-300 pr-3 mr-3">
+                                <button type="button" id="bold-btn" class="editor-btn p-2" title="Bold (Ctrl+B)">
+                                    <i data-lucide="bold" class="w-4 h-4"></i>
                                 </button>
-                                <div id="text-color-dropdown" class="absolute hidden z-10 mt-1 w-40 bg-white shadow-lg rounded-md p-2 grid grid-cols-4 gap-1">
-                                    <button type="button" class="w-8 h-8 bg-black rounded" data-color="#000000"></button>
-                                    <button type="button" class="w-8 h-8 bg-red-600 rounded" data-color="#dc2626"></button>
-                                    <button type="button" class="w-8 h-8 bg-blue-600 rounded" data-color="#2563eb"></button>
-                                    <button type="button" class="w-8 h-8 bg-green-600 rounded" data-color="#16a34a"></button>
-                                    <button type="button" class="w-8 h-8 bg-yellow-500 rounded" data-color="#eab308"></button>
-                                    <button type="button" class="w-8 h-8 bg-purple-600 rounded" data-color="#9333ea"></button>
-                                    <button type="button" class="w-8 h-8 bg-pink-600 rounded" data-color="#db2777"></button>
-                                    <button type="button" class="w-8 h-8 bg-gray-600 rounded" data-color="#4b5563"></button>
+                                <button type="button" id="italic-btn" class="editor-btn p-2" title="Italic (Ctrl+I)">
+                                    <i data-lucide="italic" class="w-4 h-4"></i>
+                                </button>
+                                <button type="button" id="underline-btn" class="editor-btn p-2" title="Underline (Ctrl+U)">
+                                    <i data-lucide="underline" class="w-4 h-4"></i>
+                                </button>
+                                <button type="button" id="strikethrough-btn" class="editor-btn p-2" title="Strikethrough">
+                                    <i data-lucide="strikethrough" class="w-4 h-4"></i>
+                                </button>
+                            </div>
+
+                            <!-- Colors -->
+                            <div class="flex items-center border-r border-slate-300 pr-3 mr-3">
+                                <div class="relative">
+                                    <button type="button" id="text-color-btn" class="editor-btn p-2 flex items-center" title="Text Color">
+                                        <i data-lucide="type" class="w-4 h-4"></i>
+                                        <div class="w-2 h-2 bg-black rounded-full ml-1"></div>
+                                    </button>
+                                    <div id="text-color-dropdown" class="absolute hidden z-10 mt-1 bg-white shadow-lg rounded-lg border border-slate-200">
+                                        <div class="color-picker">
+                                            <button type="button" class="color-btn bg-black" data-color="#000000"></button>
+                                            <button type="button" class="color-btn bg-red-600" data-color="#dc2626"></button>
+                                            <button type="button" class="color-btn bg-blue-600" data-color="#2563eb"></button>
+                                            <button type="button" class="color-btn bg-green-600" data-color="#16a34a"></button>
+                                            <button type="button" class="color-btn bg-yellow-500" data-color="#eab308"></button>
+                                            <button type="button" class="color-btn bg-purple-600" data-color="#9333ea"></button>
+                                            <button type="button" class="color-btn bg-pink-600" data-color="#db2777"></button>
+                                            <button type="button" class="color-btn bg-gray-600" data-color="#4b5563"></button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="relative ml-1">
+                                    <button type="button" id="bg-color-btn" class="editor-btn p-2" title="Background Color">
+                                        <i data-lucide="paintbrush" class="w-4 h-4"></i>
+                                    </button>
+                                    <div id="bg-color-dropdown" class="absolute hidden z-10 mt-1 bg-white shadow-lg rounded-lg border border-slate-200">
+                                        <div class="color-picker">
+                                            <button type="button" class="color-btn bg-yellow-100" data-color="#fef9c3"></button>
+                                            <button type="button" class="color-btn bg-green-100" data-color="#dcfce7"></button>
+                                            <button type="button" class="color-btn bg-blue-100" data-color="#dbeafe"></button>
+                                            <button type="button" class="color-btn bg-red-100" data-color="#fee2e2"></button>
+                                            <button type="button" class="color-btn bg-purple-100" data-color="#f3e8ff"></button>
+                                            <button type="button" class="color-btn bg-gray-100" data-color="#f3f4f6"></button>
+                                            <button type="button" class="color-btn bg-pink-100" data-color="#fce7f3"></button>
+                                            <button type="button" class="color-btn bg-white border border-gray-300" data-color="#ffffff"></button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="relative ml-1">
-                                <button type="button" id="bg-color-btn" class="p-1.5 rounded hover:bg-gray-200 flex items-center" title="Background Color">
-                                    <i class="fas fa-fill-drip"></i>
-                                </button>
-                                <div id="bg-color-dropdown" class="absolute hidden z-10 mt-1 w-40 bg-white shadow-lg rounded-md p-2 grid grid-cols-4 gap-1">
-                                    <button type="button" class="w-8 h-8 bg-yellow-100 rounded" data-color="#fef9c3"></button>
-                                    <button type="button" class="w-8 h-8 bg-green-100 rounded" data-color="#dcfce7"></button>
-                                    <button type="button" class="w-8 h-8 bg-blue-100 rounded" data-color="#dbeafe"></button>
-                                    <button type="button" class="w-8 h-8 bg-red-100 rounded" data-color="#fee2e2"></button>
-                                    <button type="button" class="w-8 h-8 bg-purple-100 rounded" data-color="#f3e8ff"></button>
-                                    <button type="button" class="w-8 h-8 bg-gray-100 rounded" data-color="#f3f4f6"></button>
-                                    <button type="button" class="w-8 h-8 bg-pink-100 rounded" data-color="#fce7f3"></button>
-                                    <button type="button" class="w-8 h-8 bg-white border border-gray-300 rounded" data-color="#ffffff"></button>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Text Alignment -->
-                        <div class="flex items-center border-r border-gray-300 pr-2 mr-2">
-                            <button type="button" id="align-left-btn" class="p-1.5 rounded hover:bg-gray-200" title="Align Left">
-                                <i class="fas fa-align-left"></i>
-                            </button>
-                            <button type="button" id="align-center-btn" class="p-1.5 rounded hover:bg-gray-200" title="Align Center">
-                                <i class="fas fa-align-center"></i>
-                            </button>
-                            <button type="button" id="align-right-btn" class="p-1.5 rounded hover:bg-gray-200" title="Align Right">
-                                <i class="fas fa-align-right"></i>
-                            </button>
-                            <button type="button" id="align-justify-btn" class="p-1.5 rounded hover:bg-gray-200" title="Justify">
-                                <i class="fas fa-align-justify"></i>
-                            </button>
-                        </div>
-                        
-                        <!-- Lists and Indentation -->
-                        <div class="flex items-center border-r border-gray-300 pr-2 mr-2">
-                            <button type="button" id="list-ul-btn" class="p-1.5 rounded hover:bg-gray-200" title="Bullet List">
-                                <i class="fas fa-list-ul"></i>
-                            </button>
-                            <button type="button" id="list-ol-btn" class="p-1.5 rounded hover:bg-gray-200" title="Numbered List">
-                                <i class="fas fa-list-ol"></i>
-                            </button>
-                            <button type="button" id="indent-btn" class="p-1.5 rounded hover:bg-gray-200" title="Increase Indent">
-                                <i class="fas fa-indent"></i>
-                            </button>
-                            <button type="button" id="outdent-btn" class="p-1.5 rounded hover:bg-gray-200" title="Decrease Indent">
-                                <i class="fas fa-outdent"></i>
-                            </button>
-                        </div>
-                        
-                        <!-- Links and Images -->
-                        <div class="flex items-center">
-                            <button type="button" id="link-btn" class="p-1.5 rounded hover:bg-gray-200" title="Insert Link">
-                                <i class="fas fa-link"></i>
-                            </button>
-                            <button type="button" id="unlink-btn" class="p-1.5 rounded hover:bg-gray-200" title="Remove Link">
-                                <i class="fas fa-unlink"></i>
-                            </button>
-                            <label for="image-upload" class="p-1.5 rounded hover:bg-gray-200 cursor-pointer" title="Insert Image">
-                                <i class="fas fa-image"></i>
-                                <span class="sr-only">Upload Image</span>
-                            </label>
-                            <input id="image-upload" type="file" accept="image/*" class="hidden">
-                        </div>
 
-                        <!-- Templates for News -->
-                        <div class="flex items-center ml-auto">
-                            <div class="relative">
-                                <button type="button" id="template-btn" class="inline-flex items-center p-1.5 rounded hover:bg-gray-200 text-gray-700" title="Insert Template">
-                                    <i class="fas fa-file-alt mr-1"></i>
-                                    <span class="text-sm">Templates</span>
-                                    <i class="fas fa-chevron-down ml-1 text-xs"></i>
+                            <!-- Alignment -->
+                            <div class="flex items-center border-r border-slate-300 pr-3 mr-3">
+                                <button type="button" id="align-left-btn" class="editor-btn p-2" title="Align Left">
+                                    <i data-lucide="align-left" class="w-4 h-4"></i>
                                 </button>
-                                <div id="template-dropdown" class="absolute hidden right-0 z-10 mt-1 w-64 bg-white shadow-lg rounded-md py-1 text-sm">
-                                    <div class="px-3 py-2 border-b border-gray-200 text-xs font-medium text-gray-700">
+                                <button type="button" id="align-center-btn" class="editor-btn p-2" title="Align Center">
+                                    <i data-lucide="align-center" class="w-4 h-4"></i>
+                                </button>
+                                <button type="button" id="align-right-btn" class="editor-btn p-2" title="Align Right">
+                                    <i data-lucide="align-right" class="w-4 h-4"></i>
+                                </button>
+                                <button type="button" id="align-justify-btn" class="editor-btn p-2" title="Justify">
+                                    <i data-lucide="align-justify" class="w-4 h-4"></i>
+                                </button>
+                            </div>
+
+                            <!-- Lists -->
+                            <div class="flex items-center border-r border-slate-300 pr-3 mr-3">
+                                <button type="button" id="list-ul-btn" class="editor-btn p-2" title="Bullet List">
+                                    <i data-lucide="list" class="w-4 h-4"></i>
+                                </button>
+                                <button type="button" id="list-ol-btn" class="editor-btn p-2" title="Numbered List">
+                                    <i data-lucide="list-ordered" class="w-4 h-4"></i>
+                                </button>
+                                <button type="button" id="indent-btn" class="editor-btn p-2" title="Increase Indent">
+                                    <i data-lucide="indent" class="w-4 h-4"></i>
+                                </button>
+                                <button type="button" id="outdent-btn" class="editor-btn p-2" title="Decrease Indent">
+                                    <i data-lucide="outdent" class="w-4 h-4"></i>
+                                </button>
+                            </div>
+
+                            <!-- Links & Tools -->
+                            <div class="flex items-center border-r border-slate-300 pr-3 mr-3">
+                                <button type="button" id="link-btn" class="editor-btn p-2" title="Insert Link">
+                                    <i data-lucide="link" class="w-4 h-4"></i>
+                                </button>
+                                <button type="button" id="unlink-btn" class="editor-btn p-2" title="Remove Link">
+                                    <i data-lucide="link-2-off" class="w-4 h-4"></i>
+                                </button>
+                                <button type="button" id="clear-format-btn" class="editor-btn p-2" title="Clear Formatting">
+                                    <i data-lucide="eraser" class="w-4 h-4"></i>
+                                </button>
+                            </div>
+
+                            <!-- Templates -->
+                            <div class="relative ml-auto">
+                                <button type="button" id="template-btn" class="editor-btn p-2 flex items-center" title="Insert Template">
+                                    <i data-lucide="file-plus" class="w-4 h-4 mr-1"></i>
+                                    <span class="text-sm">Template</span>
+                                    <i data-lucide="chevron-down" class="w-3 h-3 ml-1"></i>
+                                </button>
+                                <div id="template-dropdown" class="absolute hidden right-0 z-10 mt-1 w-64 bg-white shadow-lg rounded-lg border border-slate-200 py-1">
+                                    <div class="px-3 py-2 border-b border-slate-200 text-xs font-medium text-slate-700">
                                         Template Cepat
                                     </div>
-                                    <button type="button" data-template="news-intro" class="w-full text-left px-4 py-2 hover:bg-gray-100">
-                                        <i class="fas fa-newspaper mr-2 text-green-600"></i> Intro Berita
+                                    <button type="button" data-template="news-intro" class="template-item w-full text-left px-4 py-3 text-sm">
+                                        <i data-lucide="newspaper" class="w-4 h-4 inline mr-2 text-green-600"></i>
+                                        Informasi Umum
                                     </button>
-                                    <button type="button" data-template="news-event" class="w-full text-left px-4 py-2 hover:bg-gray-100">
-                                        <i class="fas fa-calendar-alt mr-2 text-blue-600"></i> Berita Acara
+                                    <button type="button" data-template="news-event" class="template-item w-full text-left px-4 py-3 text-sm">
+                                        <i data-lucide="calendar" class="w-4 h-4 inline mr-2 text-blue-600"></i>
+                                        Undangan Acara
                                     </button>
-                                    <button type="button" data-template="news-announcement" class="w-full text-left px-4 py-2 hover:bg-gray-100">
-                                        <i class="fas fa-bullhorn mr-2 text-yellow-600"></i> Pengumuman
+                                    <button type="button" data-template="news-announcement" class="template-item w-full text-left px-4 py-3 text-sm">
+                                        <i data-lucide="megaphone" class="w-4 h-4 inline mr-2 text-yellow-600"></i>
+                                        Pengumuman Penting
                                     </button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    
-                    <!-- Word-like Text Editor Content Area -->
-                    <div id="editor-container" class="min-h-[300px] max-h-[600px] overflow-y-auto p-4 border border-gray-300 rounded-b-md bg-white focus:outline-none" contenteditable="true" style="font-family: Arial, sans-serif; font-size: 14px;">{{ old('content', $news->content) }}</div>
+
+                    <!-- Editor Content -->
+                    <div
+                        id="editor-content"
+                        class="editor-content p-4 bg-white focus:outline-none overflow-y-auto"
+                        contenteditable="true"
+                        style="font-family: Inter, sans-serif; font-size: 14px; line-height: 1.6;"
+                    >{{ old('content', $news->content) }}</div>
+
                     <textarea id="hidden-content" name="content" class="hidden">{{ old('content', $news->content) }}</textarea>
                 </div>
-                @error('content')
-                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                @enderror
-            </div>
 
-            <div class="mb-4">
-                <label for="image" class="block text-sm font-medium text-gray-700">Gambar Berita</label>
+                @error('content')
+                <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
+                @enderror
+
+                <div class="mt-4 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                    <div class="flex items-start">
+                        <i data-lucide="info" class="w-5 h-5 text-blue-600 mr-2 mt-0.5"></i>
+                        <div class="text-sm text-blue-800">
+                            <p class="font-medium">Tips Menulis Berita:</p>
+                            <ul class="mt-1 list-disc list-inside space-y-1">
+                                <li>Gunakan template untuk memulai dengan cepat</li>
+                                <li>Keyboard shortcuts: Ctrl+B (Bold), Ctrl+I (Italic), Ctrl+U (Underline)</li>
+                                <li>Pastikan konten mudah dibaca dan informatif</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Image Upload -->
+        <div class="form-section fade-in" style="animation-delay: 0.2s;">
+            <div class="section-header">
+                <h3 class="text-lg font-semibold text-slate-900 flex items-center">
+                    <i data-lucide="image" class="w-5 h-5 mr-2 text-blue-600"></i>
+                    Gambar Berita
+                </h3>
+            </div>
+            <div class="p-6">
                 @if($news->image)
-                <div class="mt-2 mb-3">
-                    <img src="{{ asset('storage/' . $news->image) }}" alt="{{ $news->title }}" class="h-32 w-auto object-cover rounded">
-                    <p class="text-xs text-gray-500 mt-1">Gambar saat ini. Unggah gambar baru untuk mengganti.</p>
+                <div class="mb-6">
+                    <h4 class="text-sm font-medium text-slate-700 mb-3">Gambar Saat Ini:</h4>
+                    <div class="image-preview">
+                        <img src="{{ asset('storage/' . $news->image) }}" alt="{{ $news->title }}" class="h-32 w-auto object-cover rounded-lg">
+                    </div>
+                    <p class="text-xs text-slate-500 mt-2">Upload gambar baru untuk mengganti gambar yang ada</p>
                 </div>
                 @endif
-                <input type="file" name="image" id="image" accept="image/*"
-                    class="mt-1 block w-full text-sm text-gray-500
-                    file:mr-4 file:py-2 file:px-4
-                    file:rounded-full file:border-0
-                    file:text-sm file:font-semibold
-                    file:bg-indigo-50 file:text-indigo-700
-                    hover:file:bg-indigo-100">
-                <p class="text-gray-500 text-xs mt-1">Format: JPEG, PNG, JPG, GIF. Ukuran maksimum: 10MB.</p>
+
+                <div id="upload-area" class="upload-area">
+                    <div class="text-center">
+                        <i data-lucide="upload-cloud" class="w-12 h-12 text-slate-400 mx-auto mb-4"></i>
+                        <div class="text-lg font-medium text-slate-900 mb-2">
+                            Drag & drop gambar di sini atau klik untuk memilih
+                        </div>
+                        <p class="text-sm text-slate-500">
+                            Format: JPEG, PNG, JPG, GIF. Maksimal: 10MB
+                        </p>
+                    </div>
+                    <input type="file" name="image" id="image-input" accept="image/*" class="hidden">
+                </div>
+
+                <div id="image-preview" class="mt-4"></div>
+
                 @error('image')
-                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
                 @enderror
             </div>
+        </div>
 
-            <div class="mb-4">
-                <label for="status" class="block text-sm font-medium text-gray-700">Status</label>
-                <select name="status" id="status" required
-                    class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
-                    <option value="draft" {{ (old('status', $news->status) == 'draft') ? 'selected' : '' }}>Draft</option>
-                    <option value="published" {{ (old('status', $news->status) == 'published') ? 'selected' : '' }}>Publikasikan</option>
-                </select>
-                @error('status')
-                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                @enderror
-            </div>
-
-            <div class="flex justify-end space-x-3">
-                <a href="{{ route('admin.news.index') }}" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-2 px-4 rounded">
-                    Batal
-                </a>
-                <button type="submit" class="bg-yellow-600 hover:bg-yellow-700 text-white font-medium py-2 px-4 rounded">
-                    Update Berita
-                </button>
-            </div>
-        </form>
-    </div>
+        <!-- Form Actions -->
+        <div class="flex justify-end space-x-4 mt-8">
+            <a href="{{ route('admin.news.index') }}"
+               class="btn-secondary px-6 py-3 rounded-lg font-medium">
+                <i data-lucide="x" class="w-4 h-4 mr-2"></i>
+                Batal
+            </a>
+            <button type="submit"
+                    class="btn-primary px-6 py-3 rounded-lg font-medium">
+                <i data-lucide="save" class="w-4 h-4 mr-2"></i>
+                Update Berita
+            </button>
+        </div>
+    </form>
 </div>
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Rich Text Editor functionality
-    const editor = document.getElementById('editor-container');
-    const hiddenContent = document.getElementById('hidden-content');
-    const form = document.querySelector('form');
-    
-    // Initialize the hidden textarea with the editor content
-    if (editor && hiddenContent) {
-        hiddenContent.value = editor.innerHTML;
-    }
-    
-    // Attach submit handler directly to the form
-    if (form) {
-        form.onsubmit = function() {
-            if (editor && hiddenContent) {
-                hiddenContent.value = editor.innerHTML;
-            }
-            return true; // Allow the form to submit
-        };
-    }
-    
-    // Update on any change to the editor content
-    if (editor && hiddenContent) {
-        editor.addEventListener('input', function() {
-            hiddenContent.value = editor.innerHTML;
-        });
-    }
-    
-    // Font family
-    document.getElementById('font-family').addEventListener('change', function() {
-        document.execCommand('fontName', false, this.value);
-        editor.focus();
-    });
-    
-    // Font size
-    document.getElementById('font-size').addEventListener('change', function() {
-        document.execCommand('fontSize', false, this.value);
-        editor.focus();
-    });
-    
-    // Text formatting buttons
-    document.getElementById('bold-btn').addEventListener('click', function() {
-        document.execCommand('bold', false, null);
-        editor.focus();
-    });
-    
-    document.getElementById('italic-btn').addEventListener('click', function() {
-        document.execCommand('italic', false, null);
-        editor.focus();
-    });
-    
-    document.getElementById('underline-btn').addEventListener('click', function() {
-        document.execCommand('underline', false, null);
-        editor.focus();
-    });
-    
-    document.getElementById('strikethrough-btn').addEventListener('click', function() {
-        document.execCommand('strikeThrough', false, null);
-        editor.focus();
-    });
-    
-    // Text color dropdown
-    const textColorBtn = document.getElementById('text-color-btn');
-    const textColorDropdown = document.getElementById('text-color-dropdown');
-    
-    textColorBtn.addEventListener('click', function() {
-        textColorDropdown.classList.toggle('hidden');
-        bgColorDropdown.classList.add('hidden');
-    });
-    
-    textColorDropdown.querySelectorAll('button').forEach(button => {
-        button.addEventListener('click', function() {
-            const color = this.getAttribute('data-color');
-            document.execCommand('foreColor', false, color);
-            textColorDropdown.classList.add('hidden');
-            editor.focus();
-        });
-    });
-    
-    // Background color dropdown
-    const bgColorBtn = document.getElementById('bg-color-btn');
-    const bgColorDropdown = document.getElementById('bg-color-dropdown');
-    
-    bgColorBtn.addEventListener('click', function() {
-        bgColorDropdown.classList.toggle('hidden');
-        textColorDropdown.classList.add('hidden');
-    });
-    
-    bgColorDropdown.querySelectorAll('button').forEach(button => {
-        button.addEventListener('click', function() {
-            const color = this.getAttribute('data-color');
-            document.execCommand('hiliteColor', false, color);
-            bgColorDropdown.classList.add('hidden');
-            editor.focus();
-        });
-    });
-    
-    // Hide color dropdowns when clicking elsewhere
-    document.addEventListener('click', function(e) {
-        if (!textColorBtn.contains(e.target) && !textColorDropdown.contains(e.target)) {
-            textColorDropdown.classList.add('hidden');
-        }
-        if (!bgColorBtn.contains(e.target) && !bgColorDropdown.contains(e.target)) {
-            bgColorDropdown.classList.add('hidden');
-        }
-        if (!templateBtn.contains(e.target) && !templateDropdown.contains(e.target)) {
-            templateDropdown.classList.add('hidden');
-        }
-    });
-    
-    // Text alignment buttons
-    document.getElementById('align-left-btn').addEventListener('click', function() {
-        document.execCommand('justifyLeft', false, null);
-        editor.focus();
-    });
-    
-    document.getElementById('align-center-btn').addEventListener('click', function() {
-        document.execCommand('justifyCenter', false, null);
-        editor.focus();
-    });
-    
-    document.getElementById('align-right-btn').addEventListener('click', function() {
-        document.execCommand('justifyRight', false, null);
-        editor.focus();
-    });
-    
-    document.getElementById('align-justify-btn').addEventListener('click', function() {
-        document.execCommand('justifyFull', false, null);
-        editor.focus();
-    });
-    
-    // List buttons
-    document.getElementById('list-ul-btn').addEventListener('click', function() {
-        document.execCommand('insertUnorderedList', false, null);
-        editor.focus();
-    });
-    
-    document.getElementById('list-ol-btn').addEventListener('click', function() {
-        document.execCommand('insertOrderedList', false, null);
-        editor.focus();
-    });
-    
-    // Indentation
-    document.getElementById('indent-btn').addEventListener('click', function() {
-        document.execCommand('indent', false, null);
-        editor.focus();
-    });
-    
-    document.getElementById('outdent-btn').addEventListener('click', function() {
-        document.execCommand('outdent', false, null);
-        editor.focus();
-    });
-    
-    // Link buttons
-    document.getElementById('link-btn').addEventListener('click', function() {
-        const url = prompt('Enter the URL:');
-        if (url) {
-            document.execCommand('createLink', false, url);
-        }
-        editor.focus();
-    });
-    
-    document.getElementById('unlink-btn').addEventListener('click', function() {
-        document.execCommand('unlink', false, null);
-        editor.focus();
-    });
-    
-    // Add keyboard shortcuts
-    editor.addEventListener('keydown', function(e) {
-        if (e.ctrlKey && e.key === 'b') {
-            e.preventDefault();
-            document.execCommand('bold', false, null);
-        } else if (e.ctrlKey && e.key === 'i') {
-            e.preventDefault();
-            document.execCommand('italic', false, null);
-        } else if (e.ctrlKey && e.key === 'u') {
-            e.preventDefault();
-            document.execCommand('underline', false, null);
-        }
-    });
-    
-    // Image upload
-    document.getElementById('image-upload').addEventListener('change', function() {
-        const file = this.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const img = document.createElement('img');
-                img.src = e.target.result;
-                img.style.maxWidth = '100%';
-                img.classList.add('my-2', 'rounded', 'border', 'border-gray-300');
-                document.execCommand('insertHTML', false, img.outerHTML);
-            };
-            reader.readAsDataURL(file);
-        }
-    });
-    
-    // Template dropdown
-    const templateBtn = document.getElementById('template-btn');
-    const templateDropdown = document.getElementById('template-dropdown');
-    
-    templateBtn.addEventListener('click', function() {
-        templateDropdown.classList.toggle('hidden');
-    });
-    
-    // Template handlers
-    const templates = {
-        'news-intro': `
-            <h2 style="font-size: 18px; font-weight: bold; color: #006400; margin-bottom: 10px;">Informasi Penting</h2>
-            <p style="margin-bottom: 10px;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui.</p>
-            <p style="margin-bottom: 10px;">Silahkan isi konten berita di sini dengan informasi yang relevan.</p>
-        `,
-        'news-event': `
-            <h2 style="font-size: 18px; font-weight: bold; color: #006400; margin-bottom: 10px;">Acara Mendatang</h2>
-            <p style="margin-bottom: 10px;"><strong>Tanggal:</strong> [Masukkan Tanggal]</p>
-            <p style="margin-bottom: 10px;"><strong>Waktu:</strong> [Masukkan Waktu]</p>
-            <p style="margin-bottom: 10px;"><strong>Tempat:</strong> [Masukkan Lokasi]</p>
-            <p style="margin-bottom: 10px;"><strong>Deskripsi:</strong></p>
-            <p style="margin-bottom: 10px;">Silahkan isi deskripsi acara di sini.</p>
-        `,
-        'news-announcement': `
-            <h2 style="font-size: 18px; font-weight: bold; color: #006400; margin-bottom: 10px;">Pengumuman Penting</h2>
-            <p style="margin-bottom: 10px;">Dengan hormat kami sampaikan kepada seluruh [target audience] bahwa:</p>
-            <ul style="margin-bottom: 10px; padding-left: 20px;">
-                <li>Poin pengumuman 1</li>
-                <li>Poin pengumuman 2</li>
-                <li>Poin pengumuman 3</li>
-            </ul>
-            <p style="margin-bottom: 10px;">Untuk informasi lebih lanjut silahkan hubungi [kontak].</p>
-        `
-    };
-    
-    templateDropdown.querySelectorAll('button[data-template]').forEach(button => {
-        button.addEventListener('click', function() {
-            const templateName = this.getAttribute('data-template');
-            if (templates[templateName]) {
-                document.execCommand('insertHTML', false, templates[templateName]);
-                templateDropdown.classList.add('hidden');
-                editor.focus();
-            }
-        });
-    });
-});
-</script>
-@endsection 
+</div>
+@endsection
