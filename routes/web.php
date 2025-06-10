@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\NavbarController;
@@ -81,9 +82,7 @@ Route::prefix('admin')->group(function () {
 
     // Protected Admin Routes
     Route::middleware(['auth'])->group(function () {
-        Route::get('dashboard', function () {
-            return view('admin.dashboard');
-        })->name('admin.dashboard');
+        Route::get('dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
 
         Route::resource('news', \App\Http\Controllers\Admin\NewsController::class, [
             'as' => 'admin'

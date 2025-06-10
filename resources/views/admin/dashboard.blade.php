@@ -186,51 +186,37 @@
         </div>
 
         <!-- Quick Stats -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <!-- Total News -->
             <div class="bg-white rounded-xl shadow-lg p-6 card-hover">
                 <div class="flex items-center justify-between">
                     <div>
                         <p class="text-sm font-medium text-slate-600">Total Berita</p>
-                        <p class="text-3xl font-bold text-slate-900">{{ $totalNews ?? 12 }}</p>
-                        <p class="text-xs text-emerald-600 mt-1">
-                            <i data-lucide="trending-up" class="w-3 h-3 inline mr-1"></i>
-                            +2 bulan ini
+                        <p class="text-3xl font-bold text-slate-900">{{ $totalNews ?? 0 }}</p>
+                        <p class="text-xs {{ ($newsThisMonth ?? 0) > 0 ? 'text-emerald-600' : 'text-slate-600' }} mt-1">
+                            <i data-lucide="{{ ($newsThisMonth ?? 0) > 0 ? 'trending-up' : 'minus' }}" class="w-3 h-3 inline mr-1"></i>
+                            {{ ($newsThisMonth ?? 0) > 0 ? "+$newsThisMonth bulan ini" : "Tidak ada perubahan" }}
                         </p>
                     </div>
                     <div class="w-14 h-14 bg-emerald-100 rounded-xl flex items-center justify-center">
-                        <i data-lucide="newspaper" class="w-7 h-7 text-emerald-600"></i>
+                        <i data-lucide="newspaper" class="w-6 h-6 text-emerald-600"></i>
                     </div>
                 </div>
             </div>
 
-            <div class="bg-white rounded-xl shadow-lg p-6 card-hover">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <p class="text-sm font-medium text-slate-600">Pendaftar Baru</p>
-                        <p class="text-3xl font-bold text-slate-900">{{ $totalRegistrations ?? 45 }}</p>
-                        <p class="text-xs text-blue-600 mt-1">
-                            <i data-lucide="trending-up" class="w-3 h-3 inline mr-1"></i>
-                            +8 minggu ini
-                        </p>
-                    </div>
-                    <div class="w-14 h-14 bg-blue-100 rounded-xl flex items-center justify-center">
-                        <i data-lucide="user-plus" class="w-7 h-7 text-blue-600"></i>
-                    </div>
-                </div>
-            </div>
-
+            <!-- Total Activity Photos -->
             <div class="bg-white rounded-xl shadow-lg p-6 card-hover">
                 <div class="flex items-center justify-between">
                     <div>
                         <p class="text-sm font-medium text-slate-600">Foto Kegiatan</p>
-                        <p class="text-3xl font-bold text-slate-900">{{ $totalPhotos ?? 28 }}</p>
-                        <p class="text-xs text-amber-600 mt-1">
-                            <i data-lucide="trending-up" class="w-3 h-3 inline mr-1"></i>
-                            +5 hari ini
+                        <p class="text-3xl font-bold text-slate-900">{{ $totalActivityPhotos ?? 0 }}</p>
+                        <p class="text-xs {{ ($activityPhotosToday ?? 0) > 0 ? 'text-emerald-600' : 'text-slate-600' }} mt-1">
+                            <i data-lucide="{{ ($activityPhotosToday ?? 0) > 0 ? 'trending-up' : 'minus' }}" class="w-3 h-3 inline mr-1"></i>
+                            {{ ($activityPhotosToday ?? 0) > 0 ? "+$activityPhotosToday hari ini" : "Tidak ada perubahan" }}
                         </p>
                     </div>
-                    <div class="w-14 h-14 bg-amber-100 rounded-xl flex items-center justify-center">
-                        <i data-lucide="images" class="w-7 h-7 text-amber-600"></i>
+                    <div class="w-14 h-14 bg-purple-100 rounded-xl flex items-center justify-center">
+                        <i data-lucide="image" class="w-6 h-6 text-purple-600"></i>
                     </div>
                 </div>
             </div>
@@ -309,54 +295,41 @@
         </div>
 
         <!-- Recent Activity -->
-        <div class="bg-white rounded-xl shadow-lg overflow-hidden">
-            <div class="p-6 border-b border-slate-200">
-                <div class="flex items-center justify-between">
-                    <div class="flex items-center">
-                        <i data-lucide="bell" class="w-5 h-5 text-slate-600 mr-2"></i>
+        <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
+            <div class="flex items-center justify-between mb-6">
+                <div>
                         <h3 class="text-lg font-semibold text-slate-900">Aktivitas Terbaru</h3>
+                    <p class="text-sm text-slate-600">Pantau aktivitas terbaru di sistem</p>
                     </div>
-                    <span class="bg-slate-100 text-slate-600 text-xs font-medium px-2.5 py-0.5 rounded-full">
-                        Live
-                    </span>
+                <div class="flex items-center">
+                    <span class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse mr-2"></span>
+                    <span class="text-xs font-medium text-emerald-600">Live</span>
                 </div>
-                <p class="text-sm text-slate-600 mt-1">Pantau aktivitas terbaru di sistem</p>
             </div>
-            <div class="p-6">
+
+            <!-- Activity List -->
                 <div class="space-y-4">
-                    <div class="flex items-start space-x-3 p-3 bg-emerald-50 rounded-lg border-l-4 border-emerald-500">
-                        <div class="w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center flex-shrink-0">
-                            <i data-lucide="newspaper" class="w-4 h-4 text-emerald-600"></i>
+                @forelse($recentActivities ?? [] as $activity)
+                <div class="flex items-start space-x-4 p-4 bg-slate-50 rounded-lg">
+                    <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-sm">
+                        <i data-lucide="activity" class="w-5 h-5 text-emerald-600"></i>
                         </div>
                         <div class="flex-1">
-                            <p class="text-sm font-medium text-slate-900">Berita baru dipublikasikan</p>
-                            <p class="text-xs text-slate-600">"Kegiatan Ramadhan 2024" telah dipublikasikan</p>
-                            <p class="text-xs text-slate-500 mt-1">2 jam yang lalu</p>
-                        </div>
-                    </div>
-
-                    <div class="flex items-start space-x-3 p-3 bg-blue-50 rounded-lg border-l-4 border-blue-500">
-                        <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
-                            <i data-lucide="user-plus" class="w-4 h-4 text-blue-600"></i>
-                        </div>
-                        <div class="flex-1">
-                            <p class="text-sm font-medium text-slate-900">Pendaftar baru</p>
-                            <p class="text-xs text-slate-600">Ahmad Fauzi telah mendaftar sebagai santri baru</p>
-                            <p class="text-xs text-slate-500 mt-1">4 jam yang lalu</p>
-                        </div>
-                    </div>
-
-                    <div class="flex items-start space-x-3 p-3 bg-amber-50 rounded-lg border-l-4 border-amber-500">
-                        <div class="w-8 h-8 bg-amber-100 rounded-full flex items-center justify-center flex-shrink-0">
-                            <i data-lucide="images" class="w-4 h-4 text-amber-600"></i>
-                        </div>
-                        <div class="flex-1">
-                            <p class="text-sm font-medium text-slate-900">Foto kegiatan ditambahkan</p>
-                            <p class="text-xs text-slate-600">5 foto baru ditambahkan ke galeri kegiatan</p>
-                            <p class="text-xs text-slate-500 mt-1">1 hari yang lalu</p>
-                        </div>
+                        <p class="text-sm font-medium text-slate-900">{{ $activity->title }}</p>
+                        <p class="text-xs text-slate-600">{{ $activity->created_at->diffForHumans() }}</p>
+                        @if($activity->galleries->count() > 0)
+                        <p class="text-xs text-blue-600 mt-1">
+                            <i data-lucide="image" class="w-3 h-3 inline mr-1"></i>
+                            {{ $activity->galleries->count() }} foto ditambahkan
+                        </p>
+                        @endif
                     </div>
                 </div>
+                @empty
+                <div class="text-center py-4">
+                    <p class="text-sm text-slate-600">Belum ada aktivitas terbaru</p>
+                </div>
+                @endforelse
             </div>
         </div>
     </div>

@@ -153,50 +153,6 @@
     </div>
 </section>
 
-<!-- Stats Section -->
-<section class="stats-section py-5">
-    <div class="container">
-        <div class="row">
-            <div class="col-6 col-md-3 mb-4 mb-md-0">
-                <div class="stat-card text-center">
-                    <div class="stat-icon mb-2">
-                        <i class="fas fa-users fa-2x text-primary-custom"></i>
-                    </div>
-                    <h3 class="counter fw-bold fs-2" data-target="500">0</h3>
-                    <p class="stat-title text-muted">Jumlah Santri</p>
-                </div>
-            </div>
-            <div class="col-6 col-md-3 mb-4 mb-md-0">
-                <div class="stat-card text-center">
-                    <div class="stat-icon mb-2">
-                        <i class="fas fa-chalkboard-teacher fa-2x text-primary-custom"></i>
-                    </div>
-                    <h3 class="counter fw-bold fs-2" data-target="50">0</h3>
-                    <p class="stat-title text-muted">Tenaga Pengajar</p>
-                </div>
-            </div>
-            <div class="col-6 col-md-3">
-                <div class="stat-card text-center">
-                    <div class="stat-icon mb-2">
-                        <i class="fas fa-building fa-2x text-primary-custom"></i>
-                    </div>
-                    <h3 class="counter fw-bold fs-2" data-target="10">0</h3>
-                    <p class="stat-title text-muted">Gedung Fasilitas</p>
-                </div>
-            </div>
-            <div class="col-6 col-md-3">
-                <div class="stat-card text-center">
-                    <div class="stat-icon mb-2">
-                        <i class="fas fa-award fa-2x text-primary-custom"></i>
-                    </div>
-                    <h3 class="counter fw-bold fs-2" data-target="20">0</h3>
-                    <p class="stat-title text-muted">Tahun Berdiri</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
 <!-- Program Schedule Section -->
 <section class="schedule-section py-5 bg-light-custom">
     <div class="container">
@@ -659,31 +615,6 @@
     .feature-link:hover {
         color: var(--secondary-color);
         transform: translateX(5px);
-    }
-
-    /* Stats Section Styles */
-    .stats-section {
-        padding: 4rem 0;
-        background-color: #fff;
-    }
-
-    .stat-card {
-        padding: 1.5rem;
-        transition: all 0.3s ease;
-    }
-
-    .stat-card:hover .stat-icon {
-        transform: scale(1.2);
-    }
-
-    .stat-icon {
-        display: inline-block;
-        transition: all 0.3s ease;
-    }
-
-    .counter {
-        color: var(--dark-color);
-        margin-bottom: 0.5rem;
     }
 
     /* Schedule Section Styles */
