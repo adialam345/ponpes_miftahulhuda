@@ -539,7 +539,7 @@
                     <div class="file-upload-area drag-drop-area" id="thumbnail-drop-area">
                         <div class="text-center">
                             <i data-lucide="upload-cloud" class="w-12 h-12 text-slate-400 mx-auto mb-4"></i>
-                            <div class="text-sm text-slate-600 mb-2">
+                            <div class="flex flex-col items-center gap-3">
                                 <label for="thumbnail" class="relative cursor-pointer bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition-colors duration-200">
                                     <span>Pilih Thumbnail</span>
                                     <input type="file"
@@ -549,9 +549,9 @@
                                            name="thumbnail"
                                            required>
                                 </label>
-                                atau drag & drop file di sini
+                                <p class="text-sm text-slate-600">atau drag & drop file di sini</p>
                             </div>
-                            <p class="text-xs text-slate-500">Format: JPG, PNG, GIF. Maksimal: 10MB</p>
+                            <p class="text-xs text-slate-500 mt-2">Format: JPG, PNG, GIF. Maksimal: 10MB</p>
                         </div>
                     </div>
 
@@ -582,7 +582,7 @@
                     <div class="file-upload-area drag-drop-area" id="images-drop-area">
                         <div class="text-center">
                             <i data-lucide="images" class="w-12 h-12 text-slate-400 mx-auto mb-4"></i>
-                            <div class="text-sm text-slate-600 mb-2">
+                            <div class="flex flex-col items-center gap-3">
                                 <label for="images" class="relative cursor-pointer bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-200">
                                     <span>Pilih Foto-foto</span>
                                     <input type="file"
@@ -592,9 +592,9 @@
                                            name="images[]"
                                            multiple>
                                 </label>
-                                atau drag & drop file di sini
+                                <p class="text-sm text-slate-600">atau drag & drop file di sini</p>
                             </div>
-                            <p class="text-xs text-slate-500">Format: JPG, PNG, GIF. Maksimal: 10MB per foto, 20 foto total</p>
+                            <p class="text-xs text-slate-500 mt-2">Format: JPG, PNG, GIF. Maksimal: 10MB per foto, 20 foto total</p>
                         </div>
                     </div>
 

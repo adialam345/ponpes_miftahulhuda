@@ -23,7 +23,7 @@ class ActivityController extends Controller
             $query->active();
         }])
         ->orderBy('order', 'asc')
-        ->get();
+        ->paginate(10);
         
         return view('admin.activities.index', compact('activities'));
     }
