@@ -19,19 +19,6 @@
                         <p class="text-gray-600 mt-1">Informasi lengkap halaman pendaftaran {{ $registrationPage->page_type == 'pondok' ? 'Pondok Pesantren' : 'SMP' }}</p>
                     </div>
                 </div>
-
-                <div class="flex flex-wrap gap-3">
-                    <a href="{{ route('admin.registration.edit', $registrationPage->id) }}"
-                       class="inline-flex items-center px-4 py-2.5 bg-gradient-to-r from-amber-500 to-orange-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200">
-                        <i class="fas fa-edit mr-2"></i>
-                        Edit Halaman
-                    </a>
-                    <a href="{{ route('admin.registration.index') }}"
-                       class="inline-flex items-center px-4 py-2.5 bg-gradient-to-r from-gray-500 to-gray-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200">
-                        <i class="fas fa-arrow-left mr-2"></i>
-                        Kembali
-                    </a>
-                </div>
             </div>
         </div>
 
@@ -278,16 +265,12 @@
                         </a>
                         @endif
 
-                        <form action="{{ route('admin.registration.destroy', $registrationPage->id) }}" method="POST" class="w-full"
-                              onsubmit="return confirm('Apakah Anda yakin ingin menghapus halaman pendaftaran ini? Tindakan ini tidak dapat dibatalkan.')">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit"
-                                    class="w-full inline-flex items-center justify-center px-4 py-3 bg-gradient-to-r from-red-500 to-pink-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200">
-                                <i class="fas fa-trash mr-2"></i>
-                                Hapus Halaman
-                            </button>
-                        </form>
+                        <a href="{{ route('admin.registration.clear-content', $registrationPage->id) }}"
+                           onclick="return confirm('Apakah Anda yakin ingin mengosongkan seluruh konten halaman ini?');"
+                           class="w-full inline-flex items-center justify-center px-4 py-3 bg-gradient-to-r from-blue-500 to-cyan-500 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200">
+                            <i class="fas fa-eraser mr-2"></i>
+                            Kosongkan Halaman
+                        </a>
                     </div>
                 </div>
 

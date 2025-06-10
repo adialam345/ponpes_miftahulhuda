@@ -8,6 +8,7 @@ use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\NavbarController;
 use App\Http\Controllers\PendidikanController;
 use App\Http\Controllers\GalleryController;
+use App\Http\Controllers\Admin\RegistrationPageController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -92,6 +93,8 @@ Route::prefix('admin')->group(function () {
             'as' => 'admin'
         ]);
 
+        Route::get('registration/{id}/clear-content', [\App\Http\Controllers\Admin\RegistrationPageController::class, 'clearContent'])->name('admin.registration.clear-content');
+
         Route::resource('gallery', \App\Http\Controllers\Admin\GalleryController::class, [
             'as' => 'admin'
         ]);
@@ -114,5 +117,7 @@ Route::prefix('admin')->group(function () {
 
         Route::post('logout', [AuthController::class, 'logout'])->name('admin.logout');
         Route::post('password/update', [AuthController::class, 'updatePassword'])->name('admin.password.update');
+
+        Route::post('/upload-image', [\App\Http\Controllers\Admin\RegistrationPageController::class, 'uploadImage'])->name('admin.upload-image');
     });
 });

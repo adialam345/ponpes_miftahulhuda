@@ -111,7 +111,7 @@ class RegistrationPageController extends Controller
         $rules = [
             'page_type' => 'required|in:pondok,smp',
             'title' => 'required|string|max:255',
-            'content' => 'required|string',
+            'content' => 'nullable|string',
             'registration_start' => 'nullable|date',
             'registration_end' => 'nullable|date|after_or_equal:registration_start',
             'requirements' => 'nullable|array',
@@ -150,5 +150,31 @@ class RegistrationPageController extends Controller
         }
         
         return $data;
+    }
+
+    /**
+     * Clear the content of a registration page
+     */
+    public function clearContent(string $id)
+    {
+        $registrationPage = RegistrationPage::findOrFail($id);
+        $registrationPage->content = '';
+        $registrationPage->requirements = [];
+        $registrationPage->procedures = [];
+        $registrationPage->documents = [];
+        $registrationPage->contacts = [];
+        $registrationPage->save();
+
+        return redirect()->back()->with('success', 'Semua konten halaman pendaftaran berhasil dikosongkan!');
+    }
+
+    public function uploadImage(Request $request)
+    {
+        if ($request->hasFile('file')) {
+            $path = $request->file('file')->store('uploads', 'public');
+            $url = asset('storage/' . $path);
+            return response()->json(['url' => $url]);
+        }
+        return response()->json(['error' => 'No file uploaded'], 400);
     }
 }

@@ -237,7 +237,6 @@ function initializeEditor() {
     // Setup toolbar buttons
     setupToolbarButtons();
     setupColorPickers();
-    setupTemplates();
     setupImageUpload();
     setupKeyboardShortcuts();
 }
@@ -376,278 +375,40 @@ function setupColorPickers() {
     });
 }
 
-function setupTemplates() {
-    const templateBtn = document.getElementById('template-btn');
-    const templateDropdown = document.getElementById('template-dropdown');
-
-    if (templateBtn && templateDropdown) {
-        templateBtn.addEventListener('click', function() {
-            templateDropdown.classList.toggle('hidden');
-        });
-
-        const templates = {
-            'requirements': `
-                <h3 style="font-size: 20px; font-weight: bold; color: #059669; margin-bottom: 16px;">📋 Persyaratan Pendaftaran</h3>
-                <div style="background: #ecfdf5; padding: 16px; border-radius: 8px; margin: 16px 0; border-left: 4px solid #059669;">
-                    <ul style="margin: 0; padding-left: 20px; color: #374151;">
-                        <li style="margin-bottom: 8px;">Fotokopi Kartu Keluarga (2 lembar)</li>
-                        <li style="margin-bottom: 8px;">Fotokopi Akta Kelahiran (2 lembar)</li>
-                        <li style="margin-bottom: 8px;">Fotokopi Ijazah/SKHUN terakhir (2 lembar)</li>
-                        <li style="margin-bottom: 8px;">Pas foto 3x4 berwarna (4 lembar)</li>
-                        <li style="margin-bottom: 8px;">Surat Keterangan Sehat dari Dokter</li>
-                        <li style="margin-bottom: 8px;">Surat Keterangan Berkelakuan Baik</li>
-                    </ul>
-                </div>
-            `,
-            'procedures': `
-                <h3 style="font-size: 20px; font-weight: bold; color: #0891b2; margin-bottom: 16px;">📝 Prosedur Pendaftaran</h3>
-                <div style="background: #f0f9ff; padding: 16px; border-radius: 8px; margin: 16px 0; border-left: 4px solid #0891b2;">
-                    <ol style="margin: 0; padding-left: 20px; color: #374151;">
-                        <li style="margin-bottom: 8px;">Mengisi formulir pendaftaran online</li>
-                        <li style="margin-bottom: 8px;">Membayar biaya pendaftaran sebesar Rp. 150.000</li>
-                        <li style="margin-bottom: 8px;">Menyerahkan berkas persyaratan lengkap</li>
-                        <li style="margin-bottom: 8px;">Mengikuti tes seleksi (tulis dan wawancara)</li>
-                        <li style="margin-bottom: 8px;">Menunggu pengumuman hasil seleksi</li>
-                        <li style="margin-bottom: 8px;">Melakukan daftar ulang bagi yang diterima</li>
-                    </ol>
-                </div>
-            `,
-            'documents': `
-                <h3 style="font-size: 20px; font-weight: bold; color: #dc2626; margin-bottom: 16px;">📄 Dokumen yang Dibutuhkan</h3>
-                <div style="background: #fef2f2; padding: 16px; border-radius: 8px; margin: 16px 0; border-left: 4px solid #dc2626;">
-                    <ul style="margin: 0; padding-left: 20px; color: #374151;">
-                        <li style="margin-bottom: 8px;">Formulir Pendaftaran (diisi lengkap dan ditandatangani)</li>
-                        <li style="margin-bottom: 8px;">Surat Pernyataan Orang Tua/Wali bermaterai</li>
-                        <li style="margin-bottom: 8px;">Surat Rekomendasi dari Sekolah Asal</li>
-                        <li style="margin-bottom: 8px;">Rapor 3 semester terakhir (dilegalisir)</li>
-                        <li style="margin-bottom: 8px;">Surat Keterangan Tidak Mampu (jika ada)</li>
-                    </ul>
-                </div>
-            `,
-            'contacts': `
-                <h3 style="font-size: 20px; font-weight: bold; color: #7c2d12; margin-bottom: 16px;">📞 Kontak Pendaftaran</h3>
-                <div style="background: #fef7ed; padding: 16px; border-radius: 8px; margin: 16px 0; border-left: 4px solid #ea580c;">
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px;">
-                        <div>
-                            <p style="margin-bottom: 8px; display: flex; align-items: center;"><i data-lucide="phone" style="width: 16px; height: 16px; margin-right: 8px; color: #ea580c;"></i> <strong>Telepon:</strong></p>
-                            <p style="margin-left: 24px; margin-bottom: 12px;">0812-3456-7890 (Ustadz Ahmad)</p>
-
-                            <p style="margin-bottom: 8px; display: flex; align-items: center;"><i data-lucide="mail" style="width: 16px; height: 16px; margin-right: 8px; color: #ea580c;"></i> <strong>Email:</strong></p>
-                            <p style="margin-left: 24px; margin-bottom: 12px;">pendaftaran@ponpes.sch.id</p>
-                        </div>
-                        <div>
-                            <p style="margin-bottom: 8px; display: flex; align-items: center;"><i data-lucide="message-circle" style="width: 16px; height: 16px; margin-right: 8px; color: #ea580c;"></i> <strong>WhatsApp:</strong></p>
-                            <p style="margin-left: 24px; margin-bottom: 12px;">0812-3456-7890</p>
-
-                            <p style="margin-bottom: 8px; display: flex; align-items: center;"><i data-lucide="map-pin" style="width: 16px; height: 16px; margin-right: 8px; color: #ea580c;"></i> <strong>Alamat:</strong></p>
-                            <p style="margin-left: 24px;">Jl. Pendidikan No. 123, Kota Anda</p>
-                        </div>
-                    </div>
-                </div>
-            `,
-            'full-page': `
-                <h2 style="font-size: 24px; font-weight: bold; color: #1f2937; margin-bottom: 20px; text-align: center;">📚 Informasi Pendaftaran Santri Baru</h2>
-
-                <p style="margin-bottom: 20px; text-align: justify; color: #374151; line-height: 1.6;">
-                    Assalamu'alaikum warahmatullahi wabarakatuh. Pondok Pesantren Miftahul Huda dengan bangga membuka pendaftaran santri baru
-                    untuk tahun akademik 2024/2025. Berikut adalah informasi lengkap mengenai persyaratan, prosedur, dan kontak pendaftaran.
-                </p>
-
-                <h3 style="font-size: 20px; font-weight: bold; color: #059669; margin-bottom: 16px;">📋 Persyaratan Pendaftaran</h3>
-                <div style="background: #ecfdf5; padding: 16px; border-radius: 8px; margin: 16px 0; border-left: 4px solid #059669;">
-                    <ul style="margin: 0; padding-left: 20px; color: #374151;">
-                        <li style="margin-bottom: 8px;">Fotokopi Kartu Keluarga (2 lembar)</li>
-                        <li style="margin-bottom: 8px;">Fotokopi Akta Kelahiran (2 lembar)</li>
-                        <li style="margin-bottom: 8px;">Fotokopi Ijazah/SKHUN terakhir (2 lembar)</li>
-                        <li style="margin-bottom: 8px;">Pas foto 3x4 berwarna (4 lembar)</li>
-                        <li style="margin-bottom: 8px;">Surat Keterangan Sehat dari Dokter</li>
-                        <li style="margin-bottom: 8px;">Surat Keterangan Berkelakuan Baik</li>
-                    </ul>
-                </div>
-
-                <h3 style="font-size: 20px; font-weight: bold; color: #0891b2; margin-bottom: 16px;">📝 Prosedur Pendaftaran</h3>
-                <div style="background: #f0f9ff; padding: 16px; border-radius: 8px; margin: 16px 0; border-left: 4px solid #0891b2;">
-                    <ol style="margin: 0; padding-left: 20px; color: #374151;">
-                        <li style="margin-bottom: 8px;">Mengisi formulir pendaftaran online</li>
-                        <li style="margin-bottom: 8px;">Membayar biaya pendaftaran sebesar Rp. 150.000</li>
-                        <li style="margin-bottom: 8px;">Menyerahkan berkas persyaratan lengkap</li>
-                        <li style="margin-bottom: 8px;">Mengikuti tes seleksi (tulis dan wawancara)</li>
-                        <li style="margin-bottom: 8px;">Menunggu pengumuman hasil seleksi</li>
-                        <li style="margin-bottom: 8px;">Melakukan daftar ulang bagi yang diterima</li>
-                    </ol>
-                </div>
-
-                <h3 style="font-size: 20px; font-weight: bold; color: #7c2d12; margin-bottom: 16px;">📞 Kontak Pendaftaran</h3>
-                <div style="background: #fef7ed; padding: 16px; border-radius: 8px; margin: 16px 0; border-left: 4px solid #ea580c;">
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px;">
-                        <div>
-                            <p style="margin-bottom: 8px;"><strong>📞 Telepon:</strong> 0812-3456-7890 (Ustadz Ahmad)</p>
-                            <p style="margin-bottom: 8px;"><strong>📧 Email:</strong> pendaftaran@ponpes.sch.id</p>
-                        </div>
-                        <div>
-                            <p style="margin-bottom: 8px;"><strong>💬 WhatsApp:</strong> 0812-3456-7890</p>
-                            <p style="margin-bottom: 8px;"><strong>📍 Alamat:</strong> Jl. Pendidikan No. 123, Kota Anda</p>
-                        </div>
-                    </div>
-                </div>
-
-                <p style="margin-top: 20px; text-align: center; color: #374151; font-style: italic;">
-                    Barakallahu fiikum. Semoga Allah SWT memberikan kemudahan dalam proses pendaftaran ini.
-                </p>
-            `
-        };
-
-        templateDropdown.querySelectorAll('[data-template]').forEach(btn => {
-            btn.addEventListener('click', function() {
-                const templateName = this.getAttribute('data-template');
-                if (templates[templateName]) {
-                    document.execCommand('insertHTML', false, templates[templateName]);
-                    templateDropdown.classList.add('hidden');
-                    editor.focus();
-                    hiddenContent.value = editor.innerHTML;
-                    lucide.createIcons(); // Re-initialize icons after inserting template
-                }
-            });
-        });
-
-        // Close dropdown when clicking outside
-        document.addEventListener('click', function(e) {
-            if (!templateBtn.contains(e.target) && !templateDropdown.contains(e.target)) {
-                templateDropdown.classList.add('hidden');
-            }
-        });
-    }
-}
-
 function setupImageUpload() {
     const imageUpload = document.getElementById('image-upload');
 
     if (imageUpload) {
-        imageUpload.addEventListener('change', function() {
-            const file = this.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const wrapper = document.createElement('div');
-                    wrapper.className = 'resizable-image';
-                    wrapper.style.display = 'inline-block';
-                    wrapper.style.position = 'relative';
-                    wrapper.style.margin = '0.5rem';
-
-                    const img = document.createElement('img');
-                    img.src = e.target.result;
-                    img.style.maxWidth = '100%';
-                    img.style.height = 'auto';
-                    img.style.borderRadius = '0.375rem';
-                    img.style.cursor = 'move';
-
-                    wrapper.appendChild(img);
-
-                    // Add resize handles
-                    const corners = ['nw', 'ne', 'se', 'sw'];
-                    corners.forEach(corner => {
-                        const handle = document.createElement('div');
-                        handle.className = `resize-handle ${corner}`;
-                        wrapper.appendChild(handle);
-                    });
-
-                    // Insert into editor
-                    const selection = window.getSelection();
-                    if (selection.rangeCount > 0) {
-                        const range = selection.getRangeAt(0);
-                        range.insertNode(wrapper);
+        imageUpload.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file && file.type.indexOf('image') !== -1) {
+                const formData = new FormData();
+                formData.append('file', file);
+                fetch('{{ route('admin.upload-image') }}', {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.url) {
+                        const img = document.createElement('img');
+                        img.src = data.url;
+                        img.style.maxWidth = '100%';
+                        insertImageAtCursor(img);
                     } else {
-                        editor.appendChild(wrapper);
+                        showAlert('error', 'Gagal upload gambar');
                     }
-
-                    // Make image draggable and resizable
-                    makeImageInteractive(wrapper, img);
-                };
-                reader.readAsDataURL(file);
+                })
+                .catch(() => {
+                    showAlert('error', 'Gagal upload gambar');
+                });
             }
+            e.target.value = '';
         });
     }
-}
-
-function makeImageInteractive(wrapper, img) {
-    // Drag functionality
-    img.addEventListener('mousedown', function(e) {
-        if (e.target.classList.contains('resize-handle')) return;
-
-        e.preventDefault();
-        const startX = e.clientX;
-        const startY = e.clientY;
-        const startLeft = wrapper.offsetLeft;
-        const startTop = wrapper.offsetTop;
-
-        function moveHandler(e) {
-            const dx = e.clientX - startX;
-            const dy = e.clientY - startY;
-            wrapper.style.position = 'relative';
-            wrapper.style.left = `${startLeft + dx}px`;
-            wrapper.style.top = `${startTop + dy}px`;
-        }
-
-        function upHandler() {
-            document.removeEventListener('mousemove', moveHandler);
-            document.removeEventListener('mouseup', upHandler);
-        }
-
-        document.addEventListener('mousemove', moveHandler);
-        document.addEventListener('mouseup', upHandler);
-    });
-
-    // Resize functionality
-    wrapper.querySelectorAll('.resize-handle').forEach(handle => {
-        handle.addEventListener('mousedown', function(e) {
-            e.stopPropagation();
-            e.preventDefault();
-
-            const startWidth = img.offsetWidth;
-            const startHeight = img.offsetHeight;
-            const startX = e.clientX;
-            const startY = e.clientY;
-            const corner = this.classList[1]; // nw, ne, se, sw
-
-            function resizeHandler(e) {
-                let newWidth = startWidth;
-                let newHeight = startHeight;
-
-                if (corner.includes('e')) {
-                    newWidth = startWidth + (e.clientX - startX);
-                } else if (corner.includes('w')) {
-                    newWidth = startWidth - (e.clientX - startX);
-                }
-
-                if (corner.includes('s')) {
-                    newHeight = startHeight + (e.clientY - startY);
-                } else if (corner.includes('n')) {
-                    newHeight = startHeight - (e.clientY - startY);
-                }
-
-                // Maintain aspect ratio if shift is held
-                if (e.shiftKey) {
-                    const ratio = startWidth / startHeight;
-                    if (Math.abs(e.clientX - startX) > Math.abs(e.clientY - startY)) {
-                        newHeight = newWidth / ratio;
-                    } else {
-                        newWidth = newHeight * ratio;
-                    }
-                }
-
-                img.style.width = `${Math.max(50, newWidth)}px`;
-                img.style.height = 'auto';
-            }
-
-            function endResizeHandler() {
-                document.removeEventListener('mousemove', resizeHandler);
-                document.removeEventListener('mouseup', endResizeHandler);
-            }
-
-            document.addEventListener('mousemove', resizeHandler);
-            document.addEventListener('mouseup', endResizeHandler);
-        });
-    });
 }
 
 function setupKeyboardShortcuts() {
@@ -756,6 +517,154 @@ function showAlert(type, message) {
         position: 'top-end'
     });
 }
+
+editor.addEventListener('paste', function(e) {
+    const items = (e.clipboardData || e.originalEvent.clipboardData).items;
+    for (let i = 0; i < items.length; i++) {
+        if (items[i].type.indexOf('image') !== -1) {
+            const file = items[i].getAsFile();
+            const formData = new FormData();
+            formData.append('file', file);
+
+            fetch('{{ route('admin.upload-image') }}', {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.url) {
+                    const img = document.createElement('img');
+                    img.src = data.url;
+                    img.style.maxWidth = '100%';
+                    insertImageAtCursor(img);
+                }
+            });
+            e.preventDefault();
+        }
+    }
+});
+
+function insertImageAtCursor(img) {
+    // Bungkus gambar dengan span resizable
+    const wrapper = document.createElement('span');
+    wrapper.className = 'resizable-image';
+    wrapper.contentEditable = false;
+
+    // Tambahkan handle sudut
+    ['nw', 'ne', 'sw', 'se'].forEach(pos => {
+        const handle = document.createElement('span');
+        handle.className = 'resize-handle ' + pos;
+        wrapper.appendChild(handle);
+    });
+
+    img.style.maxWidth = '100%';
+    img.style.height = 'auto';
+    wrapper.appendChild(img);
+
+    let sel = window.getSelection();
+    let isInEditor = false;
+
+    if (sel && sel.rangeCount) {
+        let range = sel.getRangeAt(0);
+        let currentNode = range.commonAncestorContainer;
+        while (currentNode) {
+            if (currentNode === editor) {
+                isInEditor = true;
+                break;
+            }
+            currentNode = currentNode.parentNode;
+        }
+
+        if (isInEditor) {
+            range.deleteContents();
+            range.insertNode(wrapper);
+            range.setStartAfter(wrapper);
+            range.collapse(true);
+            sel.removeAllRanges();
+            sel.addRange(range);
+            initResizable(wrapper);
+            return;
+        }
+    }
+    editor.appendChild(wrapper);
+    editor.scrollTop = editor.scrollHeight;
+    initResizable(wrapper);
+}
+
+function initResizable(wrapper) {
+    const img = wrapper.querySelector('img');
+    let startX, startY, startWidth, startHeight, handle;
+
+    wrapper.querySelectorAll('.resize-handle').forEach(h => {
+        h.addEventListener('mousedown', function(e) {
+            e.preventDefault();
+            handle = h;
+            startX = e.clientX;
+            startY = e.clientY;
+            startWidth = img.offsetWidth;
+            startHeight = img.offsetHeight;
+            document.addEventListener('mousemove', resize);
+            document.addEventListener('mouseup', stopResize);
+        });
+    });
+
+    function resize(e) {
+        let dx = e.clientX - startX;
+        let dy = e.clientY - startY;
+        if (handle.classList.contains('se')) {
+            img.style.width = (startWidth + dx) + 'px';
+            img.style.height = (startHeight + dy) + 'px';
+        } else if (handle.classList.contains('sw')) {
+            img.style.width = (startWidth - dx) + 'px';
+            img.style.height = (startHeight + dy) + 'px';
+        } else if (handle.classList.contains('ne')) {
+            img.style.width = (startWidth + dx) + 'px';
+            img.style.height = (startHeight - dy) + 'px';
+        } else if (handle.classList.contains('nw')) {
+            img.style.width = (startWidth - dx) + 'px';
+            img.style.height = (startHeight - dy) + 'px';
+        }
+    }
+
+    function stopResize() {
+        document.removeEventListener('mousemove', resize);
+        document.removeEventListener('mouseup', stopResize);
+    }
+}
+
+// Drag & Drop Image
+editor.addEventListener('dragover', function(e) {
+    e.preventDefault();
+});
+editor.addEventListener('drop', function(e) {
+    e.preventDefault();
+    const files = e.dataTransfer.files;
+    for (let i = 0; i < files.length; i++) {
+        if (files[i].type.indexOf('image') !== -1) {
+            const formData = new FormData();
+            formData.append('file', files[i]);
+            fetch('{{ route('admin.upload-image') }}', {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.url) {
+                    const img = document.createElement('img');
+                    img.src = data.url;
+                    img.style.maxWidth = '100%';
+                    insertImageAtCursor(img);
+                }
+            });
+        }
+    }
+});
 </script>
 @endpush
 
@@ -1035,40 +944,6 @@ function showAlert(type, message) {
                                             <i data-lucide="image" class="w-4 h-4"></i>
                                             <input id="image-upload" type="file" accept="image/*" class="hidden">
                                         </label>
-                                    </div>
-
-                                    <!-- Templates -->
-                                    <div class="relative ml-auto">
-                                        <button type="button" id="template-btn" class="editor-btn p-2 flex items-center" title="Insert Template">
-                                            <i data-lucide="file-plus" class="w-4 h-4 mr-1"></i>
-                                            <span class="text-sm">Template</span>
-                                            <i data-lucide="chevron-down" class="w-3 h-3 ml-1"></i>
-                                        </button>
-                                        <div id="template-dropdown" class="absolute hidden right-0 z-10 mt-1 w-64 bg-white shadow-lg rounded-lg border border-slate-200 py-1">
-                                            <div class="px-3 py-2 border-b border-slate-200 text-xs font-medium text-slate-700">
-                                                Template Pendaftaran
-                                            </div>
-                                            <button type="button" data-template="requirements" class="template-item w-full text-left px-4 py-3 text-sm">
-                                                <i data-lucide="clipboard-list" class="w-4 h-4 inline mr-2 text-emerald-600"></i>
-                                                Persyaratan Pendaftaran
-                                            </button>
-                                            <button type="button" data-template="procedures" class="template-item w-full text-left px-4 py-3 text-sm">
-                                                <i data-lucide="list-checks" class="w-4 h-4 inline mr-2 text-cyan-600"></i>
-                                                Prosedur Pendaftaran
-                                            </button>
-                                            <button type="button" data-template="documents" class="template-item w-full text-left px-4 py-3 text-sm">
-                                                <i data-lucide="file-text" class="w-4 h-4 inline mr-2 text-red-600"></i>
-                                                Dokumen yang Dibutuhkan
-                                            </button>
-                                            <button type="button" data-template="contacts" class="template-item w-full text-left px-4 py-3 text-sm">
-                                                <i data-lucide="phone" class="w-4 h-4 inline mr-2 text-orange-600"></i>
-                                                Kontak Pendaftaran
-                                            </button>
-                                            <button type="button" data-template="full-page" class="template-item w-full text-left px-4 py-3 text-sm border-t border-slate-200">
-                                                <i data-lucide="layout-template" class="w-4 h-4 inline mr-2 text-purple-600"></i>
-                                                Template Halaman Lengkap
-                                            </button>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
