@@ -38,43 +38,29 @@
                             <div class="timeline-item">
                                 <div class="timeline-dot"></div>
                                 <div class="timeline-content">
-                                    <h5 class="fw-bold">2016</h5>
+                                    <h5 class="fw-bold">2015</h5>
                                     <p>Pendirian Pondok Pesantren Miftahul Huda dengan 7 santri pertama.</p>
                                 </div>
                             </div>
                             <div class="timeline-item">
                                 <div class="timeline-dot"></div>
                                 <div class="timeline-content">
-                                    <h5 class="fw-bold">2005</h5>
-                                    <p>Pembangunan asrama santri putra dan perluasan area pesantren.</p>
-                                </div>
-                            </div>
-                            <div class="timeline-item">
-                                <div class="timeline-dot"></div>
-                                <div class="timeline-content">
-                                    <h5 class="fw-bold">2008</h5>
-                                    <p>Pendirian asrama santri putri dan penambahan tenaga pengajar.</p>
-                                </div>
-                            </div>
-                            <div class="timeline-item">
-                                <div class="timeline-dot"></div>
-                                <div class="timeline-content">
-                                    <h5 class="fw-bold">2012</h5>
-                                    <p>Pendirian SMP Islam Terpadu Miftahul Huda.</p>
-                                </div>
-                            </div>
-                            <div class="timeline-item">
-                                <div class="timeline-dot"></div>
-                                <div class="timeline-content">
-                                    <h5 class="fw-bold">2018</h5>
-                                    <p>Peresmian perpustakaan dan laboratorium komputer.</p>
-                                </div>
-                            </div>
-                            <div class="timeline-item">
-                                <div class="timeline-dot"></div>
-                                <div class="timeline-content">
                                     <h5 class="fw-bold">2022</h5>
-                                    <p>Perayaan 20 tahun Pondok Pesantren Miftahul Huda dan peresmian gedung serba guna.</p>
+                                    <p>Pembangunan asrama santri putri dan perluasan area pesantren.</p>
+                                </div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-dot"></div>
+                                <div class="timeline-content">
+                                    <h5 class="fw-bold">2025</h5>
+                                    <p>Pendirian SMP Miftahul Huda Terpadu.</p>
+                                </div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-dot"></div>
+                                <div class="timeline-content">
+                                    <h5 class="fw-bold">2025</h5>
+                                    <p>Perayaan Hari Lahir ke-10 Pondok Pesantren Miftahul Huda Doho.</p>
                                 </div>
                             </div>
                         </div>
