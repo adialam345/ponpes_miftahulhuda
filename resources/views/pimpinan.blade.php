@@ -44,7 +44,7 @@
                 <div class="h-1 w-12 bg-emerald-600 mb-6"></div>
                 <p class="mb-4">
                     KH. Dr. Imam Mudhofir,. S.Pd., M.Pd adalah sosok pemimpin yang kharismatik dan berwawasan luas. Beliau
-                    telah memimpin Pondok Pesantren Miftahul Huda selama lebih dari 20 tahun, menjadikannya salah satu
+                    telah memimpin Pondok Pesantren Miftahul Huda selama lebih dari 10 tahun, menjadikannya salah satu
                     pesantren terkemuka di daerah ini.
                 </p>
                 <p class="mb-4">

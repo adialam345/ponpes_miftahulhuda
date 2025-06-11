@@ -27,9 +27,7 @@
                 <div class="animate__animated animate__fadeInLeft">
                     <h2 class="fw-bold mb-4">Sejarah Pendirian</h2>
                     <div class="title-underline mb-4"></div>
-                    <p class="mb-3">Pondok Pesantren Miftahul Huda didirikan pada tahun 2002 oleh KH. Abdul Ghofur dengan visi mencetak generasi Muslim yang berakhlak mulia, berilmu, dan siap menghadapi tantangan masa depan.</p>
-                    <p class="mb-3">Bermula dari sebuah musholla kecil dengan santri yang hanya berjumlah 15 orang, pesantren ini terus berkembang hingga kini memiliki ratusan santri dengan berbagai fasilitas modern.</p>
-                    <p class="mb-3">Seiring berjalannya waktu, Pondok Pesantren Miftahul Huda terus melebarkan sayapnya dengan mendirikan lembaga pendidikan formal seperti SMP Islam Terpadu yang mengintegrasikan kurikulum nasional dengan kurikulum pesantren.</p>
+                    <p class="mb-3">Pondok Pesantren Miftahul Huda didirikan oleh Dr. Ky. Imam Mudofir, S.Pd. M.Pd. dan Ibu Nyai Ririn Nurhayati, STP., S.Pd. pada tanggal 17 Oktober 2015 bertepatan dengan Hari Sabtu Wage tanggal 04 Muharram 1437 H di Jl. Wisata Tani, Gang Pesantren No. 01, Doho RT 29 RW 04, Kecamatan Dolopo, Kabupaten Madiun. Peletakan Batu pertama Pondok Pesantren pada tanggal 27 Desember 2015 bertepatan dengan Hari Ahad Kliwon tanggal 14 Robiul Awwal 1437 H. Awal Mukim santri dan kegaiatan Pondok Pesantren Miftahul Huda pada tanggal 19 Juli 2016 bertepatan dengan Hari Rabu Legi 14 Syawal 1437 H. Dewan Pengasuh dan sekaligus Pimpinan Pondok Pesantren Miftahul Huda adalah Dr. Ky. Imam Mudofir, S.Pd., M.Pd. yang didampingi oleh Dewan Pembina dan sekaligus Dewan Pendamping seluruh kegiatan Pondok Pesantren Miftahul Huda adalah Ibu Nyai Ririn Nurhayati, STP., S.Pd. Pondok Pesantren Miftahul Huda resmi mendapat surat keputusan dari pemerintah dengan SK Kemenkumham No : AHU-0036417.AH.01.04 Tahun 2016.</p>
                     <p>Kini, Pondok Pesantren Miftahul Huda telah menjadi salah satu lembaga pendidikan Islam terkemuka di daerah ini, dan terus berkomitmen untuk memberikan pendidikan berkualitas bagi para santrinya.</p>
                 </div>
             </div>
@@ -40,8 +38,8 @@
                             <div class="timeline-item">
                                 <div class="timeline-dot"></div>
                                 <div class="timeline-content">
-                                    <h5 class="fw-bold">2002</h5>
-                                    <p>Pendirian Pondok Pesantren Miftahul Huda dengan 15 santri pertama.</p>
+                                    <h5 class="fw-bold">2016</h5>
+                                    <p>Pendirian Pondok Pesantren Miftahul Huda dengan 7 santri pertama.</p>
                                 </div>
                             </div>
                             <div class="timeline-item">
@@ -98,7 +96,7 @@
                 <p class="text-muted">Prinsip dan panduan yang menjadi dasar penyelenggaraan pendidikan di Pondok Pesantren Miftahul Huda</p>
             </div>
         </div>
-        
+
         <div class="row">
             <div class="col-md-6 mb-4">
                 <div class="card feature-card h-100 border-0 shadow-sm">
@@ -107,11 +105,11 @@
                             <i class="fas fa-eye fa-2x text-primary-custom"></i>
                         </div>
                         <h3 class="card-title h4 fw-bold text-dark">Visi Pesantren</h3>
-                        <p class="card-text">Menjadi lembaga pendidikan Islam yang unggul dalam melahirkan generasi Muslim yang berakhlak mulia, berilmu, mandiri, dan berkontribusi positif bagi masyarakat, bangsa, dan agama.</p>
+                        <p class="card-text">Mengamalkan perintah Allah SWT dan Rosulullah SAW yang bersinergi dengan pemerintah (NKRI).</p>
                     </div>
                 </div>
             </div>
-            
+
             <div class="col-md-6 mb-4">
                 <div class="card feature-card h-100 border-0 shadow-sm">
                     <div class="card-body p-4">
@@ -120,11 +118,11 @@
                         </div>
                         <h3 class="card-title h4 fw-bold text-dark">Misi Pesantren</h3>
                         <ul class="ps-3">
-                            <li class="mb-2">Menyelenggarakan pendidikan Islam yang komprehensif dengan memadukan kurikulum pesantren dan kurikulum nasional</li>
-                            <li class="mb-2">Membentuk karakter santri yang berakhlakul karimah berdasarkan Al-Qur'an dan Sunnah</li>
-                            <li class="mb-2">Menumbuhkan semangat kemandirian dan kewirausahaan santri</li>
-                            <li class="mb-2">Mengembangkan bakat dan minat santri sesuai dengan potensi yang dimiliki</li>
-                            <li>Membekali santri dengan keterampilan yang relevan dengan kebutuhan zaman</li>
+                            <li class="mb-2">1. PPMH mendidik dan membina serta menyiapkan insan yang sholeh dan sholehah, berilmu dan beramal, berakhlak mulia penuh kedisiplinan, bertanggung jawab dan berkepribadian luhur dalam rangka membentuk jiwa taqwallah.</li>
+                            <li class="mb-2">2. PPMH membentuk dan mengupayakan terwujudnya sistem masyarakat yang berdasarkan nilai-nilai ajaran Islam sesuai dengan latar sosial budaya yang melingkupinya.</li>
+                            <li class="mb-2">3. PPMH merencanakan mekanisme dakwah Islam yang efektif, terpadu, sesuai dengan kondisi dan tetap mempertahankan warisan nilai yang sudah baik serta melakukan pembaharuan dan peningkatan efektivitas dakwah.</li>
+                            <li class="mb-2">4. PPMH menggali dan menyajikan khasanah pemikiran Islam dalam rangka menyampaikan pemahaman keagamaan di tengah kehidupan masyarakat.</li>
+                            <li>5. PPMH mendukung pelaksanaan program pemerintah yang tidak bertentangan dengan Islam dalam mencerdaskan kehidupan bangsa, mewujudkan cita-cita luhur bangsa serta meningkatkan kualitas sumber daya manusia.</li>
                         </ul>
                     </div>
                 </div>
@@ -144,7 +142,7 @@
                 <p class="text-muted">Berbagai fasilitas yang menunjang kegiatan belajar mengajar di Pondok Pesantren Miftahul Huda</p>
             </div>
         </div>
-        
+
         <div class="row g-4">
             <div class="col-md-4 col-sm-6 mb-4">
                 <div class="facility-card card border-0 shadow-sm h-100">
@@ -157,7 +155,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="col-md-4 col-sm-6 mb-4">
                 <div class="facility-card card border-0 shadow-sm h-100">
                     <div class="card-body p-4 text-center">
@@ -169,7 +167,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="col-md-4 col-sm-6 mb-4">
                 <div class="facility-card card border-0 shadow-sm h-100">
                     <div class="card-body p-4 text-center">
@@ -181,7 +179,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="col-md-4 col-sm-6 mb-4">
                 <div class="facility-card card border-0 shadow-sm h-100">
                     <div class="card-body p-4 text-center">
@@ -193,7 +191,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="col-md-4 col-sm-6 mb-4">
                 <div class="facility-card card border-0 shadow-sm h-100">
                     <div class="card-body p-4 text-center">
@@ -205,7 +203,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="col-md-4 col-sm-6 mb-4">
                 <div class="facility-card card border-0 shadow-sm h-100">
                     <div class="card-body p-4 text-center">
@@ -228,7 +226,7 @@
         padding: 4rem 0;
         position: relative;
     }
-    
+
     .hero-bg {
         position: absolute;
         top: 0;
@@ -239,13 +237,13 @@
         clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
         z-index: -1;
     }
-    
+
     /* Timeline Styles */
     .timeline-container {
         position: relative;
         padding-left: 30px;
     }
-    
+
     .timeline-container:before {
         content: '';
         position: absolute;
@@ -256,12 +254,12 @@
         background-color: var(--primary-color);
         opacity: 0.3;
     }
-    
+
     .timeline-item {
         position: relative;
         margin-bottom: 30px;
     }
-    
+
     .timeline-dot {
         position: absolute;
         top: 5px;
@@ -271,11 +269,11 @@
         border-radius: 50%;
         background-color: var(--primary-color);
     }
-    
+
     .timeline-content {
         padding-bottom: 10px;
     }
-    
+
     /* Section Styling */
     .title-underline {
         height: 4px;
@@ -283,19 +281,19 @@
         background-color: var(--primary-color);
         margin-top: 5px;
     }
-    
+
     /* Facility Card Styles */
     .facility-card {
         border-radius: 12px;
         overflow: hidden;
         transition: all 0.3s ease;
     }
-    
+
     .facility-card:hover {
         transform: translateY(-10px);
         box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1) !important;
     }
-    
+
     .facility-icon {
         display: inline-flex;
         align-items: center;
@@ -307,7 +305,7 @@
         margin-bottom: 1rem;
         transition: all 0.3s ease;
     }
-    
+
     .facility-card:hover .facility-icon {
         background-color: var(--primary-color);
         color: white;
@@ -318,7 +316,7 @@
     document.addEventListener('DOMContentLoaded', function() {
         // Add animation classes when elements enter viewport
         const animatedElements = document.querySelectorAll('.feature-card, .facility-card');
-        
+
         const animateOnScroll = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -327,10 +325,10 @@
                 }
             });
         }, { threshold: 0.1 });
-        
+
         animatedElements.forEach(element => {
             animateOnScroll.observe(element);
         });
     });
 </script>
-@endsection 
+@endsection
