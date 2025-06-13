@@ -217,7 +217,7 @@ function initializeEditor() {
     if (!editor || !hiddenContent) return;
 
     // Initialize content
-    hiddenContent.value = editor.innerHTML;
+    editor.innerHTML = hiddenContent.value;
 
     // Update hidden field on content change
     editor.addEventListener('input', function() {

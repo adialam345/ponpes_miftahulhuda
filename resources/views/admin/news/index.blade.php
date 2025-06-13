@@ -461,9 +461,9 @@ function viewThumbnail(src, alt) {
                             {{ $index + $news->firstItem() }}
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
-                            @if($item->thumbnail)
-                            <div class="thumbnail-container cursor-pointer" onclick="viewThumbnail('{{ asset('storage/' . $item->thumbnail) }}', '{{ $item->title }}')">
-                                <img src="{{ asset('storage/' . $item->thumbnail) }}"
+                            @if($item->image)
+                            <div class="thumbnail-container cursor-pointer" onclick="viewThumbnail('{{ asset('storage/' . $item->image) }}', '{{ $item->title }}')">
+                                <img src="{{ asset('storage/' . $item->image) }}"
                                      alt="{{ $item->title }}"
                                      class="h-16 w-24 object-cover rounded-lg">
                                 <div class="thumbnail-overlay">

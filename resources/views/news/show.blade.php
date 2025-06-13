@@ -82,7 +82,7 @@
                 @endif
 
                 <div class="news-content">
-                    {!! nl2br(e($news->content)) !!}
+                    {!! $news->content !!}
                 </div>
 
                 <div class="mt-4 pt-3 border-top">
